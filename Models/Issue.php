@@ -9,9 +9,10 @@ use Blossom\Classes\ActiveRecord;
 use Blossom\Classes\Database;
 use Blossom\Classes\ExternalIdentity;
 
-class IssueType extends ActiveRecord
+class Issue extends ActiveRecord
 {
     protected $tablename = 'issues';
+    protected $issueType;
 
     /**
      * Populates the object with data
@@ -65,12 +66,12 @@ class IssueType extends ActiveRecord
     public function getZone()         { return parent::get('zone');        }
     public function getMeter()        { return parent::get('meter');       }
     public function getComments()     { return parent::get('comments');    }
-    public function getIssueType_id() { return parent::get('isueType_id'); }
+    public function getIssueType_id() { return parent::get('issueType_id'); }
     public function getIssueType()    { return parent::getForeignKeyObject(__namespace__.'\IssueType', 'issueType_id'); }
     public function getReportedDate($f=null, $tz=null) { return parent::getDateData('reportedDate', $f, $tz); }
     public function getResolvedDate($f=null, $tz=null) { return parent::getDateData('resolvedDate', $f, $tz); }
 
-    public function setZone    ($s) { parent::set('zone',     $s); }
+    public function setZone    ($s) { parent::set('zone',(int)$s); }
     public function setMeter   ($s) { parent::set('meter',    $s); }
     public function setComments($s) { parent::set('comments', $s); }
     public function setIssueType_id($i) { parent::setForeignKeyField (__namespace__.'\IssueType', 'issueType_id', $i); }
@@ -89,7 +90,7 @@ class IssueType extends ActiveRecord
             $this->$set($post[$f]);
         }
     }
-    
+
     //----------------------------------------------------------------
     // Custom Functions
     //----------------------------------------------------------------

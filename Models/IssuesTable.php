@@ -12,7 +12,7 @@ use Zend\Db\Sql\Select;
 class IssuesTable extends TableGateway
 {
     protected $columns = ['id', 'zone', 'meter', 'issueType_id'];
-    
+
     public function __construct() { parent::__construct('issues', __namespace__.'\Issue'); }
 
     /**
@@ -23,6 +23,6 @@ class IssuesTable extends TableGateway
      */
     public function find($fields=null, $order='reportedDate desc', $paginated=false, $limit=null)
     {
-        return parent::find($select, $order, $paginated, $limit);
+        return parent::find($fields, $order, $paginated, $limit);
     }
 }
