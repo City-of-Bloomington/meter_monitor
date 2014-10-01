@@ -27,12 +27,16 @@ class IssuesController extends Controller
     public function index()
     {
         $table = new IssuesTable();
-        $issues = $table->find(null, null, true);
+
+        $issues = (!empty($_GET['meter']) || !empty($_GET['zone']) || !empty($_GET['issueType_id']))
+            ? $table->search($_GET, null, true)
+            : $table->find  (null,  null, true);
 
         $page = !empty($_GET['page']) ? (int)$_GET['page'] : 1;
         $issues->setCurrentPageNumber($page);
         $issues->setItemCountPerPage(20);
 
+        $this->template->blocks[] = new Block('issues/searchForm.inc');
         $this->template->blocks[] = new Block('issues/list.inc',    ['issues'   =>$issues]);
         $this->template->blocks[] = new Block('pageNavigation.inc', ['paginator'=>$issues]);
     }

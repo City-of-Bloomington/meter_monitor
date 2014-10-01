@@ -25,4 +25,32 @@ class IssuesTable extends TableGateway
     {
         return parent::find($fields, $order, $paginated, $limit);
     }
+
+    /**
+     * @param array $fields
+     * @param string|array $order Multi-column sort should be given as an array
+     * @param bool $paginated Whether to return a paginator or a raw resultSet
+     * @param int $limit
+     */
+    public function search($fields=null, $order='reportedDate desc', $paginated=false, $limit=null)
+    {
+        $select = new Select('issues');
+        if (count($fields)) {
+            foreach ($fields as $key=>$value) {
+                if (!empty($value)) {
+                    switch ($key) {
+                        case 'id':
+                        case 'issueType_id':
+                            $select->where([$key=>$value]);
+                            break;
+                        default:
+                            if (in_array($key, $this->columns)) {
+                                $select->where->like($key, "%$value%");
+                            }
+                    }
+                }
+            }
+        }
+        return parent::performSelect($select, $order, $paginated, $limit);
+    }
 }
