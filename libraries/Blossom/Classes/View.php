@@ -136,8 +136,20 @@ abstract class View
     public static function translateDateString($format)
     {
         return str_replace(
-            ['m',  'n' , 'd',  'j',  'Y',    'H',  'i',  's'],
-            ['mm', 'mm', 'dd', 'dd', 'yyyy', 'hh', 'mm', 'ss'],
+            ['m',  'n' , 'd',  'j',  'Y',    'H',  'g',  'i',  's',  'a'],
+            ['mm', 'mm', 'dd', 'dd', 'yyyy', 'hh', 'hh', 'mm', 'ss', 'am'],
+            $format
+        );
+    }
+
+    /**
+     * Converts a PHP date format string to jQuery's date format syntax
+     */
+    public static function jQueryDateFormat($format)
+    {
+        return str_replace(
+            ['m',  'n', 'd',  'j', 'Y' ],
+            ['mm', 'm', 'dd', 'd', 'yy'],
             $format
         );
     }

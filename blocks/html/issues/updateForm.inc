@@ -11,8 +11,8 @@ use Blossom\Classes\View;
 $zone     = View::escape($this->issue->getZone());
 $meter    = View::escape($this->issue->getMeter());
 $comments = View::escape($this->issue->getComments());
-$reportedDate = $this->issue->getReportedDate(DATE_FORMAT);
-$resolvedDate = $this->issue->getResolvedDate(DATE_FORMAT);
+$reportedDate = $this->issue->getReportedDate(DATETIME_FORMAT);
+$resolvedDate = $this->issue->getResolvedDate(DATETIME_FORMAT);
 
 $title = $this->issue->getId() ? $this->_('issue_edit') : $this->_('issue_add');
 ?>

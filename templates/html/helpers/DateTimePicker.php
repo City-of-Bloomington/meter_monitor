@@ -13,10 +13,25 @@ class DateTimePicker extends Helper
 {
     public function dateTimePicker($fieldname, $timestamp=null)
     {
-        $value = $timestamp ? date(DATE_FORMAT, $timestamp) : '';
+        $this->template->addToAsset('scripts',     JQUERY   .'/jquery.min.js');
+        $this->template->addToAsset('scripts',     JQUERY_UI.'/jquery-ui.min.js');
+        $this->template->addToAsset('stylesheets', JQUERY_UI.'/jquery-ui.min.css');
+        $this->template->addToAsset('scripts',     JQUERY_TIMEPICKER.'/jquery.timepicker.min.js');
+        $this->template->addToAsset('stylesheets', JQUERY_TIMEPICKER.'/jquery.timepicker.css');
+        $this->template->addToAsset('scripts',     BASE_URI.'/js/dateTimePicker.js');
 
-        $input = "<input name=\"$fieldname\" id=\"$fieldname\" value=\"$value\" />";
-        $help  = View::translateDateString(DATE_FORMAT);
+        $date = '';
+        $time = '';
+        if ($timestamp) {
+            $date = date(DATE_FORMAT, $timestamp);
+            $time = date(TIME_FORMAT, $timestamp);
+        }
+
+        $input = "
+        <input name=\"{$fieldname}[date]\" id=\"$fieldname\"        value=\"$date\" size=\"10\" class=\"date\"/>
+        <input name=\"{$fieldname}[time]\" id=\"{$fieldname}-time\" value=\"$time\" size=\"10\" class=\"time\" />
+        ";
+        $help  = View::translateDateString(DATETIME_FORMAT);
 
         return "$input $help";
     }

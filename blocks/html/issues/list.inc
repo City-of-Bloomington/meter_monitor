@@ -39,8 +39,8 @@ use Blossom\Classes\Url;
             $meter    = View::escape($issue->getMeter());
             $type     = View::escape($issue->getIssueType());
             $comments = View::escape($issue->getComments());
-            $reported = $issue->getReportedDate(DATE_FORMAT);
-            $resolved = $issue->getResolvedDate(DATE_FORMAT);
+            $reported = $issue->getReportedDate(DATETIME_FORMAT);
+            $resolved = $issue->getResolvedDate(DATETIME_FORMAT);
 
             $editButton = '';
             if (Person::isAllowed('issues', 'edit')) {

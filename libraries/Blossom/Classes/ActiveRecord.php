@@ -12,7 +12,7 @@ abstract class ActiveRecord
 	protected $tablename;
 	protected $data = array();
 
-	const MYSQL_DATE_FORMAT = 'Y-m-d H:i:s';
+	const MYSQL_DATETIME_FORMAT = 'Y-m-d H:i:s';
 
 	abstract public function validate();
 
@@ -108,8 +108,8 @@ abstract class ActiveRecord
 	/**
 	 * Sets a date
 	 *
-	 * Dates should be in DATE_FORMAT, set in configuration.inc
-	 * If we cannot parse the string using DATE_FORMAT, we will
+	 * Dates should be in DATETIME_FORMAT, set in configuration.inc
+	 * If we cannot parse the string using DATETIME_FORMAT, we will
 	 * fall back to trying something strtotime() understands
 	 * http://www.php.net/manual/en/function.strtotime.php
 	 *
@@ -120,7 +120,7 @@ abstract class ActiveRecord
 	{
 		$date = trim($date);
 		if ($date) {
-			$d = \DateTime::createFromFormat(DATE_FORMAT, $date);
+			$d = \DateTime::createFromFormat(DATETIME_FORMAT, $date);
 			if (!$d) {
 				try {
 					$d = new \DateTime($date);
@@ -129,7 +129,7 @@ abstract class ActiveRecord
 					throw new \Exception('unknownDateFormat');
 				}
 			}
-			$this->data[$dateField] = $d->format(self::MYSQL_DATE_FORMAT);
+			$this->data[$dateField] = $d->format(self::MYSQL_DATETIME_FORMAT);
 		}
 		else {
 			$this->data[$dateField] = null;

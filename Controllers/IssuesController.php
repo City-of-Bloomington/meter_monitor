@@ -48,8 +48,10 @@ class IssuesController extends Controller
             : new Issue();
 
         if (isset($_POST['meter'])) {
-            $issue->handleUpdate($_POST);
+            $_POST['reportedDate'] = implode(' ', [$_POST['reportedDate']['date'], $_POST['reportedDate']['time']]);
+            $_POST['resolvedDate'] = implode(' ', [$_POST['resolvedDate']['date'], $_POST['resolvedDate']['time']]);
 
+            $issue->handleUpdate($_POST);
             try {
                 $issue->save();
                 header('Location: '.BASE_URL.'/issues');
