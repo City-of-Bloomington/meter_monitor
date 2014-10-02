@@ -6,18 +6,11 @@
  */
 namespace Application\Templates\Helpers;
 
-use Blossom\Classes\Template;
+use Blossom\Classes\Helper;
 use Blossom\Classes\Url;
 
-class PrintButton
+class PrintButton extends Helper
 {
-    private $template;
-
-    public function __construct(Template $template)
-    {
-        $this->template = $template;
-    }
-
     public function printButton()
     {
         $printUrl = new Url(Url::current_url());

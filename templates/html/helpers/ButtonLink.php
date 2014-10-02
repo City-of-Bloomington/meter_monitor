@@ -8,12 +8,10 @@
  */
 namespace Application\Templates\Helpers;
 
-use Blossom\Classes\Template;
+use Blossom\Classes\Helper;
 
-class ButtonLink
+class ButtonLink extends Helper
 {
-	private $template;
-
 	const SIZE_BUTTON = 'button';
 	const SIZE_ICON   = 'icon';
 
@@ -24,11 +22,6 @@ class ButtonLink
 		'cancel' => 'fa fa-times',
 		'print'  => 'fa fa-print'
 	];
-
-	public function __construct(Template $template)
-	{
-		$this->template = $template;
-	}
 
 	public function buttonLink($url, $label, $type, $size=self::SIZE_BUTTON)
 	{

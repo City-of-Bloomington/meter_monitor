@@ -45,13 +45,16 @@ $title = $this->issue->getId() ? $this->_('issue_edit') : $this->_('issue_add');
                 </td>
             </tr>
             <tr><th><label for="reportedDate"><?php echo $this->_('reportedDate'); ?></label></th>
-                <td><input type="datetime" name="reportedDate" id="reportedDate" value="<?php echo $reportedDate; ?>" />
-                    <?php echo View::translateDateString(DATE_FORMAT); ?>
+                <td><?php
+                        $picker = $this->template->getHelper('dateTimePicker');
+                        echo $picker->dateTimePicker('reportedDate', $this->issue->getReportedDate('U'));
+                    ?>
                 </td>
             </tr>
             <tr><th><label for="resolvedDate"><?php echo $this->_('resolvedDate'); ?></label></th>
-                <td><input type="datetime" name="resolvedDate" id="resolvedDate" value="<?php echo $resolvedDate; ?>" />
-                    <?php echo View::translateDateString(DATE_FORMAT); ?>
+                <td><?php
+                        echo $picker->dateTimePicker('resolvedDate', $this->issue->getResolvedDate('U'));
+                    ?>
                 </td>
             </tr>
         </table>
