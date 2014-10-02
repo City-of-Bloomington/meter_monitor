@@ -136,8 +136,8 @@ abstract class View
     public static function translateDateString($format)
     {
         return str_replace(
-            ['n' , 'j',  'Y'],
-            ['mm', 'dd', 'yyyy'],
+            ['m',  'n' , 'd',  'j',  'Y',    'H',  'i',  's'],
+            ['mm', 'mm', 'dd', 'dd', 'yyyy', 'hh', 'mm', 'ss'],
             $format
         );
     }
