@@ -42,7 +42,31 @@ $title = $this->activity->getId() ? $this->_('activity_edit') : $this->_('activi
                 </td>
             </tr>
         </table>
+    </fieldset>
 
+    <fieldset id="issueType_picker">
+        <legend><?php echo $this->_(['issue', 'issues', 2]); ?></legend>
+        <ul><?php
+                $table = new IssueTypesTable();
+                $list = $table->find();
+                foreach ($list as $type) {
+                    $checked = $this->activity->hasIssueType($type)
+                        ? 'checked="checked"'
+                        : '';
+                    $name = View::escape($type);
+                    echo "
+                    <li><label>
+                            <input name=\"issueTypes[]\" value=\"{$type->getId()}\" type=\"checkbox\" $checked />
+                            $type
+                        </label>
+                    </li>
+                    ";
+                }
+            ?>
+        </ul>
+    </fieldset>
+
+    <fieldset>
         <div>
             <div><label for="comments"><?php echo $this->_('comments'); ?></label></div>
             <textarea name="comments" id="comments" rows="6" cols="60"><?php echo $comments; ?></textarea>

@@ -29,6 +29,7 @@ use Blossom\Classes\Url;
             <th><?php echo $this->_('meter'); ?></th>
             <th><?php echo $this->_('zone'); ?></th>
             <th><?php echo $this->_('reportedDate'); ?></th>
+            <th><?php echo $this->_(['issue', 'issues', 2]); ?></th>
             <th><?php echo $this->_('resolvedDate'); ?></th>
     </thead>
     <tbody>
@@ -37,8 +38,10 @@ use Blossom\Classes\Url;
             $zone     = View::escape($a->getZone());
             $meter    = View::escape($a->getMeter());
             $comments = View::escape($a->getComments());
+            $issues   = View::escape(implode(', ', $a->getIssueTypes()));
             $reported = $a->getReportedDate(DATETIME_FORMAT);
             $resolved = $a->getResolvedDate(DATETIME_FORMAT);
+
 
             $editButton = '';
             if (Person::isAllowed('activity', 'edit')) {
@@ -54,6 +57,7 @@ use Blossom\Classes\Url;
                 <td>$meter</td>
                 <td>$zone</td>
                 <td>$reported</td>
+                <td>$issues</td>
                 <td>$resolved</td>
             </tr>
             ";

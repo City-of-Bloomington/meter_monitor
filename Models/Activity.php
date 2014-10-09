@@ -12,7 +12,8 @@ use Blossom\Classes\ExternalIdentity;
 class Activity extends ActiveRecord
 {
     protected $tablename = 'activity';
-    protected $issueType;
+
+    private $issueTypes = [];
 
     /**
      * Populates the object with data
@@ -57,7 +58,11 @@ class Activity extends ActiveRecord
         if (!$this->getMeter()) { throw new \Exception('missingRequiredFields'); }
     }
 
-    public function save() { parent::save(); }
+    public function save()
+    {
+        parent::save();
+        $this->saveIssueTypes();
+    }
 
     //----------------------------------------------------------------
     // Generic Getters & Setters
@@ -80,7 +85,7 @@ class Activity extends ActiveRecord
      */
     public function handleUpdate($post)
     {
-        $fields = ['zone', 'meter', 'comments', 'reportedDate', 'resolvedDate'];
+        $fields = ['zone', 'meter', 'comments', 'reportedDate', 'resolvedDate', 'issueTypes'];
         foreach ($fields as $f) {
             $set = 'set'.ucfirst($f);
             $this->$set($post[$f]);
@@ -90,4 +95,50 @@ class Activity extends ActiveRecord
     //----------------------------------------------------------------
     // Custom Functions
     //----------------------------------------------------------------
+    public function getIssueTypes() {
+        if (!$this->issueTypes && $this->getId()) {
+            $table = new IssueTypesTable();
+            $list = $table->find(['activity_id'=>$this->getId()]);
+            foreach ($list as $type) {
+                $this->issueTypes[$type->getId()] = $type;
+            }
+        }
+        return $this->issueTypes;
+    }
+
+    /**
+     * @param array $ids An array of issueType_ids to set
+     */
+    public function setIssueTypes($ids=null) {
+        $this->issueTypes = [];
+        foreach ($ids as $id) {
+            try {
+                $type = new IssueType($id);
+                $this->issueTypes[$type->getId()] = $type;
+            }
+            catch (\Exception $e) {
+                // Just ignore any invalid issueTypes
+            }
+        }
+    }
+
+    public function hasIssueType(IssueType $type)
+    {
+        return in_array($type->getId(), array_keys($this->getIssueTypes()));
+    }
+
+    public function saveIssueTypes()
+    {
+        if ($this->getId()) {
+            $zend_db = Database::getConnection();
+
+            $query = $zend_db->createStatement('delete from activity_issueTypes where activity_id=?');
+            $query->execute([$this->getId()]);
+
+            $query = $zend_db->createStatement('insert activity_issueTypes set activity_id=?,issueType_id=?');
+            foreach ($this->issueTypes as $type) {
+                $query->execute([$this->getId(),$type->getId()]);
+            }
+        }
+    }
 }
