@@ -5,56 +5,56 @@
  * @author Cliff Ingham <inghamn@bloomington.in.gov>
  */
 namespace Application\Controllers;
-use Application\Models\Issue;
-use Application\Models\IssuesTable;
+use Application\Models\Activity;
+use Application\Models\ActivityTable;
 use Blossom\Classes\Controller;
 use Blossom\Classes\Block;
 
-class IssuesController extends Controller
+class ActivityController extends Controller
 {
-    private function loadIssue($id)
+    private function loadActivity($id)
     {
         try {
-            return new Issue($id);
+            return new Activity($id);
         }
         catch (\Exception $e) {
             $_SESSION['errorMessages'][] = $e;
-            header('Location: '.BASE_URL.'/issues');
+            header('Location: '.BASE_URL.'/activity');
             exit();
         }
     }
 
     public function index()
     {
-        $table = new IssuesTable();
+        $table = new ActivityTable();
 
-        $issues = (!empty($_GET['meter']) || !empty($_GET['zone']) || !empty($_GET['issueType_id']))
+        $a = (!empty($_GET['meter']) || !empty($_GET['zone']) || !empty($_GET['issueType_id']))
             ? $table->search($_GET, null, true)
             : $table->find  (null,  null, true);
 
         $page = !empty($_GET['page']) ? (int)$_GET['page'] : 1;
-        $issues->setCurrentPageNumber($page);
-        $issues->setItemCountPerPage(20);
+        $a->setCurrentPageNumber($page);
+        $a->setItemCountPerPage(20);
 
-        $this->template->blocks[] = new Block('issues/searchForm.inc');
-        $this->template->blocks[] = new Block('issues/list.inc',    ['issues'   =>$issues]);
-        $this->template->blocks[] = new Block('pageNavigation.inc', ['paginator'=>$issues]);
+        $this->template->blocks[] = new Block('activity/searchForm.inc');
+        $this->template->blocks[] = new Block('activity/list.inc',  ['activity'   => $a]);
+        $this->template->blocks[] = new Block('pageNavigation.inc', ['paginator'  => $a]);
     }
 
     public function update()
     {
-        $issue = !empty($_REQUEST['issue_id'])
-            ? $this->loadIssue($_REQUEST['issue_id'])
-            : new Issue();
+        $activity = !empty($_REQUEST['activity_id'])
+            ? $this->loadActivity($_REQUEST['activity_id'])
+            : new Activity();
 
         if (isset($_POST['meter'])) {
             $_POST['reportedDate'] = implode(' ', [$_POST['reportedDate']['date'], $_POST['reportedDate']['time']]);
             $_POST['resolvedDate'] = implode(' ', [$_POST['resolvedDate']['date'], $_POST['resolvedDate']['time']]);
 
-            $issue->handleUpdate($_POST);
+            $activity->handleUpdate($_POST);
             try {
-                $issue->save();
-                header('Location: '.BASE_URL.'/issues');
+                $activity->save();
+                header('Location: '.BASE_URL.'/activity');
                 exit();
             }
             catch (\Exception $e) {
@@ -62,6 +62,6 @@ class IssuesController extends Controller
             }
         }
 
-        $this->template->blocks[] = new Block('issues/updateForm.inc', ['issue'=>$issue]);
+        $this->template->blocks[] = new Block('activity/updateForm.inc', ['activity'=>$activity]);
     }
 }

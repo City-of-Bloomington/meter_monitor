@@ -9,11 +9,11 @@ namespace Application\Models;
 use Blossom\Classes\TableGateway;
 use Zend\Db\Sql\Select;
 
-class IssuesTable extends TableGateway
+class ActivityTable extends TableGateway
 {
-    protected $columns = ['id', 'zone', 'meter', 'issueType_id'];
+    protected $columns = ['id', 'zone', 'meter'];
 
-    public function __construct() { parent::__construct('issues', __namespace__.'\Issue'); }
+    public function __construct() { parent::__construct('activity', __namespace__.'\Activity'); }
 
     /**
      * @param array $fields
@@ -34,13 +34,12 @@ class IssuesTable extends TableGateway
      */
     public function search($fields=null, $order='reportedDate desc', $paginated=false, $limit=null)
     {
-        $select = new Select('issues');
+        $select = new Select('activity');
         if (count($fields)) {
             foreach ($fields as $key=>$value) {
                 if (!empty($value)) {
                     switch ($key) {
                         case 'id':
-                        case 'issueType_id':
                             $select->where([$key=>$value]);
                             break;
                         default:

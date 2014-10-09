@@ -1,4 +1,4 @@
--- @copyright 2006-2012 City of Bloomington, Indiana
+-- @copyright 2014 City of Bloomington, Indiana
 -- @license http://www.gnu.org/copyleft/gpl.html GNU/GPL, see LICENSE.txt
 -- @author Cliff Ingham <inghamn@bloomington.in.gov>
 create table people (
@@ -17,13 +17,19 @@ create table issueTypes (
     name varchar(32) not null
 );
 
-create table issues (
+create table activity (
     id   int unsigned not null primary key auto_increment,
     zone int unsigned,
     meter varchar(24) not null,
-    issueType_id int unsigned,
     reportedDate datetime,
     resolvedDate datetime,
-    comments text,
+    comments text
+);
+
+create table activity_issueTypes (
+    activity_id  int unsigned not null,
+    issueType_id int unsigned not null,
+    primary key (activity_id, issueType_id),
+    foreign key (activity_id)  references activity  (id),
     foreign key (issueType_id) references issueTypes(id)
 );

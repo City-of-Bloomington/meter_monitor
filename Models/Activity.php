@@ -9,9 +9,9 @@ use Blossom\Classes\ActiveRecord;
 use Blossom\Classes\Database;
 use Blossom\Classes\ExternalIdentity;
 
-class Issue extends ActiveRecord
+class Activity extends ActiveRecord
 {
-    protected $tablename = 'issues';
+    protected $tablename = 'activity';
     protected $issueType;
 
     /**
@@ -34,14 +34,14 @@ class Issue extends ActiveRecord
             }
             else {
                 $zend_db = Database::getConnection();
-                $sql = 'select * from issues where id=?';
+                $sql = 'select * from activity where id=?';
 
                 $result = $zend_db->createStatement($sql)->execute([$id]);
                 if (count($result)) {
                     $this->exchangeArray($result->current());
                 }
                 else {
-                    throw new \Exception('issueTypes/unknownType');
+                    throw new \Exception('activity/unknownActivity');
                 }
             }
         }
@@ -66,16 +66,12 @@ class Issue extends ActiveRecord
     public function getZone()         { return parent::get('zone');        }
     public function getMeter()        { return parent::get('meter');       }
     public function getComments()     { return parent::get('comments');    }
-    public function getIssueType_id() { return parent::get('issueType_id'); }
-    public function getIssueType()    { return parent::getForeignKeyObject(__namespace__.'\IssueType', 'issueType_id'); }
     public function getReportedDate($f=null, $tz=null) { return parent::getDateData('reportedDate', $f, $tz); }
     public function getResolvedDate($f=null, $tz=null) { return parent::getDateData('resolvedDate', $f, $tz); }
 
     public function setZone    ($s) { parent::set('zone',(int)$s); }
     public function setMeter   ($s) { parent::set('meter',    $s); }
     public function setComments($s) { parent::set('comments', $s); }
-    public function setIssueType_id($i) { parent::setForeignKeyField (__namespace__.'\IssueType', 'issueType_id', $i); }
-    public function setIssueType   ($o) { parent::setForeignKeyObject(__namespace__.'\IssueType', 'issueType_id', $o); }
     public function setReportedDate($d) { parent::setDateData('reportedDate', $d); }
     public function setResolvedDate($d) { parent::setDateData('resolvedDate', $d); }
 
@@ -84,7 +80,7 @@ class Issue extends ActiveRecord
      */
     public function handleUpdate($post)
     {
-        $fields = ['zone', 'meter', 'comments', 'issueType_id', 'reportedDate', 'resolvedDate'];
+        $fields = ['zone', 'meter', 'comments', 'reportedDate', 'resolvedDate'];
         foreach ($fields as $f) {
             $set = 'set'.ucfirst($f);
             $this->$set($post[$f]);

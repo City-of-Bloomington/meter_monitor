@@ -10,7 +10,7 @@ use Blossom\Classes\View;
 $meter = !empty($_GET['meter']) ? View::escape($_GET['meter']) : '';
 $zone  = !empty($_GET['zone'])  ? View::escape($_GET['zone'])  : '';
 ?>
-<form method="get" action="<?php echo BASE_URI; ?>/issues">
+<form method="get" action="<?php echo BASE_URI; ?>/activity">
     <fieldset><legend><?php echo $this->_('search'); ?></legend>
         <table>
             <tr><td><label for="meter"><?php echo $this->_('meter'); ?></label></td>
@@ -38,6 +38,6 @@ $zone  = !empty($_GET['zone'])  ? View::escape($_GET['zone'])  : '';
         </table>
 
         <button type="submit"><i class="fa fa-search"></i> <?php echo $this->_('search'); ?></button>
-        <a href="<?php echo BASE_URI; ?>/issues"><?php echo $this->_('clear'); ?></a>
+        <a href="<?php echo BASE_URI; ?>/activity"><?php echo $this->_('clear'); ?></a>
     </fieldset>
 </form>
