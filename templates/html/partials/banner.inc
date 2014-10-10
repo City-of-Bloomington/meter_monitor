@@ -8,9 +8,6 @@ use Blossom\Classes\View;
 
 			if (isset($_SESSION['USER'])) {
 				echo sprintf($li, BASE_URI.'/login/logout', $this->translate('logout'));
-
-				$name = View::escape($_SESSION['USER']->getFullname());
-				echo sprintf('<li>'.sprintf($this->_('signed_in_as', 'messages'), $name).'</li>');
 			}
 			else {
 				$return_url = View::escape($_SERVER['REQUEST_URI']);

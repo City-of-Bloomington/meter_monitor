@@ -74,3 +74,8 @@ $title = $this->activity->getId() ? $this->_('activity_edit') : $this->_('activi
         ?>
     </fieldset>
 </form>
+<?php
+    $this->template->addToAsset('scripts', JQUERY.'/jquery.min.js');
+    $this->template->addToAsset('scripts', JQUERY_UI.'/jquery-ui.min.js');
+    $this->template->addToAsset('scripts', BASE_URI.'/js/meterAutoComplete.js');
+?>

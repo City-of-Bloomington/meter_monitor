@@ -18,6 +18,12 @@ class MetersController extends Controller
 
         $pagination = $this->template->outputFormat == 'html';
 
+        // Translate jQuery autocomplete searches
+        if (!empty($_GET['term'])) {
+            $_GET['name'] = $_GET['term'];
+            unset($_GET['term']);
+        }
+
         $list = (!empty($_GET['name']) || !empty($_GET['zone']))
             ? $table->search($_GET, null, $pagination)
             : $table->find  (null,  null, $pagination);

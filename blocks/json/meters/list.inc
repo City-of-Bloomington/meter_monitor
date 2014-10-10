@@ -8,10 +8,6 @@
 $meters = [];
 
 foreach ($this->meters as $m) {
-    $meters[] = [
-        'id'   => $m->getId(),
-        'name' => $m->getName(),
-        'zone' => $m->getZone()
-    ];
+    $meters[] = $m->getName();
 }
 echo json_encode($meters);

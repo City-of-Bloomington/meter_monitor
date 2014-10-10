@@ -5,11 +5,19 @@
  * @author Cliff Ingham <inghamn@bloomington.in.gov>
  */
 namespace Application\Controllers;
+use Application\Models\Person;
 use Blossom\Classes\Controller;
 
 class IndexController extends Controller
 {
 	public function index()
 	{
+        if (Person::isAllowed('activity', 'add')) {
+            header('Location: '.BASE_URL.'/activity');
+        }
+        else {
+            header('Location: '.BASE_URL.'/login?return_url='.BASE_URL.'/activity');
+        }
+        exit();
 	}
 }
