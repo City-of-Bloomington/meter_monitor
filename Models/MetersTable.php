@@ -9,11 +9,11 @@ namespace Application\Models;
 use Blossom\Classes\TableGateway;
 use Zend\Db\Sql\Select;
 
-class ActivityTable extends TableGateway
+class MetersTable extends TableGateway
 {
-    protected $columns = ['id', 'meter'];
+    protected $columns = ['id', 'name', 'zone'];
 
-    public function __construct() { parent::__construct('activity', __namespace__.'\Activity'); }
+    public function __construct() { parent::__construct('meters', __namespace__.'\Meter'); }
 
     /**
      * @param array $fields
@@ -21,7 +21,7 @@ class ActivityTable extends TableGateway
      * @param bool $paginated Whether to return a paginator or a raw resultSet
      * @param int $limit
      */
-    public function find($fields=null, $order='reportedDate desc', $paginated=false, $limit=null)
+    public function find($fields=null, $order='name', $paginated=false, $limit=null)
     {
         return parent::find($fields, $order, $paginated, $limit);
     }
@@ -32,27 +32,16 @@ class ActivityTable extends TableGateway
      * @param bool $paginated Whether to return a paginator or a raw resultSet
      * @param int $limit
      */
-    public function search($fields=null, $order='reportedDate desc', $paginated=false, $limit=null)
+    public function search($fields=null, $order='name', $paginated=false, $limit=null)
     {
-        $select = new Select('activity');
+        $select = new Select('meters');
         if (count($fields)) {
-            $this->handleJoins($fields, $select);
-
             foreach ($fields as $key=>$value) {
                 if (!empty($value)) {
                     switch ($key) {
-                        case 'meter':
-                            $select->where->like('m.name', "$value%");
+                        case 'name':
+                            $select->where->like($key, "$value%");
                             break;
-
-                        case 'zone':
-                            $select->where(["m.$key"=>$value]);
-                            break;
-
-                        case 'issueType_id':
-                            $select->where(["i.$key"=>$value]);
-                            break;
-
                         default:
                             if (in_array($key, $this->columns)) {
                                 $select->where([$key=>$value]);
@@ -63,15 +52,4 @@ class ActivityTable extends TableGateway
         }
         return parent::performSelect($select, $order, $paginated, $limit);
     }
-
-    private function handleJoins($fields, &$select)
-    {
-        if (count(array_intersect(['meter', 'zone'], array_keys($fields)))) {
-            $select->join(['m'=>'meters'], 'activity.meter_id=m.id', []);
-        }
-        if (in_array('issueType_id', array_keys($fields))) {
-            $select->join(['i'=>'activity_issueTypes'], 'activity.id=i.activity_id', []);
-        }
-    }
-
 }

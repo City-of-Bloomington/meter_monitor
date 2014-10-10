@@ -2,6 +2,7 @@
 use Blossom\Classes\View;
 ?>
 <head>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
 	<link rel="stylesheet" type="text/css" href="<?php echo BASE_URI; ?>/css/local/reset.css" />
 	<link rel="stylesheet" type="text/css" href="<?php echo BASE_URI; ?>/css/local/layouts/<?php echo $this->layout; ?>.css" />
 	<link rel="stylesheet" type="text/css" href="<?php echo BASE_URI; ?>/css/local/screen.css" />

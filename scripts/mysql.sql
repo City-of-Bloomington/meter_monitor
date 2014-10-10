@@ -12,6 +12,12 @@ create table people (
 	role varchar(30)
 );
 
+create table meters (
+    id int unsigned not null primary key auto_increment,
+    name varchar(12) not null unique,
+    zone tinyint unsigned not null
+);
+
 create table issueTypes (
     id int unsigned not null primary key auto_increment,
     name varchar(32) not null
@@ -19,11 +25,11 @@ create table issueTypes (
 
 create table activity (
     id   int unsigned not null primary key auto_increment,
-    zone int unsigned,
-    meter varchar(24) not null,
+    meter_id int unsigned not null,
     reportedDate datetime,
     resolvedDate datetime,
-    comments text
+    comments text,
+    foreign key (meter_id) references meters(id)
 );
 
 create table activity_issueTypes (
@@ -33,3 +39,4 @@ create table activity_issueTypes (
     foreign key (activity_id)  references activity  (id),
     foreign key (issueType_id) references issueTypes(id)
 );
+

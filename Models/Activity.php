@@ -12,6 +12,7 @@ use Blossom\Classes\ExternalIdentity;
 class Activity extends ActiveRecord
 {
     protected $tablename = 'activity';
+    protected $meter;
 
     private $issueTypes = [];
 
@@ -55,7 +56,7 @@ class Activity extends ActiveRecord
 
     public function validate()
     {
-        if (!$this->getMeter()) { throw new \Exception('missingRequiredFields'); }
+        if (!$this->getMeter_id()) { throw new \Exception('missingRequiredFields'); }
     }
 
     public function save()
@@ -68,15 +69,15 @@ class Activity extends ActiveRecord
     // Generic Getters & Setters
     //----------------------------------------------------------------
     public function getId()           { return parent::get('id');          }
-    public function getZone()         { return parent::get('zone');        }
-    public function getMeter()        { return parent::get('meter');       }
     public function getComments()     { return parent::get('comments');    }
+    public function getMeter_id()     { return parent::get('meter_id');    }
+    public function getMeter()        { return parent::getForeignKeyObject(__namespace__.'\Meter', 'meter_id'); }
     public function getReportedDate($f=null, $tz=null) { return parent::getDateData('reportedDate', $f, $tz); }
     public function getResolvedDate($f=null, $tz=null) { return parent::getDateData('resolvedDate', $f, $tz); }
 
-    public function setZone    ($s) { parent::set('zone',(int)$s); }
-    public function setMeter   ($s) { parent::set('meter',    $s); }
     public function setComments($s) { parent::set('comments', $s); }
+    public function setMeter_id($i) { parent::setForeignKeyField (__namespace__.'\Meter', 'meter_id', $i); }
+    public function setMeter   ($o) { parent::setForeignKeyObject(__namespace__.'\Meter', 'meter_id', $o); }
     public function setReportedDate($d) { parent::setDateData('reportedDate', $d); }
     public function setResolvedDate($d) { parent::setDateData('resolvedDate', $d); }
 
@@ -85,7 +86,7 @@ class Activity extends ActiveRecord
      */
     public function handleUpdate($post)
     {
-        $fields = ['zone', 'meter', 'comments', 'reportedDate', 'resolvedDate', 'issueTypes'];
+        $fields = ['meter_id', 'comments', 'reportedDate', 'resolvedDate', 'issueTypes'];
         foreach ($fields as $f) {
             $set = 'set'.ucfirst($f);
             $this->$set($post[$f]);
@@ -95,6 +96,12 @@ class Activity extends ActiveRecord
     //----------------------------------------------------------------
     // Custom Functions
     //----------------------------------------------------------------
+    public function getZone()
+    {
+        $meter = $this->getMeter();
+        if ($meter) { return $meter->getZone(); }
+    }
+
     public function getIssueTypes() {
         if (!$this->issueTypes && $this->getId()) {
             $table = new IssueTypesTable();

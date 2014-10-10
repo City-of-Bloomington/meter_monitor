@@ -31,8 +31,6 @@ class DateTimePicker extends Helper
         <input name=\"{$fieldname}[date]\" id=\"$fieldname\"        value=\"$date\" size=\"10\" class=\"date\"/>
         <input name=\"{$fieldname}[time]\" id=\"{$fieldname}-time\" value=\"$time\" size=\"10\" class=\"time\" />
         ";
-        $help  = View::translateDateString(DATETIME_FORMAT);
-
-        return "$input $help";
+        return $input;
     }
 }

@@ -8,6 +8,7 @@ use Application\Models\Person;
     $routes = [
         'activity'   => 'activity',
         'issueTypes' => 'issueType',
+        'meters'     => 'meter',
         'people'     => 'person',
         'users'      => 'user'
     ];

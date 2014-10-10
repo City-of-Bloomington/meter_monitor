@@ -8,7 +8,6 @@
 use Application\Models\IssueTypesTable;
 use Blossom\Classes\View;
 
-$zone     = View::escape($this->activity->getZone());
 $meter    = View::escape($this->activity->getMeter());
 $comments = View::escape($this->activity->getComments());
 $reportedDate = $this->activity->getReportedDate(DATETIME_FORMAT);
@@ -22,11 +21,8 @@ $title = $this->activity->getId() ? $this->_('activity_edit') : $this->_('activi
         <input name="activity_id" type="hidden" value="<?php echo $this->activity->getId(); ?>" />
 
         <table>
-            <tr><th><label for="meter" class="required"><?php echo $this->_('meter'); ?></label></th>
-                <td><input name="meter" id="meter" value="<?php echo $meter; ?>" /></td>
-            </tr>
-            <tr><th><label for="zone"><?php echo $this->_('zone'); ?></label></th>
-                <td><input name="zone" id="zone" value="<?php echo $zone; ?>" /></td>
+            <tr><th><label for="meter_id" class="required"><?php echo $this->_('meter'); ?></label></th>
+                <td><input name="meter_id" id="meter_id" value="<?php echo $meter; ?>" /></td>
             </tr>
             <tr><th><label for="reportedDate"><?php echo $this->_('reportedDate'); ?></label></th>
                 <td><?php
@@ -69,7 +65,7 @@ $title = $this->activity->getId() ? $this->_('activity_edit') : $this->_('activi
     <fieldset>
         <div>
             <div><label for="comments"><?php echo $this->_('comments'); ?></label></div>
-            <textarea name="comments" id="comments" rows="6" cols="60"><?php echo $comments; ?></textarea>
+            <textarea name="comments" id="comments"><?php echo $comments; ?></textarea>
         </div>
 
         <?php

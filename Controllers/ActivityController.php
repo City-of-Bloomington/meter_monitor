@@ -47,7 +47,7 @@ class ActivityController extends Controller
             ? $this->loadActivity($_REQUEST['activity_id'])
             : new Activity();
 
-        if (isset($_POST['meter'])) {
+        if (isset($_POST['meter_id'])) {
             $_POST['reportedDate'] = implode(' ', [$_POST['reportedDate']['date'], $_POST['reportedDate']['time']]);
             $_POST['resolvedDate'] = implode(' ', [$_POST['resolvedDate']['date'], $_POST['resolvedDate']['time']]);
 
