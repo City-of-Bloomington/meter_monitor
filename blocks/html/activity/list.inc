@@ -40,8 +40,8 @@ use Blossom\Classes\Url;
             $meter    = View::escape($a->getMeter());
             $comments = View::escape($a->getComments());
             $issues   = View::escape(implode(', ', $a->getIssueTypes()));
-            $reported = $a->getReportedDate(DATETIME_FORMAT);
-            $resolved = $a->getResolvedDate(DATETIME_FORMAT);
+            $reported = $a->getReportedDate(DATE_FORMAT);
+            $resolved = $a->getResolvedDate(DATE_FORMAT);
 
 
             $editButton   = '';

@@ -26,8 +26,8 @@ create table issueTypes (
 create table activity (
     id   int unsigned not null primary key auto_increment,
     meter_id int unsigned not null,
-    reportedDate datetime,
-    resolvedDate datetime,
+    reportedDate date not null,
+    resolvedDate date,
     comments text,
     foreign key (meter_id) references meters(id)
 );

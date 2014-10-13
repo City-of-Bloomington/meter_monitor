@@ -27,14 +27,14 @@ $title = $this->activity->getId() ? $this->_('activity_edit') : $this->_('activi
             <?php if ($this->activity->getId()): ?>
             <tr><th><label for="reportedDate"><?php echo $this->_('reportedDate'); ?></label></th>
                 <td><?php
-                        $picker = $this->template->getHelper('dateTimePicker');
-                        echo $picker->dateTimePicker('reportedDate', $this->activity->getReportedDate('U'));
+                        $picker = $this->template->getHelper('datePicker');
+                        echo $picker->datePicker('reportedDate', $this->activity->getReportedDate('U'));
                     ?>
                 </td>
             </tr>
             <tr><th><label for="resolvedDate"><?php echo $this->_('resolvedDate'); ?></label></th>
                 <td><?php
-                        echo $picker->dateTimePicker('resolvedDate', $this->activity->getResolvedDate('U'));
+                        echo $picker->datePicker('resolvedDate', $this->activity->getResolvedDate('U'));
                     ?>
                 </td>
             </tr>
