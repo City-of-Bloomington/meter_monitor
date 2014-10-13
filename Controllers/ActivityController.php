@@ -68,4 +68,18 @@ class ActivityController extends Controller
 
         $this->template->blocks[] = new Block('activity/updateForm.inc', ['activity'=>$activity]);
     }
+
+    public function delete()
+    {
+        $activity = $this->loadActivity($_GET['activity_id']);
+        try {
+            $activity->delete();
+        }
+        catch (\Exception $e) {
+            $_SESSION['errorMessages'][] = $e;
+        }
+
+        header('Location: '.BASE_URL.'/activity');
+        exit();
+    }
 }

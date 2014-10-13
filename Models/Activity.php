@@ -65,6 +65,19 @@ class Activity extends ActiveRecord
         $this->saveIssueTypes();
     }
 
+    public function delete()
+    {
+        $this->deleteIssueTypes();
+        parent::delete();
+    }
+
+    private function deleteIssueTypes()
+    {
+        $zend_db = Database::getConnection();
+        $query = $zend_db->createStatement('delete from activity_issueTypes where activity_id=?');
+        $query->execute([$this->getId()]);
+    }
+
     //----------------------------------------------------------------
     // Generic Getters & Setters
     //----------------------------------------------------------------
@@ -139,11 +152,9 @@ class Activity extends ActiveRecord
     public function saveIssueTypes()
     {
         if ($this->getId()) {
+            $this->deleteIssueTypes();
+
             $zend_db = Database::getConnection();
-
-            $query = $zend_db->createStatement('delete from activity_issueTypes where activity_id=?');
-            $query->execute([$this->getId()]);
-
             $query = $zend_db->createStatement('insert activity_issueTypes set activity_id=?,issueType_id=?');
             foreach ($this->issueTypes as $type) {
                 $query->execute([$this->getId(),$type->getId()]);
