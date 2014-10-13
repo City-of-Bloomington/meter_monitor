@@ -28,9 +28,9 @@ class IssueTypesTable extends TableGateway
             foreach ($fields as $key=>$value) {
                 if (!empty($value)) {
                     switch ($key) {
-                        case 'activity_id':
-                            $select->join(['a'=>'activity_issueTypes'], 'a.issueType_id=issueTypes.id', []);
-                            $select->where(["a.$key"=>$value]);
+                        case 'issue_id':
+                            $select->join(['t'=>'issue_issueTypes'], 't.issueType_id=issueTypes.id', []);
+                            $select->where(["t.$key"=>$value]);
                             break;
                         default:
                             if (in_array($key, $this->columns)) {

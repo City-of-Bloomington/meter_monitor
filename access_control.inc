@@ -1,6 +1,6 @@
 <?php
 /**
- * @copyright 2012 City of Bloomington, Indiana
+ * @copyright 2014 City of Bloomington, Indiana
  * @license http://www.gnu.org/licenses/agpl.txt GNU/AGPL, see LICENSE.txt
  * @author Cliff Ingham <inghamn@bloomington.in.gov>
  */
@@ -23,7 +23,7 @@ $ZEND_ACL->addResource(new Resource('users'));
 $ZEND_ACL->addResource(new Resource('login'));
 
 $ZEND_ACL->addResource(new Resource('issueTypes'));
-$ZEND_ACL->addResource(new Resource('activity'));
+$ZEND_ACL->addResource(new Resource('issues'));
 $ZEND_ACL->addResource(new Resource('meters'));
 
 
@@ -37,7 +37,7 @@ $ZEND_ACL->allow(null, ['index'], ['index']);
 
 // Allow Staff to do stuff
 $ZEND_ACL->allow('Staff', ['meters'], ['index','view']);
-$ZEND_ACL->allow('Staff', ['activity', 'issueTypes']);
+$ZEND_ACL->allow('Staff', ['issues', 'issueTypes']);
 
 // Administrator is allowed access to everything
 $ZEND_ACL->allow('Administrator');

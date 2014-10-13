@@ -6,7 +6,7 @@ use Application\Models\Person;
     $a = '<a href="%s">%s</a>';
 
     $routes = [
-        'activity'   => 'activity',
+        'issues'     => 'issue',
         'issueTypes' => 'issueType',
         'meters'     => 'meter',
         'people'     => 'person',
@@ -14,10 +14,7 @@ use Application\Models\Person;
     ];
     foreach ($routes as $plural=>$singular) {
         if (Person::isAllowed($plural, 'index')) {
-            $label = $plural == 'activity'
-                ? $this->_($plural)
-                : $this->_([$singular, $plural, 2]);
-            echo sprintf($a, BASE_URI.'/'.$plural, $label);
+            echo sprintf($a, BASE_URI.'/'.$plural, $this->_([$singular, $plural, 2]));
         }
     }
 ?>

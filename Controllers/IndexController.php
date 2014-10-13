@@ -1,6 +1,6 @@
 <?php
 /**
- * @copyright 2012-2013 City of Bloomington, Indiana
+ * @copyright 2014 City of Bloomington, Indiana
  * @license http://www.gnu.org/licenses/agpl.txt GNU/AGPL, see LICENSE.txt
  * @author Cliff Ingham <inghamn@bloomington.in.gov>
  */
@@ -12,11 +12,11 @@ class IndexController extends Controller
 {
 	public function index()
 	{
-        if (Person::isAllowed('activity', 'add')) {
-            header('Location: '.BASE_URL.'/activity');
+        if (Person::isAllowed('issues', 'add')) {
+            header('Location: '.BASE_URL.'/issues');
         }
         else {
-            header('Location: '.BASE_URL.'/login?return_url='.BASE_URL.'/activity');
+            header('Location: '.BASE_URL.'/login?return_url='.BASE_URL.'/issues');
         }
         exit();
 	}

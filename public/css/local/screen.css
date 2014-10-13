@@ -101,3 +101,5 @@ header nav a { font-weight:bold; color:black; margin-right:1em; }
 
 #issueType_picker { -moz-column-count:3; column-count:3; }
 #issueType_picker ul { list-style-type:none; }
+
+#issuesList tbody tr:nth-child(even) { background-color:#ddd; }
