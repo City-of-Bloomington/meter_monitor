@@ -13,7 +13,7 @@ use Blossom\Classes\Url;
 <h2><?php
         echo $this->_(['issue', 'issues', 2]);
 
-        if (Person::isAllowed('issues', 'edit')) {
+        if (Person::isAllowed('issues', 'update')) {
             $helper = $this->template->getHelper('buttonLink');
             echo $helper->buttonLink(
                 BASE_URI.'/issues/update',
@@ -44,7 +44,7 @@ use Blossom\Classes\Url;
 
 
             $editButton   = '';
-            if (Person::isAllowed('issues', 'edit')) {
+            if (Person::isAllowed('issues', 'update')) {
                 $editButton = $helper->buttonLink(
                     BASE_URI.'/issues/update?issue_id='.$issue->getId(),
                     $this->_('edit'),
