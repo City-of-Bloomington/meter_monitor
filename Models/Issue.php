@@ -9,9 +9,9 @@ use Blossom\Classes\ActiveRecord;
 use Blossom\Classes\Database;
 use Blossom\Classes\ExternalIdentity;
 
-class Activity extends ActiveRecord
+class Issue extends ActiveRecord
 {
-    protected $tablename = 'activity';
+    protected $tablename = 'issues';
     protected $meter;
 
     private $issueTypes = [];
@@ -36,14 +36,14 @@ class Activity extends ActiveRecord
             }
             else {
                 $zend_db = Database::getConnection();
-                $sql = 'select * from activity where id=?';
+                $sql = 'select * from issues where id=?';
 
                 $result = $zend_db->createStatement($sql)->execute([$id]);
                 if (count($result)) {
                     $this->exchangeArray($result->current());
                 }
                 else {
-                    throw new \Exception('activity/unknownActivity');
+                    throw new \Exception('issues/unknownIssue');
                 }
             }
         }
@@ -74,7 +74,7 @@ class Activity extends ActiveRecord
     private function deleteIssueTypes()
     {
         $zend_db = Database::getConnection();
-        $query = $zend_db->createStatement('delete from activity_issueTypes where activity_id=?');
+        $query = $zend_db->createStatement('delete from issue_issueTypes where issue_id=?');
         $query->execute([$this->getId()]);
     }
 
@@ -120,7 +120,7 @@ class Activity extends ActiveRecord
     public function getIssueTypes() {
         if (!$this->issueTypes && $this->getId()) {
             $table = new IssueTypesTable();
-            $list = $table->find(['activity_id'=>$this->getId()]);
+            $list = $table->find(['issue_id'=>$this->getId()]);
             foreach ($list as $type) {
                 $this->issueTypes[$type->getId()] = $type;
             }
@@ -155,7 +155,7 @@ class Activity extends ActiveRecord
             $this->deleteIssueTypes();
 
             $zend_db = Database::getConnection();
-            $query = $zend_db->createStatement('insert activity_issueTypes set activity_id=?,issueType_id=?');
+            $query = $zend_db->createStatement('insert issue_issueTypes set issue_id=?,issueType_id=?');
             foreach ($this->issueTypes as $type) {
                 $query->execute([$this->getId(),$type->getId()]);
             }

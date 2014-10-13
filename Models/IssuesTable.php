@@ -9,11 +9,11 @@ namespace Application\Models;
 use Blossom\Classes\TableGateway;
 use Zend\Db\Sql\Select;
 
-class ActivityTable extends TableGateway
+class IssuesTable extends TableGateway
 {
     protected $columns = ['id', 'meter'];
 
-    public function __construct() { parent::__construct('activity', __namespace__.'\Activity'); }
+    public function __construct() { parent::__construct('issues', __namespace__.'\Issue'); }
 
     /**
      * @param array $fields
@@ -34,7 +34,7 @@ class ActivityTable extends TableGateway
      */
     public function search($fields=null, $order='reportedDate desc', $paginated=false, $limit=null)
     {
-        $select = new Select('activity');
+        $select = new Select('issues');
         if (count($fields)) {
             $this->handleJoins($fields, $select);
 
@@ -67,11 +67,10 @@ class ActivityTable extends TableGateway
     private function handleJoins($fields, &$select)
     {
         if (count(array_intersect(['meter', 'zone'], array_keys($fields)))) {
-            $select->join(['m'=>'meters'], 'activity.meter_id=m.id', []);
+            $select->join(['m'=>'meters'], 'issue.meter_id=m.id', []);
         }
         if (in_array('issueType_id', array_keys($fields))) {
-            $select->join(['i'=>'activity_issueTypes'], 'activity.id=i.activity_id', []);
+            $select->join(['i'=>'issue_issueTypes'], 'issue.id=i.issue_id', []);
         }
     }
-
 }

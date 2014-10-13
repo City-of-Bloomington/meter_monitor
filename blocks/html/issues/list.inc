@@ -3,7 +3,7 @@
  * @copyright 2014 City of Bloomington, Indiana
  * @license http://www.gnu.org/licenses/agpl.txt GNU/AGPL, see LICENSE.txt
  * @author Cliff Ingham <inghamn@bloomington.in.gov>
- * @param Zend\Db\Result $this->activity
+ * @param Zend\Db\Result $this->issues
  */
 use Application\Models\Person;
 use Application\Templates\Helpers\ButtonLink;
@@ -11,19 +11,19 @@ use Blossom\Classes\View;
 use Blossom\Classes\Url;
 ?>
 <h2><?php
-        echo $this->_('activity');
+        echo $this->_(['issue', 'issues', 2]);
 
-        if (Person::isAllowed('activity', 'edit')) {
+        if (Person::isAllowed('issues', 'edit')) {
             $helper = $this->template->getHelper('buttonLink');
             echo $helper->buttonLink(
-                BASE_URI.'/activity/update',
-                $this->_('activity_add'),
+                BASE_URI.'/issues/update',
+                $this->_('issue_add'),
                 'add'
             );
         }
     ?>
 </h2>
-<table>
+<table id="issuesList">
     <thead>
         <tr><th></th>
             <th><?php echo $this->_('meter'); ?></th>
@@ -35,27 +35,27 @@ use Blossom\Classes\Url;
     </thead>
     <tbody>
     <?php
-        foreach ($this->activity as $a) {
-            $zone     = View::escape($a->getZone());
-            $meter    = View::escape($a->getMeter());
-            $comments = View::escape($a->getComments());
-            $issues   = View::escape(implode(', ', $a->getIssueTypes()));
-            $reported = $a->getReportedDate(DATE_FORMAT);
-            $resolved = $a->getResolvedDate(DATE_FORMAT);
+        foreach ($this->issues as $issue) {
+            $zone     = View::escape($issue->getZone());
+            $meter    = View::escape($issue->getMeter());
+            $comments = View::escape($issue->getComments());
+            $issues   = View::escape(implode(', ', $issue->getIssueTypes()));
+            $reported = $issue->getReportedDate(DATE_FORMAT);
+            $resolved = $issue->getResolvedDate(DATE_FORMAT);
 
 
             $editButton   = '';
             $deleteButton = '';
-            if (Person::isAllowed('activity', 'edit')) {
+            if (Person::isAllowed('issues', 'edit')) {
                 $editButton = $helper->buttonLink(
-                    BASE_URI.'/activity/update?activity_id='.$a->getId(),
+                    BASE_URI.'/issues/update?issue_id='.$issue->getId(),
                     $this->_('edit'),
                     'edit',
                     ButtonLink::SIZE_ICON
                 );
 
                 $deleteButton = $helper->buttonLink(
-                    BASE_URI.'/activity/delete?activity_id='.$a->getId(),
+                    BASE_URI.'/issues/delete?issue_id='.$issue->getId(),
                     $this->_('delete'),
                     'delete',
                     ButtonLink::SIZE_ICON

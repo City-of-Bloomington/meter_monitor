@@ -5,53 +5,53 @@
  * @author Cliff Ingham <inghamn@bloomington.in.gov>
  */
 namespace Application\Controllers;
-use Application\Models\Activity;
-use Application\Models\ActivityTable;
+use Application\Models\Issue;
+use Application\Models\IssuesTable;
 use Blossom\Classes\Controller;
 use Blossom\Classes\Block;
 
-class ActivityController extends Controller
+class IssuesController extends Controller
 {
-    private function loadActivity($id)
+    private function loadIssue($id)
     {
         try {
-            return new Activity($id);
+            return new Issue($id);
         }
         catch (\Exception $e) {
             $_SESSION['errorMessages'][] = $e;
-            header('Location: '.BASE_URL.'/activity');
+            header('Location: '.BASE_URL.'/issues');
             exit();
         }
     }
 
     public function index()
     {
-        $table = new ActivityTable();
+        $table = new IssuesTable();
 
-        $a = (!empty($_GET['meter']) || !empty($_GET['zone']) || !empty($_GET['issueType_id']))
+        $list = (!empty($_GET['meter']) || !empty($_GET['zone']) || !empty($_GET['issueType_id']))
             ? $table->search($_GET, null, true)
             : $table->find  (null,  null, true);
 
         $page = !empty($_GET['page']) ? (int)$_GET['page'] : 1;
-        $a->setCurrentPageNumber($page);
-        $a->setItemCountPerPage(20);
+        $list->setCurrentPageNumber($page);
+        $list->setItemCountPerPage(20);
 
-        $this->template->blocks[] = new Block('activity/searchForm.inc');
-        $this->template->blocks[] = new Block('activity/list.inc',  ['activity'   => $a]);
-        $this->template->blocks[] = new Block('pageNavigation.inc', ['paginator'  => $a]);
+        $this->template->blocks[] = new Block('issues/searchForm.inc');
+        $this->template->blocks[] = new Block('issues/list.inc',    ['issues'    => $list]);
+        $this->template->blocks[] = new Block('pageNavigation.inc', ['paginator' => $list]);
     }
 
     public function update()
     {
-        $activity = !empty($_REQUEST['activity_id'])
-            ? $this->loadActivity($_REQUEST['activity_id'])
-            : new Activity();
+        $issue =        !empty($_REQUEST['issue_id'])
+            ? $this->loadIssue($_REQUEST['issue_id'])
+            : new Issue();
 
         if (isset($_POST['meter_id'])) {
-            $activity->handleUpdate($_POST);
+            $issue->handleUpdate($_POST);
             try {
-                $activity->save();
-                header('Location: '.BASE_URL.'/activity');
+                $issue->save();
+                header('Location: '.BASE_URL.'/issues');
                 exit();
             }
             catch (\Exception $e) {
@@ -59,20 +59,20 @@ class ActivityController extends Controller
             }
         }
 
-        $this->template->blocks[] = new Block('activity/updateForm.inc', ['activity'=>$activity]);
+        $this->template->blocks[] = new Block('issues/updateForm.inc', ['issue'=>$issue]);
     }
 
     public function delete()
     {
-        $activity = $this->loadActivity($_GET['activity_id']);
+        $issue = $this->loadIssue($_GET['issue_id']);
         try {
-            $activity->delete();
+            $issue->delete();
         }
         catch (\Exception $e) {
             $_SESSION['errorMessages'][] = $e;
         }
 
-        header('Location: '.BASE_URL.'/activity');
+        header('Location: '.BASE_URL.'/issues');
         exit();
     }
 }
