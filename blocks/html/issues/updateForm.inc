@@ -6,6 +6,7 @@
  * @param Issue $this->issue
  */
 use Application\Models\IssueTypesTable;
+use Application\Models\Person;
 use Blossom\Classes\View;
 
 $meter    = View::escape($this->issue->getMeter());
@@ -73,6 +74,15 @@ $title = $this->issue->getId() ? $this->_('issue_edit') : $this->_('issue_add');
         <?php
             $h = $this->template->getHelper('saveAndCancelButtons');
             echo $h->saveAndCancelButtons(BASE_URI.'/issues');
+
+            if ($this->issue->getId() && Person::isAllowed('issues', 'delete')) {
+                $h = $this->template->getHelper('buttonLink');
+                echo $h->buttonLink(
+                    BASE_URI.'/issues/delete?issue_id='.$this->issue->getId(),
+                    $this->_('issue_delete'),
+                    'delete'
+                );
+            }
         ?>
     </fieldset>
 </form>

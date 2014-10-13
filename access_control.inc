@@ -37,7 +37,8 @@ $ZEND_ACL->allow(null, ['index'], ['index']);
 
 // Allow Staff to do stuff
 $ZEND_ACL->allow('Staff', ['meters'], ['index','view']);
-$ZEND_ACL->allow('Staff', ['issues', 'issueTypes']);
+$ZEND_ACL->allow('Staff', ['issueTypes']);
+$ZEND_ACL->allow('Staff', ['issues'], ['index', 'update']);
 
 // Administrator is allowed access to everything
 $ZEND_ACL->allow('Administrator');

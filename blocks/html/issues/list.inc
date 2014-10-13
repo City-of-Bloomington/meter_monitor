@@ -31,7 +31,6 @@ use Blossom\Classes\Url;
             <th><?php echo $this->_('reportedDate'); ?></th>
             <th><?php echo $this->_(['issue', 'issues', 2]); ?></th>
             <th><?php echo $this->_('resolvedDate'); ?></th>
-            <th></th>
     </thead>
     <tbody>
     <?php
@@ -45,19 +44,11 @@ use Blossom\Classes\Url;
 
 
             $editButton   = '';
-            $deleteButton = '';
             if (Person::isAllowed('issues', 'edit')) {
                 $editButton = $helper->buttonLink(
                     BASE_URI.'/issues/update?issue_id='.$issue->getId(),
                     $this->_('edit'),
                     'edit',
-                    ButtonLink::SIZE_ICON
-                );
-
-                $deleteButton = $helper->buttonLink(
-                    BASE_URI.'/issues/delete?issue_id='.$issue->getId(),
-                    $this->_('delete'),
-                    'delete',
                     ButtonLink::SIZE_ICON
                 );
             }
@@ -68,7 +59,6 @@ use Blossom\Classes\Url;
                 <td>$reported</td>
                 <td>$issues</td>
                 <td>$resolved</td>
-                <td>$deleteButton</td>
             </tr>
             ";
         }
