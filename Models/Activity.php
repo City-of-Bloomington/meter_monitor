@@ -88,8 +88,10 @@ class Activity extends ActiveRecord
     {
         $fields = ['meter_id', 'comments', 'reportedDate', 'resolvedDate', 'issueTypes'];
         foreach ($fields as $f) {
-            $set = 'set'.ucfirst($f);
-            $this->$set($post[$f]);
+            if (isset($post[$f])) {
+                $set = 'set'.ucfirst($f);
+                $this->$set($post[$f]);
+            }
         }
     }
 

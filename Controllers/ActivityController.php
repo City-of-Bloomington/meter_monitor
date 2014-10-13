@@ -48,8 +48,12 @@ class ActivityController extends Controller
             : new Activity();
 
         if (isset($_POST['meter_id'])) {
-            $_POST['reportedDate'] = implode(' ', [$_POST['reportedDate']['date'], $_POST['reportedDate']['time']]);
-            $_POST['resolvedDate'] = implode(' ', [$_POST['resolvedDate']['date'], $_POST['resolvedDate']['time']]);
+            if (isset($_POST['reportedDate'])) {
+                $_POST['reportedDate'] = implode(' ', [$_POST['reportedDate']['date'], $_POST['reportedDate']['time']]);
+            }
+            if (isset($_POST['resolvedDate'])) {
+                $_POST['resolvedDate'] = implode(' ', [$_POST['resolvedDate']['date'], $_POST['resolvedDate']['time']]);
+            }
 
             $activity->handleUpdate($_POST);
             try {

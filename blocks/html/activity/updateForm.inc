@@ -24,6 +24,7 @@ $title = $this->activity->getId() ? $this->_('activity_edit') : $this->_('activi
             <tr><th><label for="meter_id" class="required"><?php echo $this->_('meter'); ?></label></th>
                 <td><input name="meter_id" id="meter_id" value="<?php echo $meter; ?>" /></td>
             </tr>
+            <?php if ($this->activity->getId()): ?>
             <tr><th><label for="reportedDate"><?php echo $this->_('reportedDate'); ?></label></th>
                 <td><?php
                         $picker = $this->template->getHelper('dateTimePicker');
@@ -37,6 +38,7 @@ $title = $this->activity->getId() ? $this->_('activity_edit') : $this->_('activi
                     ?>
                 </td>
             </tr>
+            <?php endif ?>
         </table>
     </fieldset>
 
@@ -78,4 +80,5 @@ $title = $this->activity->getId() ? $this->_('activity_edit') : $this->_('activi
     $this->template->addToAsset('scripts', JQUERY.'/jquery.min.js');
     $this->template->addToAsset('scripts', JQUERY_UI.'/jquery-ui.min.js');
     $this->template->addToAsset('scripts', BASE_URI.'/js/meterAutoComplete.js');
+    $this->template->addToAsset('stylesheets', JQUERY_UI.'/jquery-ui.min.css');
 ?>
