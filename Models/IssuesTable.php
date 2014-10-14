@@ -67,10 +67,10 @@ class IssuesTable extends TableGateway
     private function handleJoins($fields, &$select)
     {
         if (count(array_intersect(['meter', 'zone'], array_keys($fields)))) {
-            $select->join(['m'=>'meters'], 'issue.meter_id=m.id', []);
+            $select->join(['m'=>'meters'], 'issues.meter_id=m.id', []);
         }
         if (in_array('issueType_id', array_keys($fields))) {
-            $select->join(['i'=>'issue_issueTypes'], 'issue.id=i.issue_id', []);
+            $select->join(['i'=>'issue_issueTypes'], 'issues.id=i.issue_id', []);
         }
     }
 }
