@@ -25,7 +25,6 @@ $title = $this->issue->getId() ? $this->_('issue_edit') : $this->_('issue_add');
             <tr><th><label for="meter_id" class="required"><?php echo $this->_('meter'); ?></label></th>
                 <td><input name="meter_id" id="meter_id" value="<?php echo $meter; ?>" /></td>
             </tr>
-            <?php if ($this->issue->getId()): ?>
             <tr><th><label for="reportedDate"><?php echo $this->_('reportedDate'); ?></label></th>
                 <td><?php
                         $picker = $this->template->getHelper('datePicker');
@@ -39,7 +38,6 @@ $title = $this->issue->getId() ? $this->_('issue_edit') : $this->_('issue_add');
                     ?>
                 </td>
             </tr>
-            <?php endif ?>
         </table>
     </fieldset>
 
