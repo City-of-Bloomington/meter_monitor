@@ -81,4 +81,28 @@ class Meter extends ActiveRecord
     // Custom Functions
     //----------------------------------------------------------------
     public function __toString() { return parent::get('name'); }
+
+    /**
+     * Returns the array of distinct field values for Meter records
+     *
+     * This is primarily used to populate autocomplete lists for search forms
+     * Make sure to keep this function as fast as possible
+     *
+     * @param string $fieldname
+     * @return array
+     */
+    public static function getDistinct($fieldname)
+    {
+        $fieldname = trim($fieldname);
+        $zend_db = Database::getConnection();
+
+        $validFields = array('zone');
+        if (in_array($fieldname, $validFields)) {
+            $sql = "select distinct $fieldname from meters";
+        }
+        $result = $zend_db->createStatement($sql)->execute();
+        $o = [];
+        foreach ($result as $row) { $o[] = $row[$fieldname]; }
+        return $o;
+    }
 }

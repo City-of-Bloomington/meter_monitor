@@ -5,6 +5,7 @@
  * @author Cliff Ingham <inghamn@bloomington.in.gov>
  */
 use Application\Models\IssueTypesTable;
+use Application\Models\Meter;
 use Blossom\Classes\View;
 
 $meter = !empty($_GET['meter']) ? View::escape($_GET['meter']) : '';
@@ -17,7 +18,18 @@ $zone  = !empty($_GET['zone'])  ? View::escape($_GET['zone'])  : '';
                 <td><input name="meter" id="meter" value="<?php echo $meter; ?>" /></td>
             </tr>
             <tr><td><label for="zone"><?php echo $this->_('zone'); ?></label></td>
-                <td><input name="zone" id="zone" value="<?php echo $zone; ?>" /></td>
+                <td><select name="zone" id="zone"><option value=""></option>
+                    <?php
+                        $zones = Meter::getDistinct('zone');
+                        foreach ($zones as $z) {
+                            $selected = $zone==$z
+                                ? 'selected="selected"'
+                                : '';
+                            echo "<option $selected>$z</option>";
+                        }
+                    ?>
+                    </select>
+                </td>
             </tr>
             <tr><td><label for="issueType_id"><?php echo $this->_(['issueType', 'issueTypes', 1]); ?></label></td>
                 <td><select name="issueType_id"><option value=""></option>
@@ -41,3 +53,9 @@ $zone  = !empty($_GET['zone'])  ? View::escape($_GET['zone'])  : '';
         <a href="<?php echo BASE_URI; ?>/issues"><?php echo $this->_('clear'); ?></a>
     </fieldset>
 </form>
+<?php
+    $this->template->addToAsset('scripts', JQUERY.'/jquery.min.js');
+    $this->template->addToAsset('scripts', JQUERY_UI.'/jquery-ui.min.js');
+    $this->template->addToAsset('scripts', BASE_URI.'/js/meterAutoComplete.js');
+    $this->template->addToAsset('stylesheets', JQUERY_UI.'/jquery-ui.min.css');
+?>
