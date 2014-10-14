@@ -120,13 +120,13 @@ abstract class ActiveRecord
 	{
 		$date = trim($date);
 		if ($date) {
-			$d = \DateTime::createFromFormat(DATETIME_FORMAT, $date);
+            $d = \DateTime::createFromFormat(DATETIME_FORMAT, $date);
 			if (!$d) {
 				try {
 					$d = new \DateTime($date);
 				}
-				catch (Exception $e) {
-					throw new \Exception('unknownDateFormat');
+				catch (\Exception $e) {
+					throw new \Exception('invalidDate');
 				}
 			}
 			$this->data[$dateField] = $d->format(self::MYSQL_DATETIME_FORMAT);

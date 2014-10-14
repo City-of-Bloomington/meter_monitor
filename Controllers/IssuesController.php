@@ -48,8 +48,8 @@ class IssuesController extends Controller
             : new Issue();
 
         if (isset($_POST['meter_id'])) {
-            $issue->handleUpdate($_POST);
             try {
+                $issue->handleUpdate($_POST);
                 $issue->save();
                 header('Location: '.BASE_URL.'/issues');
                 exit();
