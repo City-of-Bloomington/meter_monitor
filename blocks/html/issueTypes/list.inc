@@ -23,10 +23,11 @@ use Blossom\Classes\Url;
         }
     ?>
 </h2>
-<table>
+<table class="data">
     <?php
         foreach ($this->issueTypes as $type) {
-            $name = View::escape($type->getName());
+            $name        = View::escape($type->getName());
+            $description = View::escape($type->getDescription());
 
             $editButton = '';
             if (Person::isAllowed('issueTypes', 'edit')) {
@@ -40,6 +41,7 @@ use Blossom\Classes\Url;
             echo "
             <tr><td>$editButton</td>
                 <td>$name</td>
+                <td>$description</td>
             </tr>
             ";
         }

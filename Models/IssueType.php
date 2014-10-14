@@ -64,17 +64,20 @@ class IssueType extends ActiveRecord
     //----------------------------------------------------------------
     // Generic Getters & Setters
     //----------------------------------------------------------------
-    public function getId  () { return parent::get('id');   }
-    public function getName() { return parent::get('name'); }
+    public function getId()          { return parent::get('id');          }
+    public function getName()        { return parent::get('name');        }
+    public function getDescription() { return parent::get('description'); }
 
-    public function setName($s) { parent::set('name', $s); }
+    public function setName       ($s) { parent::set('name',        $s); }
+    public function setDescription($s) { parent::set('description', $s); }
 
     /**
      * @param array $post
      */
     public function handleUpdate($post)
     {
-        $this->setName($post['name']);
+        $this->setName       ($post['name']);
+        $this->setDescription($post['description']);
     }
 
     //----------------------------------------------------------------

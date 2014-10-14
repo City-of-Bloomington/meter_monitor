@@ -23,7 +23,7 @@ use Blossom\Classes\Url;
         }
     ?>
 </h2>
-<table id="issuesList">
+<table class="data">
     <thead>
         <tr><th></th>
             <th><?php echo $this->_('meter'); ?></th>

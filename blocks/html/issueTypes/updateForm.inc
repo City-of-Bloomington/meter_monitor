@@ -7,7 +7,8 @@
  */
 use Blossom\Classes\View;
 
-$name = View::escape($this->issueType->getName());
+$name        = View::escape($this->issueType->getName());
+$description = View::escape($this->issueType->getDescription());
 
 $title = $this->issueType->getId() ? $this->_('edit') : $this->_('add');
 ?>
@@ -21,6 +22,10 @@ $title = $this->issueType->getId() ? $this->_('edit') : $this->_('add');
                 <td><input name="name" id="name" value="<?php echo $name; ?>" /></td>
             </tr>
         </table>
+        <div>
+            <div><label for="description"><?php echo $this->_('description'); ?></label></div>
+            <textarea name="description" id="description"><?php echo $description; ?></textarea>
+        </div>
 
         <?php
             $h = $this->template->getHelper('saveAndCancelButtons');
