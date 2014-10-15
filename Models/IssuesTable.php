@@ -11,7 +11,7 @@ use Zend\Db\Sql\Select;
 
 class IssuesTable extends TableGateway
 {
-    protected $columns = ['id', 'meter'];
+    protected $columns = ['id', 'meter', 'issueType_id'];
 
     public function __construct() { parent::__construct('issues', __namespace__.'\Issue'); }
 
@@ -49,10 +49,6 @@ class IssuesTable extends TableGateway
                             $select->where(["m.$key"=>$value]);
                             break;
 
-                        case 'issueType_id':
-                            $select->where(["i.$key"=>$value]);
-                            break;
-
                         default:
                             if (in_array($key, $this->columns)) {
                                 $select->where([$key=>$value]);
@@ -68,9 +64,6 @@ class IssuesTable extends TableGateway
     {
         if (count(array_intersect(['meter', 'zone'], array_keys($fields)))) {
             $select->join(['m'=>'meters'], 'issues.meter_id=m.id', []);
-        }
-        if (in_array('issueType_id', array_keys($fields))) {
-            $select->join(['i'=>'issue_issueTypes'], 'issues.id=i.issue_id', []);
         }
     }
 }

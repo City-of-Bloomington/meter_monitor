@@ -22,45 +22,39 @@ $title = $this->issue->getId() ? $this->_('issue_edit') : $this->_('issue_add');
         <input name="issue_id" type="hidden" value="<?php echo $this->issue->getId(); ?>" />
 
         <table>
-            <tr><th><label for="meter_id" class="required"><?php echo $this->_('meter'); ?></label></th>
+            <tr><td><label for="meter_id" class="required"><?php echo $this->_('meter'); ?></label></td>
                 <td><input name="meter_id" id="meter_id" value="<?php echo $meter; ?>" /></td>
             </tr>
-            <tr><th><label for="reportedDate"><?php echo $this->_('reportedDate'); ?></label></th>
+            <tr><td><label for="reportedDate"><?php echo $this->_('reportedDate'); ?></label></td>
                 <td><?php
                         $picker = $this->template->getHelper('datePicker');
                         echo $picker->datePicker('reportedDate', $this->issue->getReportedDate('U'));
                     ?>
                 </td>
             </tr>
-            <tr><th><label for="resolvedDate"><?php echo $this->_('resolvedDate'); ?></label></th>
+            <tr><td><label for="resolvedDate"><?php echo $this->_('resolvedDate'); ?></label></td>
                 <td><?php
                         echo $picker->datePicker('resolvedDate', $this->issue->getResolvedDate('U'));
                     ?>
                 </td>
             </tr>
+            <tr><td><label for="issueType_id"><?php echo $this->_(['issueType', 'issueTypes', 1]); ?></label></td>
+                <td><select name="issueType_id"><option value=""></option>
+                    <?php
+                        $table = new IssueTypesTable();
+                        $list = $table->find();
+                        foreach ($list as $type) {
+                            $selected = $this->issue->getIssueType_id() == $type->getId()
+                                ? 'selected="selected"'
+                                : '';
+                            $name = View::escape($type);
+                            echo "<option value=\"{$type->getId()}\" $selected>$name</option>";
+                        }
+                    ?>
+                    </select>
+                </td>
+            </tr>
         </table>
-    </fieldset>
-
-    <fieldset id="issueType_picker">
-        <legend><?php echo $this->_(['issue', 'issues', 2]); ?></legend>
-        <ul><?php
-                $table = new IssueTypesTable();
-                $list = $table->find();
-                foreach ($list as $type) {
-                    $checked = $this->issue->hasIssueType($type)
-                        ? 'checked="checked"'
-                        : '';
-                    $name = View::escape($type);
-                    echo "
-                    <li><label>
-                            <input name=\"issueTypes[]\" value=\"{$type->getId()}\" type=\"checkbox\" $checked />
-                            $type
-                        </label>
-                    </li>
-                    ";
-                }
-            ?>
-        </ul>
     </fieldset>
 
     <fieldset>

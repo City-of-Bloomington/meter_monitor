@@ -13,8 +13,7 @@ class Issue extends ActiveRecord
 {
     protected $tablename = 'issues';
     protected $meter;
-
-    private $issueTypes = [];
+    protected $issueType;
 
     /**
      * Populates the object with data
@@ -59,38 +58,26 @@ class Issue extends ActiveRecord
         if (!$this->getMeter_id()) { throw new \Exception('missingRequiredFields'); }
     }
 
-    public function save()
-    {
-        parent::save();
-        $this->saveIssueTypes();
-    }
-
-    public function delete()
-    {
-        $this->deleteIssueTypes();
-        parent::delete();
-    }
-
-    private function deleteIssueTypes()
-    {
-        $zend_db = Database::getConnection();
-        $query = $zend_db->createStatement('delete from issue_issueTypes where issue_id=?');
-        $query->execute([$this->getId()]);
-    }
+    public function save  () { parent::save  (); }
+    public function delete() { parent::delete(); }
 
     //----------------------------------------------------------------
     // Generic Getters & Setters
     //----------------------------------------------------------------
-    public function getId()           { return parent::get('id');          }
-    public function getComments()     { return parent::get('comments');    }
-    public function getMeter_id()     { return parent::get('meter_id');    }
-    public function getMeter()        { return parent::getForeignKeyObject(__namespace__.'\Meter', 'meter_id'); }
+    public function getId()           { return parent::get('id');           }
+    public function getComments()     { return parent::get('comments');     }
+    public function getMeter_id()     { return parent::get('meter_id');     }
+    public function getIssueType_id() { return parent::get('issueType_id'); }
+    public function getMeter()     { return parent::getForeignKeyObject(__namespace__.'\Meter',     'meter_id'); }
+    public function getIssueType() { return parent::getForeignKeyObject(__namespace__.'\IssueType', 'issueType_id'); }
     public function getReportedDate($f=null, $tz=null) { return parent::getDateData('reportedDate', $f, $tz); }
     public function getResolvedDate($f=null, $tz=null) { return parent::getDateData('resolvedDate', $f, $tz); }
 
     public function setComments($s) { parent::set('comments', $s); }
     public function setMeter_id($i) { parent::setForeignKeyField (__namespace__.'\Meter', 'meter_id', $i); }
     public function setMeter   ($o) { parent::setForeignKeyObject(__namespace__.'\Meter', 'meter_id', $o); }
+    public function setIssueType_id($i) { parent::setForeignKeyField (__namespace__.'\IssueType', 'issueType_id', $i); }
+    public function setIssueType   ($o) { parent::setForeignKeyObject(__namespace__.'\IssueType', 'issueType_id', $o); }
     public function setReportedDate($d) { parent::setDateData('reportedDate', $d); }
     public function setResolvedDate($d) { parent::setDateData('resolvedDate', $d); }
 
@@ -99,7 +86,7 @@ class Issue extends ActiveRecord
      */
     public function handleUpdate($post)
     {
-        $fields = ['meter_id', 'comments', 'reportedDate', 'resolvedDate', 'issueTypes'];
+        $fields = ['meter_id', 'comments', 'reportedDate', 'resolvedDate', 'issueType_id'];
         foreach ($fields as $f) {
             if (isset($post[$f])) {
                 $set = 'set'.ucfirst($f);
@@ -115,50 +102,5 @@ class Issue extends ActiveRecord
     {
         $meter = $this->getMeter();
         if ($meter) { return $meter->getZone(); }
-    }
-
-    public function getIssueTypes() {
-        if (!$this->issueTypes && $this->getId()) {
-            $table = new IssueTypesTable();
-            $list = $table->find(['issue_id'=>$this->getId()]);
-            foreach ($list as $type) {
-                $this->issueTypes[$type->getId()] = $type;
-            }
-        }
-        return $this->issueTypes;
-    }
-
-    /**
-     * @param array $ids An array of issueType_ids to set
-     */
-    public function setIssueTypes($ids=null) {
-        $this->issueTypes = [];
-        foreach ($ids as $id) {
-            try {
-                $type = new IssueType($id);
-                $this->issueTypes[$type->getId()] = $type;
-            }
-            catch (\Exception $e) {
-                // Just ignore any invalid issueTypes
-            }
-        }
-    }
-
-    public function hasIssueType(IssueType $type)
-    {
-        return in_array($type->getId(), array_keys($this->getIssueTypes()));
-    }
-
-    public function saveIssueTypes()
-    {
-        if ($this->getId()) {
-            $this->deleteIssueTypes();
-
-            $zend_db = Database::getConnection();
-            $query = $zend_db->createStatement('insert issue_issueTypes set issue_id=?,issueType_id=?');
-            foreach ($this->issueTypes as $type) {
-                $query->execute([$this->getId(),$type->getId()]);
-            }
-        }
     }
 }

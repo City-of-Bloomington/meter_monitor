@@ -25,12 +25,14 @@ create table issueTypes (
 );
 
 create table issues (
-    id   int unsigned not null primary key auto_increment,
-    meter_id int unsigned not null,
+    id           int unsigned not null primary key auto_increment,
+    meter_id     int unsigned not null,
+    issueType_id int unsigned not null,
     reportedDate date not null,
     resolvedDate date,
     comments text,
-    foreign key (meter_id) references meters(id)
+    foreign key (meter_id)     references meters    (id),
+    foreign key (issueType_id) references issueTypes(id)
 );
 
 create table issue_issueTypes (

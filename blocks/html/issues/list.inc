@@ -29,19 +29,18 @@ use Blossom\Classes\Url;
             <th><?php echo $this->_('meter'); ?></th>
             <th><?php echo $this->_('zone'); ?></th>
             <th><?php echo $this->_('reportedDate'); ?></th>
-            <th><?php echo $this->_(['issue', 'issues', 2]); ?></th>
+            <th><?php echo $this->_(['issue', 'issues', 1]); ?></th>
             <th><?php echo $this->_('resolvedDate'); ?></th>
     </thead>
     <tbody>
     <?php
         foreach ($this->issues as $issue) {
-            $zone     = View::escape($issue->getZone());
-            $meter    = View::escape($issue->getMeter());
-            $comments = View::escape($issue->getComments());
-            $issues   = View::escape(implode(', ', $issue->getIssueTypes()));
-            $reported = $issue->getReportedDate(DATE_FORMAT);
-            $resolved = $issue->getResolvedDate(DATE_FORMAT);
-
+            $zone      = View::escape($issue->getZone());
+            $meter     = View::escape($issue->getMeter());
+            $comments  = View::escape($issue->getComments());
+            $issueType = View::escape($issue->getIssueType());
+            $reported  = $issue->getReportedDate(DATE_FORMAT);
+            $resolved  = $issue->getResolvedDate(DATE_FORMAT);
 
             $editButton   = '';
             if (Person::isAllowed('issues', 'update')) {
@@ -57,7 +56,7 @@ use Blossom\Classes\Url;
                 <td>$meter</td>
                 <td>$zone</td>
                 <td>$reported</td>
-                <td>$issues</td>
+                <td>$issueType</td>
                 <td>$resolved</td>
             </tr>
             ";
