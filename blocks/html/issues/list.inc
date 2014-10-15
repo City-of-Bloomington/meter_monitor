@@ -31,15 +31,13 @@ use Blossom\Classes\Url;
 <table class="data">
     <thead>
         <tr><th></th>
-            <th><?php echo $this->_('meter'); ?></th>
-            <th><?php echo $this->_('zone'); ?></th>
-            <th><?php echo $this->_('reportedDate'); ?></th>
+            <th></th>
             <th><?php echo $this->_(['issue', 'issues', 1]); ?></th>
+            <th><?php echo $this->_('reportedDate'); ?></th>
     </thead>
     <tbody>
     <?php
         foreach ($this->issues as $issue) {
-            $zone      = View::escape($issue->getZone());
             $meter     = View::escape($issue->getMeter()->getName());
             $comments  = View::escape($issue->getComments());
             $issueType = View::escape($issue->getIssueType());
@@ -56,13 +54,12 @@ use Blossom\Classes\Url;
                 );
             }
             echo "
-            <tr><td>$editButton</td>
-                <td class=\"$status\">
+            <tr><th>$editButton</th>
+                <th class=\"$status\">
                     <a href=\"{$issue->getMeter()->getUri()}\">$meter</a>
-                </td>
-                <td>$zone</td>
-                <td>$reported</td>
+                </th>
                 <td>$issueType</td>
+                <td>$reported</td>
             </tr>
             ";
         }
