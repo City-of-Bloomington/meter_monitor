@@ -30,7 +30,6 @@ use Blossom\Classes\Url;
             <th><?php echo $this->_('zone'); ?></th>
             <th><?php echo $this->_('reportedDate'); ?></th>
             <th><?php echo $this->_(['issue', 'issues', 1]); ?></th>
-            <th><?php echo $this->_('resolvedDate'); ?></th>
     </thead>
     <tbody>
     <?php
@@ -40,7 +39,6 @@ use Blossom\Classes\Url;
             $comments  = View::escape($issue->getComments());
             $issueType = View::escape($issue->getIssueType());
             $reported  = $issue->getReportedDate(DATE_FORMAT);
-            $resolved  = $issue->getResolvedDate(DATE_FORMAT);
 
             $editButton   = '';
             if (Person::isAllowed('issues', 'update')) {
@@ -57,7 +55,6 @@ use Blossom\Classes\Url;
                 <td>$zone</td>
                 <td>$reported</td>
                 <td>$issueType</td>
-                <td>$resolved</td>
             </tr>
             ";
         }

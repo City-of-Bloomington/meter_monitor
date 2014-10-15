@@ -71,7 +71,6 @@ class Issue extends ActiveRecord
     public function getMeter()     { return parent::getForeignKeyObject(__namespace__.'\Meter',     'meter_id'); }
     public function getIssueType() { return parent::getForeignKeyObject(__namespace__.'\IssueType', 'issueType_id'); }
     public function getReportedDate($f=null, $tz=null) { return parent::getDateData('reportedDate', $f, $tz); }
-    public function getResolvedDate($f=null, $tz=null) { return parent::getDateData('resolvedDate', $f, $tz); }
 
     public function setComments($s) { parent::set('comments', $s); }
     public function setMeter_id($i) { parent::setForeignKeyField (__namespace__.'\Meter', 'meter_id', $i); }
@@ -79,14 +78,13 @@ class Issue extends ActiveRecord
     public function setIssueType_id($i) { parent::setForeignKeyField (__namespace__.'\IssueType', 'issueType_id', $i); }
     public function setIssueType   ($o) { parent::setForeignKeyObject(__namespace__.'\IssueType', 'issueType_id', $o); }
     public function setReportedDate($d) { parent::setDateData('reportedDate', $d); }
-    public function setResolvedDate($d) { parent::setDateData('resolvedDate', $d); }
 
     /**
      * @param array $post
      */
     public function handleUpdate($post)
     {
-        $fields = ['meter_id', 'comments', 'reportedDate', 'resolvedDate', 'issueType_id'];
+        $fields = ['meter_id', 'comments', 'reportedDate', 'issueType_id'];
         foreach ($fields as $f) {
             if (isset($post[$f])) {
                 $set = 'set'.ucfirst($f);

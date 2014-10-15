@@ -18,3 +18,5 @@ join issues i on t.issue_id=i.id;
 drop table issue_issueTypes;
 drop table issues;
 rename table temp to issues;
+
+alter table issues drop resolvedDate;

@@ -11,8 +11,6 @@ use Blossom\Classes\View;
 
 $meter    = View::escape($this->issue->getMeter());
 $comments = View::escape($this->issue->getComments());
-$reportedDate = $this->issue->getReportedDate(DATE_FORMAT);
-$resolvedDate = $this->issue->getResolvedDate(DATE_FORMAT);
 
 $title = $this->issue->getId() ? $this->_('issue_edit') : $this->_('issue_add');
 ?>
@@ -29,12 +27,6 @@ $title = $this->issue->getId() ? $this->_('issue_edit') : $this->_('issue_add');
                 <td><?php
                         $picker = $this->template->getHelper('datePicker');
                         echo $picker->datePicker('reportedDate', $this->issue->getReportedDate('U'));
-                    ?>
-                </td>
-            </tr>
-            <tr><td><label for="resolvedDate"><?php echo $this->_('resolvedDate'); ?></label></td>
-                <td><?php
-                        echo $picker->datePicker('resolvedDate', $this->issue->getResolvedDate('U'));
                     ?>
                 </td>
             </tr>

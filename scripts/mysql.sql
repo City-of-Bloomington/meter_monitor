@@ -29,7 +29,6 @@ create table issues (
     meter_id     int unsigned not null,
     issueType_id int unsigned not null,
     reportedDate date not null,
-    resolvedDate date,
     comments text,
     foreign key (meter_id)     references meters    (id),
     foreign key (issueType_id) references issueTypes(id)
