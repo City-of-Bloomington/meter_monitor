@@ -6,10 +6,10 @@ use Application\Models\Person;
     $a = '<a href="%s">%s</a>';
 
     $routes = [
+        'meters'     => 'meter',
         'issues'     => 'issue',
         'issueTypes' => 'issueType',
         'workTypes'  => 'workType',
-        'meters'     => 'meter',
         'people'     => 'person',
         'users'      => 'user'
     ];

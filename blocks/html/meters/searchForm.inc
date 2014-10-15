@@ -6,17 +6,21 @@
  */
 use Blossom\Classes\View;
 
-$meter = !empty($_GET['meter']) ? View::escape($_GET['meter']) : '';
-$zone  = !empty($_GET['zone'])  ? View::escape($_GET['zone'])  : '';
+$name = !empty($_GET['name']) ? View::escape($_GET['name']) : '';
+$zone = !empty($_GET['zone']) ? View::escape($_GET['zone']) : '';
 ?>
 <form method="get" action="<?php echo BASE_URI; ?>/meters">
     <fieldset><legend><?php echo $this->_('search'); ?></legend>
         <table>
             <tr><td><label for="name"><?php echo $this->_('name'); ?></label></td>
-                <td><input name="name" id="name" value="<?php echo $meter; ?>" /></td>
+                <td><input name="name" id="name" value="<?php echo $name; ?>" class="meterAutoComplete" /></td>
             </tr>
             <tr><td><label for="zone"><?php echo $this->_('zone'); ?></label></td>
-                <td><input name="zone" id="zone" value="<?php echo $zone; ?>" /></td>
+                <td><?php
+                        $z = $this->template->getHelper('zoneSelector');
+                        echo $z->zoneSelector($zone, 'zone');
+                    ?>
+                </td>
             </tr>
         </table>
 
@@ -24,3 +28,9 @@ $zone  = !empty($_GET['zone'])  ? View::escape($_GET['zone'])  : '';
         <a href="<?php echo BASE_URI; ?>/meters"><?php echo $this->_('clear'); ?></a>
     </fieldset>
 </form>
+<?php
+    $this->template->addToAsset('scripts', JQUERY.'/jquery.min.js');
+    $this->template->addToAsset('scripts', JQUERY_UI.'/jquery-ui.min.js');
+    $this->template->addToAsset('scripts', BASE_URI.'/js/meterAutoComplete.js');
+    $this->template->addToAsset('stylesheets', JQUERY_UI.'/jquery-ui.min.css');
+?>

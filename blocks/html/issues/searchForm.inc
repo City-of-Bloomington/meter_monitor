@@ -15,20 +15,13 @@ $zone  = !empty($_GET['zone'])  ? View::escape($_GET['zone'])  : '';
     <fieldset><legend><?php echo $this->_('search'); ?></legend>
         <table>
             <tr><td><label for="meter"><?php echo $this->_('meter'); ?></label></td>
-                <td><input name="meter" id="meter" value="<?php echo $meter; ?>" /></td>
+                <td><input name="meter" id="meter" value="<?php echo $meter; ?>" class="meterAutoComplete" /></td>
             </tr>
             <tr><td><label for="zone"><?php echo $this->_('zone'); ?></label></td>
-                <td><select name="zone" id="zone"><option value=""></option>
-                    <?php
-                        $zones = Meter::getDistinct('zone');
-                        foreach ($zones as $z) {
-                            $selected = $zone==$z
-                                ? 'selected="selected"'
-                                : '';
-                            echo "<option $selected>$z</option>";
-                        }
+                <td><?php
+                        $z = $this->template->getHelper('zoneSelector');
+                        echo $z->zoneSelector($zone, 'zone');
                     ?>
-                    </select>
                 </td>
             </tr>
             <tr><td><label for="issueType_id"><?php echo $this->_(['issueType', 'issueTypes', 1]); ?></label></td>

@@ -103,3 +103,5 @@ header nav a { font-weight:bold; color:black; margin-right:1em; }
 #issueType_picker ul { list-style-type:none; }
 
 table.data tbody tr:nth-child(even) { background-color:#ddd; }
+.status_problem a { color:red;   }
+.status_okay    a { color:green; }

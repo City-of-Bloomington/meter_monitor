@@ -15,15 +15,27 @@ use Blossom\Classes\View;
     <thead>
         <tr><th><?php echo $this->_(['meter', 'meters', 1]); ?></th>
             <th><?php echo $this->_('zone'); ?></th>
+            <th><?php echo $this->_(['issue', 'issues', 2]); ?></th>
         </tr>
     </thead>
     <tbody>
     <?php
         foreach ($this->meters as $m) {
-            $name = View::escape($m->getName());
+            $name   = View::escape($m->getName());
+            $issues = [];
+            foreach ($m->getIssues() as $i) {
+                $issues[] = View::escape($i->getIssueType());
+            }
+            $status = count($issues)
+                ? 'status_problem'
+                : 'status_okay';
+            $issues = implode(', ', $issues);
             echo "
-            <tr><td>$name</td>
+            <tr><th class=\"$status\">
+                    <a href=\"".BASE_URI."/meters/view?meter_id={$m->getId()}\">$name</a>
+                </th>
                 <td>{$m->getZone()}</td>
+                <td>$issues</td>
             </tr>
             ";
         }

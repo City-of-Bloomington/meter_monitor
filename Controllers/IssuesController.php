@@ -5,8 +5,10 @@
  * @author Cliff Ingham <inghamn@bloomington.in.gov>
  */
 namespace Application\Controllers;
+
 use Application\Models\Issue;
 use Application\Models\IssuesTable;
+use Application\Models\Meter;
 use Blossom\Classes\Controller;
 use Blossom\Classes\Block;
 
@@ -47,11 +49,28 @@ class IssuesController extends Controller
             ? $this->loadIssue($_REQUEST['issue_id'])
             : new Issue();
 
+        if (!empty($_GET['meter_id'])) {
+            try {
+                $meter = new Meter($_GET['meter_id']);
+                $issue->setMeter($meter);
+            }
+            catch (\Exception $e) {
+                $_SESSION['errorMessages'][] = $e;
+                header('Location: '.BASE_URL.'/meters');
+                exit();
+            }
+        }
+
+        $return_url = !empty($_REQUEST['return_url'])
+            ? $_REQUEST['return_url']
+            : null;
+
         if (isset($_POST['meter_id'])) {
             try {
                 $issue->handleUpdate($_POST);
                 $issue->save();
-                header('Location: '.BASE_URL.'/issues');
+                if (!$return_url) { $return_url = $issue->getMeter()->getUrl(); }
+                header("Location: $return_url");
                 exit();
             }
             catch (\Exception $e) {
@@ -59,7 +78,7 @@ class IssuesController extends Controller
             }
         }
 
-        $this->template->blocks[] = new Block('issues/updateForm.inc', ['issue'=>$issue]);
+        $this->template->blocks[] = new Block('issues/updateForm.inc', ['issue'=>$issue, 'return_url'=>$return_url]);
     }
 
     public function delete()

@@ -12,6 +12,18 @@ use Blossom\Classes\Block;
 
 class MetersController extends Controller
 {
+    private function loadMeter($id)
+    {
+        try {
+            return new Meter($id);
+        }
+        catch (\Exception $e) {
+            $_SESSION['errorMessages'][] = $e;
+            header('Location: '.BASE_URL.'/meters');
+            exit();
+        }
+    }
+
     public function index()
     {
         $table = new MetersTable();
@@ -40,5 +52,20 @@ class MetersController extends Controller
         else {
             $this->template->blocks[] = new Block('meters/list.inc', ['meters' => $list]);
         }
+    }
+
+    public function view()
+    {
+        if (empty($_GET['meter_id'])) {
+            $_SESSION['errorMessages'][] = new \Exception('meters/unknownMeter');
+            header('Location: '.BASE_URL.'/meters');
+            exit();
+        }
+
+        $meter = $this->loadMeter($_GET['meter_id']);
+        $issues = $meter->getIssues();
+
+        $this->template->blocks[] = new Block('meters/view.inc', ['meter'=>$meter]);
+        $this->template->blocks[] = new Block('issues/list.inc', ['meter'=>$meter, 'issues'=>$issues]);
     }
 }

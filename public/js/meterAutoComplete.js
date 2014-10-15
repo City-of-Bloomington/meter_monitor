@@ -1,7 +1,4 @@
 "use strict";
-jQuery('#meter_id').autocomplete({
-    source: METERS.BASE_URI + '/meters?format=json'
-});
-jQuery('#meter').autocomplete({
+jQuery('input.meterAutoComplete').autocomplete({
     source: METERS.BASE_URI + '/meters?format=json'
 });

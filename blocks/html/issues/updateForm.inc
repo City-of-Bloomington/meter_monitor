@@ -4,6 +4,7 @@
  * @license http://www.gnu.org/licenses/agpl.txt GNU/AGPL, see LICENSE.txt
  * @author Cliff Ingham <inghamn@bloomington.in.gov>
  * @param Issue $this->issue
+ * @param string $this->return_url
  */
 use Application\Models\IssueTypesTable;
 use Application\Models\Person;
@@ -18,10 +19,11 @@ $title = $this->issue->getId() ? $this->_('issue_edit') : $this->_('issue_add');
 <form method="post" action="<?php echo BASE_URI; ?>/issues/update">
     <fieldset>
         <input name="issue_id" type="hidden" value="<?php echo $this->issue->getId(); ?>" />
+        <input name="return_url" type="hidden" value="<?php echo $this->return_url; ?>" />
 
         <table>
             <tr><td><label for="meter_id" class="required"><?php echo $this->_('meter'); ?></label></td>
-                <td><input name="meter_id" id="meter_id" value="<?php echo $meter; ?>" /></td>
+                <td><input name="meter_id" id="meter_id" value="<?php echo $meter; ?>" class="meterAutoComplete" /></td>
             </tr>
             <tr><td><label for="reportedDate"><?php echo $this->_('reportedDate'); ?></label></td>
                 <td><?php
@@ -57,7 +59,7 @@ $title = $this->issue->getId() ? $this->_('issue_edit') : $this->_('issue_add');
 
         <?php
             $h = $this->template->getHelper('saveAndCancelButtons');
-            echo $h->saveAndCancelButtons(BASE_URI.'/issues');
+            echo $h->saveAndCancelButtons($this->return_url);
 
             if ($this->issue->getId() && Person::isAllowed('issues', 'delete')) {
                 $h = $this->template->getHelper('buttonLink');

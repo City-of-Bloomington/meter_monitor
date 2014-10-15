@@ -82,6 +82,9 @@ class Meter extends ActiveRecord
     //----------------------------------------------------------------
     public function __toString() { return parent::get('name'); }
 
+    public function getUrl() { return BASE_URL.'/meters/view?meter_id='.$this->getId(); }
+    public function getUri() { return BASE_URI.'/meters/view?meter_id='.$this->getId(); }
+
     /**
      * Returns the array of distinct field values for Meter records
      *
@@ -104,5 +107,14 @@ class Meter extends ActiveRecord
         $o = [];
         foreach ($result as $row) { $o[] = $row[$fieldname]; }
         return $o;
+    }
+
+    /**
+     * return Zend\Db\Result
+     */
+    public function getIssues()
+    {
+        $table = new IssuesTable();
+        return $table->find(['meter_id'=>$this->getId()]);
     }
 }
