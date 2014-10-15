@@ -41,3 +41,9 @@ create table issue_issueTypes (
     foreign key (issue_id)     references issues    (id),
     foreign key (issueType_id) references issueTypes(id)
 );
+
+create table workTypes (
+    id int unsigned not null primary key auto_increment,
+    name varchar(32) not null,
+    description varchar(255)
+);

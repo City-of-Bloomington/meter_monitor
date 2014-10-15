@@ -20,3 +20,9 @@ drop table issues;
 rename table temp to issues;
 
 alter table issues drop resolvedDate;
+
+create table workTypes (
+    id int unsigned not null primary key auto_increment,
+    name varchar(32) not null,
+    description varchar(255)
+);
