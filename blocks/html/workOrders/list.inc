@@ -11,7 +11,6 @@ use Application\Templates\Helpers\ButtonLink;
 use Blossom\Classes\View;
 use Blossom\Classes\Url;
 ?>
-<h2><?php echo $this->_(['workOrder', 'workOrders', 2]); ?></h2>
 <div>
 <?php
     if (Person::isAllowed('workOrders', 'update')) {

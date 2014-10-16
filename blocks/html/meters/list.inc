@@ -7,10 +7,6 @@
  */
 use Blossom\Classes\View;
 ?>
-<h2><?php
-        echo $this->_(['meter', 'meters', 2]);
-    ?>
-</h2>
 <table>
     <thead>
         <tr><th><?php echo $this->_(['meter', 'meters', 1]); ?></th>

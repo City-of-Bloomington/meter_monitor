@@ -38,9 +38,7 @@ class WorkOrdersController extends Controller
         $list->setCurrentPageNumber($page);
         $list->setItemCountPerPage(20);
 
-        $this->template->blocks[] = new Block('workOrders/searchForm.inc');
-        $this->template->blocks[] = new Block('workOrders/list.inc', ['workOrders'=> $list]);
-        $this->template->blocks[] = new Block('pageNavigation.inc',  ['paginator' => $list]);
+        $this->template->blocks[] = new Block('workOrders/panel.inc', ['workOrders'=> $list]);
     }
 
     public function update()

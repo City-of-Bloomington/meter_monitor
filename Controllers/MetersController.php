@@ -45,9 +45,7 @@ class MetersController extends Controller
             $list->setCurrentPageNumber($page);
             $list->setItemCountPerPage(20);
 
-            $this->template->blocks[] = new Block('meters/searchForm.inc');
-            $this->template->blocks[] = new Block('meters/list.inc',    ['meters'    => $list]);
-            $this->template->blocks[] = new Block('pageNavigation.inc', ['paginator' => $list]);
+            $this->template->blocks[] = new Block('meters/panel.inc',['meters'    => $list]);
         }
         else {
             $this->template->blocks[] = new Block('meters/list.inc', ['meters' => $list]);
@@ -63,11 +61,6 @@ class MetersController extends Controller
         }
 
         $meter = $this->loadMeter($_GET['meter_id']);
-        $issues = $meter->getIssues();
-        $work   = $meter->getWorkOrders();
-
         $this->template->blocks[] = new Block('meters/view.inc',     ['meter'=>$meter]);
-        $this->template->blocks[] = new Block(    'issues/list.inc', ['meter'=>$meter, 'issues'    =>$issues]);
-        $this->template->blocks[] = new Block('workOrders/list.inc', ['meter'=>$meter, 'workOrders'=>$work]);
     }
 }

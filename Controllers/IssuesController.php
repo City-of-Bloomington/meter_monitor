@@ -35,9 +35,7 @@ class IssuesController extends Controller
         $list->setCurrentPageNumber($page);
         $list->setItemCountPerPage(20);
 
-        $this->template->blocks[] = new Block('issues/searchForm.inc');
-        $this->template->blocks[] = new Block('issues/list.inc',    ['issues'    => $list]);
-        $this->template->blocks[] = new Block('pageNavigation.inc', ['paginator' => $list]);
+        $this->template->blocks[] = new Block('issues/panel.inc', ['issues'    => $list]);
     }
 
     public function update()
