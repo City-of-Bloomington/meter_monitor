@@ -28,8 +28,8 @@ class WorkTypesTable extends TableGateway
             foreach ($fields as $key=>$value) {
                 if (!empty($value)) {
                     switch ($key) {
-                        case 'issue_id':
-                            $select->join(['t'=>'issue_workTypes'], 't.workType_id=workTypes.id', []);
+                        case 'workOrder_id':
+                            $select->join(['t'=>'workOrder_workTypes'], 't.workType_id=workTypes.id', []);
                             $select->where(["t.$key"=>$value]);
                             break;
                         default:

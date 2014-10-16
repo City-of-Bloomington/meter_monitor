@@ -3,57 +3,60 @@
  * @copyright 2014 City of Bloomington, Indiana
  * @license http://www.gnu.org/licenses/agpl.txt GNU/AGPL, see LICENSE.txt
  * @author Cliff Ingham <inghamn@bloomington.in.gov>
- * @param Zend\Db\Result $this->issues
+ * @param Zend\Db\Result $this->workOrders
  * @param Meter $this->meter (optional)
  */
 use Application\Models\Person;
-use Application\Models\Issue;
 use Application\Templates\Helpers\ButtonLink;
 use Blossom\Classes\View;
 use Blossom\Classes\Url;
 ?>
-<h2><?php echo $this->_(['issue', 'issues', 2]); ?></h2>
+<h2><?php echo $this->_(['workOrder', 'workOrders', 2]); ?></h2>
 <div>
 <?php
-    if (Person::isAllowed('issues', 'update')) {
+    if (Person::isAllowed('workOrders', 'update')) {
         $helper = $this->template->getHelper('buttonLink');
         $return_url = Url::current_url();
 
         if (isset($this->meter)) {
             echo $helper->buttonLink(
-                BASE_URI."/issues/update?meter_id={$this->meter->getId()};return_url=$return_url",
-                $this->_('issue_add'),
+                BASE_URI."/workOrders/update?meter_id={$this->meter->getId()};return_url=$return_url",
+                $this->_('workOrder_add'),
                 'add'
             );
         }
     }
 ?>
 </div>
-<?php if (count($this->issues)): ?>
+<?php if (count($this->workOrders)): ?>
 <table class="data">
     <thead>
         <tr><th></th>
-            <th></th>
-            <th><?php echo $this->_(['issue', 'issues', 1]); ?></th>
-            <th><?php echo $this->_('reportedDate'); ?></th>
+            <th><?php echo $this->_(['meter', 'meters', 1]); ?></th>
+            <th><?php echo $this->_(['workOrder', 'workOrders', 1]); ?></th>
             <th><?php echo $this->_('dateCompleted'); ?></th>
+            <th><?php echo $this->_('workOrder_workTypes'); ?></th>
         </tr>
     </thead>
     <tbody>
     <?php
-        foreach ($this->issues as $issue) {
-            $meter = $issue->getMeter();
+        foreach ($this->workOrders as $work) {
+            $meter = $work->getMeter();
             $meterName = View::escape($meter->getName());
-            $comments  = View::escape($issue->getComments());
-            $issueType = View::escape($issue->getIssueType());
-            $reported  = $issue->getReportedDate(DATE_FORMAT);
-            $completed = $issue->getDateCompleted(DATE_FORMAT);
-            $status    = $meter->hasOpenIssue() ? 'status_problem' : 'status_okay';
+            $comments  = View::escape($work->getComments());
+            $completed = $work->getDateCompleted(DATE_FORMAT);
+            $status = $meter->hasOpenIssue() ? 'status_problem' : 'status_okay';
+
+            $workType = [];
+            foreach ($work->getWorkTypes() as $type) {
+                $workType[] = View::escape($type);
+            }
+            $workType = implode(', ', $workType);
 
             $editButton   = '';
             if (Person::isAllowed('issues', 'update')) {
                 $editButton = $helper->buttonLink(
-                    BASE_URI."/issues/update?issue_id={$issue->getId()};return_url=$return_url",
+                    BASE_URI."/workOrders/update?workOrder_id={$work->getId()};return_url=$return_url",
                     $this->_('edit'),
                     'edit',
                     ButtonLink::SIZE_ICON
@@ -64,9 +67,9 @@ use Blossom\Classes\Url;
                 <th class=\"$status\">
                     <a href=\"{$meter->getUri()}\">$meterName</a>
                 </th>
-                <td>$issueType</td>
-                <td>$reported</td>
+                <td>{$work->getId()}</td>
                 <td>$completed</td>
+                <td>$workType</td>
             </tr>
             ";
         }

@@ -29,10 +29,7 @@ class IssuesController extends Controller
     public function index()
     {
         $table = new IssuesTable();
-
-        $list = (!empty($_GET['meter']) || !empty($_GET['zone']) || !empty($_GET['issueType_id']))
-            ? $table->search($_GET, null, true)
-            : $table->find  (null,  null, true);
+        $list = $table->search($_GET, null, true);
 
         $page = !empty($_GET['page']) ? (int)$_GET['page'] : 1;
         $list->setCurrentPageNumber($page);

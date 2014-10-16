@@ -26,3 +26,22 @@ create table workTypes (
     name varchar(32) not null,
     description varchar(255)
 );
+
+create table workOrders (
+    id       int unsigned not null primary key auto_increment,
+    meter_id int unsigned not null,
+    dateCompleted date    not null,
+    comments text,
+    foreign key (meter_id) references meters(id)
+);
+
+create table workOrder_workTypes (
+    workOrder_id int unsigned not null,
+    workType_id  int unsigned not null,
+    primary key (workOrder_id,  workType_id),
+    foreign key (workOrder_id) references workOrders(id),
+    foreign key (workType_id)  references workTypes (id)
+);
+
+alter table issues add workOrder_id int unsigned after issueType_id;
+alter table issues add foreign key (workOrder_id) references workOrders(id);

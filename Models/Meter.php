@@ -13,6 +13,8 @@ class Meter extends ActiveRecord
 {
     protected $tablename = 'meters';
 
+    private $issues = [];
+
     /**
      * Populates the object with data
      *
@@ -109,12 +111,29 @@ class Meter extends ActiveRecord
         return $o;
     }
 
-    /**
-     * return Zend\Db\Result
-     */
     public function getIssues()
     {
-        $table = new IssuesTable();
+        if ($this->getId() && !$this->issues) {
+            $table = new IssuesTable();
+            $list = $table->find(['meter_id'=>$this->getId()]);
+            foreach ($list as $i) {
+                $this->issues[] = $i;
+            }
+        }
+        return $this->issues;
+    }
+
+    public function getWorkOrders()
+    {
+        $table = new WorkOrdersTable();
         return $table->find(['meter_id'=>$this->getId()]);
+    }
+
+    public function hasOpenIssue()
+    {
+        foreach ($this->getIssues() as $i) {
+            if ($i->getStatus() == Issue::STATUS_OPEN) { return true; }
+        }
+        return false;
     }
 }

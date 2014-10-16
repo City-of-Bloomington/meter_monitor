@@ -22,13 +22,12 @@ use Blossom\Classes\View;
     <?php
         foreach ($this->meters as $m) {
             $name   = View::escape($m->getName());
+            $status = $m->hasOpenIssue() ? 'status_problem' : 'status_okay';
+
             $issues = [];
             foreach ($m->getIssues() as $i) {
                 $issues[] = View::escape($i->getIssueType());
             }
-            $status = count($issues)
-                ? 'status_problem'
-                : 'status_okay';
             $issues = implode(', ', $issues);
             echo "
             <tr><th class=\"$status\">

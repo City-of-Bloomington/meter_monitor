@@ -11,9 +11,13 @@ use Blossom\Classes\ExternalIdentity;
 
 class Issue extends ActiveRecord
 {
+    const STATUS_OPEN   = 'open';
+    const STATUS_CLOSED = 'closed';
+
     protected $tablename = 'issues';
     protected $meter;
     protected $issueType;
+    protected $workOrder;
 
     /**
      * Populates the object with data
@@ -68,8 +72,10 @@ class Issue extends ActiveRecord
     public function getComments()     { return parent::get('comments');     }
     public function getMeter_id()     { return parent::get('meter_id');     }
     public function getIssueType_id() { return parent::get('issueType_id'); }
+    public function getWorkOrder_id() { return parent::get('workOrder_id'); }
     public function getMeter()     { return parent::getForeignKeyObject(__namespace__.'\Meter',     'meter_id'); }
     public function getIssueType() { return parent::getForeignKeyObject(__namespace__.'\IssueType', 'issueType_id'); }
+    public function getWorkOrder() { return parent::getForeignKeyObject(__namespace__.'\WorkOrder', 'workOrder_id'); }
     public function getReportedDate($f=null, $tz=null) { return parent::getDateData('reportedDate', $f, $tz); }
 
     public function setComments($s) { parent::set('comments', $s); }
@@ -77,6 +83,9 @@ class Issue extends ActiveRecord
     public function setMeter   ($o) { parent::setForeignKeyObject(__namespace__.'\Meter', 'meter_id', $o); }
     public function setIssueType_id($i) { parent::setForeignKeyField (__namespace__.'\IssueType', 'issueType_id', $i); }
     public function setIssueType   ($o) { parent::setForeignKeyObject(__namespace__.'\IssueType', 'issueType_id', $o); }
+    public function setWorkOrder_id($i) { parent::setForeignKeyField (__namespace__.'\WorkOrder', 'workOrder_id', $i); }
+    public function setWorkOrder   ($o) { parent::setForeignKeyObject(__namespace__.'\WorkOrder', 'workOrder_id', $o); }
+
     public function setReportedDate($d) { parent::setDateData('reportedDate', $d); }
 
     /**
@@ -100,5 +109,18 @@ class Issue extends ActiveRecord
     {
         $meter = $this->getMeter();
         if ($meter) { return $meter->getZone(); }
+    }
+
+    public function getStatus()
+    {
+        return $this->getWorkOrder_id() ? self::STATUS_CLOSED : self::STATUS_OPEN;
+    }
+
+    public function getDateCompleted($f=null, $tz=null)
+    {
+        $o = $this->getWorkOrder();
+        if ($o) {
+            return $o->getDateCompleted($f, $tz);
+        }
     }
 }

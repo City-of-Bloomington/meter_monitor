@@ -64,8 +64,10 @@ class MetersController extends Controller
 
         $meter = $this->loadMeter($_GET['meter_id']);
         $issues = $meter->getIssues();
+        $work   = $meter->getWorkOrders();
 
-        $this->template->blocks[] = new Block('meters/view.inc', ['meter'=>$meter]);
-        $this->template->blocks[] = new Block('issues/list.inc', ['meter'=>$meter, 'issues'=>$issues]);
+        $this->template->blocks[] = new Block('meters/view.inc',     ['meter'=>$meter]);
+        $this->template->blocks[] = new Block(    'issues/list.inc', ['meter'=>$meter, 'issues'    =>$issues]);
+        $this->template->blocks[] = new Block('workOrders/list.inc', ['meter'=>$meter, 'workOrders'=>$work]);
     }
 }

@@ -11,7 +11,7 @@ use Zend\Db\Sql\Select;
 
 class IssuesTable extends TableGateway
 {
-    protected $columns = ['id', 'meter', 'issueType_id'];
+    protected $columns = ['id', 'meter_id', 'issueType_id', 'workOrder_id'];
 
     public function __construct() { parent::__construct('issues', __namespace__.'\Issue'); }
 
@@ -23,7 +23,37 @@ class IssuesTable extends TableGateway
      */
     public function find($fields=null, $order='reportedDate desc', $paginated=false, $limit=null)
     {
-        return parent::find($fields, $order, $paginated, $limit);
+        $select = new Select('issues');
+        if (count($fields)) {
+            $this->handleJoins($fields, $select);
+
+            foreach ($fields as $key=>$value) {
+                if (!empty($value)) {
+                    switch ($key) {
+                        case 'status':
+                            $w = $value == Issue::STATUS_OPEN
+                                ? 'workOrder_id is null'
+                                : 'workOrder_id is not null';
+                            $select->where($w);
+                            break;
+
+                        case 'meter':
+                            $select->where(['m.name'=>$value]);
+                            break;
+
+                        case 'zone':
+                            $select->where(['m.zone'=>$value]);
+                            break;
+
+                        default:
+                            if (in_array($key, $this->columns)) {
+                                $select->where([$key=>$value]);
+                            }
+                    }
+                }
+            }
+        }
+        return parent::performSelect($select, $order, $paginated, $limit);
     }
 
     /**
@@ -41,12 +71,19 @@ class IssuesTable extends TableGateway
             foreach ($fields as $key=>$value) {
                 if (!empty($value)) {
                     switch ($key) {
+                        case 'status':
+                            $w = $value == Issue::STATUS_OPEN
+                                ? 'workOrder_id is null'
+                                : 'workOrder_id is not null';
+                            $select->where($w);
+                            break;
+
                         case 'meter':
                             $select->where->like('m.name', "$value%");
                             break;
 
                         case 'zone':
-                            $select->where(["m.$key"=>$value]);
+                            $select->where(['m.zone'=>$value]);
                             break;
 
                         default:
