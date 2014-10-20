@@ -25,6 +25,11 @@ class DatePicker extends Helper
             $date = date(DATE_FORMAT, $timestamp);
         }
 
-        return "<input name=\"{$fieldname}\" id=\"$fieldname\" value=\"$date\" size=\"10\" class=\"date\"/>";
+        $help = View::translateDateString(DATE_FORMAT);
+
+        return "
+        <input name=\"{$fieldname}\" id=\"$fieldname\" value=\"$date\"
+               size=\"10\" class=\"date\" placeholder=\"$help\" />
+        ";
     }
 }
