@@ -32,7 +32,7 @@ use Blossom\Classes\Url;
 <?php
     $c = is_a($this->workOrders, 'Zend\Paginator\Paginator')
         ? $this->workOrders->getTotalItemCount()
-        : count($c);
+        : count($this->workOrders);
     echo "$c {$this->_(['workOrder', 'workOrders', $c])}";
 ?>
 </h3>
