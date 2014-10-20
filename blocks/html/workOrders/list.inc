@@ -28,6 +28,14 @@ use Blossom\Classes\Url;
 ?>
 </div>
 <?php if (count($this->workOrders)): ?>
+<h3>
+<?php
+    $c = is_a($this->workOrders, 'Zend\Paginator\Paginator')
+        ? $this->workOrders->getTotalItemCount()
+        : count($c);
+    echo "$c {$this->_(['workOrder', 'workOrders', $c])}";
+?>
+</h3>
 <table class="data">
     <thead>
         <tr><th></th>

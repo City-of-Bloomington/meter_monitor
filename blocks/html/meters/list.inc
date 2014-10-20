@@ -6,6 +6,11 @@
  * @param Zend\Db\Result $this->meters
  */
 use Blossom\Classes\View;
+
+$c = is_a($this->meters, 'Zend\Paginator\Paginator')
+    ? $this->meters->getTotalItemCount()
+    : count($c);
+echo "<h3>$c {$this->_(['meter', 'meters', $c])}</h3>";
 ?>
 <table>
     <thead>
