@@ -43,6 +43,7 @@ use Blossom\Classes\Url;
             <th><?php echo $this->_(['workOrder', 'workOrders', 1]); ?></th>
             <th><?php echo $this->_('dateCompleted'); ?></th>
             <th><?php echo $this->_('workOrder_workTypes'); ?></th>
+            <?php if (isset($this->meter)) { echo "<th>{$this->_('comments')}</th>"; } ?>
         </tr>
     </thead>
     <tbody>
@@ -69,6 +70,7 @@ use Blossom\Classes\Url;
                     ButtonLink::SIZE_ICON
                 );
             }
+            if (isset($this->meter)) { $comments = "<td>$comments</td>"; }
             echo "
             <tr><th>$editButton</th>
                 <th class=\"$status\">
@@ -77,6 +79,7 @@ use Blossom\Classes\Url;
                 <td>{$work->getId()}</td>
                 <td>$completed</td>
                 <td>$workType</td>
+                $comments
             </tr>
             ";
         }
