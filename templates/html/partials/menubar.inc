@@ -15,7 +15,10 @@ use Application\Models\Person;
         'users'      => 'user'
     ];
     foreach ($routes as $plural=>$singular) {
-        if (Person::isAllowed($plural, 'index')) {
+        $requiredAction = ($plural=='workTypes' || $plural=='issueTypes')
+            ? 'update'
+            : 'index';
+        if (Person::isAllowed($plural, $requiredAction)) {
             echo sprintf($a, BASE_URI.'/'.$plural, $this->_([$singular, $plural, 2]));
         }
     }
