@@ -13,10 +13,10 @@ class IndexController extends Controller
 	public function index()
 	{
         if (Person::isAllowed('issues', 'add')) {
-            header('Location: '.BASE_URL.'/issues');
+            header('Location: '.BASE_URL.'/meters');
         }
         else {
-            header('Location: '.BASE_URL.'/login?return_url='.BASE_URL.'/issues');
+            header('Location: '.BASE_URL.'/login?return_url='.BASE_URL.'/meters');
         }
         exit();
 	}
