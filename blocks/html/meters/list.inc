@@ -5,6 +5,7 @@
  * @author Cliff Ingham <inghamn@bloomington.in.gov>
  * @param Zend\Db\Result $this->meters
  */
+use Application\Models\Issue;
 use Blossom\Classes\View;
 
 $c = is_a($this->meters, 'Zend\Paginator\Paginator')
@@ -26,7 +27,7 @@ echo "<h3>$c {$this->_(['meter', 'meters', $c])}</h3>";
             $status = $m->hasOpenIssue() ? 'status_problem' : 'status_okay';
 
             $issues = [];
-            foreach ($m->getIssues() as $i) {
+            foreach ($m->getIssues(['status'=>Issue::STATUS_OPEN]) as $i) {
                 $issues[] = View::escape($i->getIssueType());
             }
             $issues = implode(', ', $issues);

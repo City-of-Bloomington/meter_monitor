@@ -13,8 +13,6 @@ class Meter extends ActiveRecord
 {
     protected $tablename = 'meters';
 
-    private $issues = [];
-
     /**
      * Populates the object with data
      *
@@ -111,16 +109,15 @@ class Meter extends ActiveRecord
         return $o;
     }
 
-    public function getIssues()
+    public function getIssues($search=null)
     {
-        if ($this->getId() && !$this->issues) {
+        if ($this->getId()) {
+            $search = is_array($search)
+                ? array_merge(['meter_id'=>$this->getId()], $search)
+                :             ['meter_id'=>$this->getId()];
             $table = new IssuesTable();
-            $list = $table->find(['meter_id'=>$this->getId()]);
-            foreach ($list as $i) {
-                $this->issues[] = $i;
-            }
+            return $table->find($search);
         }
-        return $this->issues;
     }
 
     public function getWorkOrders()
@@ -131,9 +128,9 @@ class Meter extends ActiveRecord
 
     public function hasOpenIssue()
     {
-        foreach ($this->getIssues() as $i) {
-            if ($i->getStatus() == Issue::STATUS_OPEN) { return true; }
-        }
-        return false;
+        $zend_db = Database::getConnection();
+        $result = $zend_db->query('select count(*) as count from issues where workOrder_id is null and meter_id=?', [$this->getId()]);
+        $c = $result->current()['count'];
+        return $c > 0;
     }
 }
