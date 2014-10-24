@@ -9,7 +9,9 @@ use Application\Models\Issue;
 <form method="get" action="<?php echo BASE_URI; ?>/issues">
     <fieldset><legend><?php echo $this->_('search'); ?></legend>
 
+        <table>
         <?php include APPLICATION_HOME.'/blocks/html/issues/partials/searchFields.inc'; ?>
+        </table>
 
         <div>
             <label><?php echo $this->_('status'); ?></label>

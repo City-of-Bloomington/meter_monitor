@@ -8,6 +8,7 @@
  */
 use Application\Models\WorkTypesTable;
 use Application\Models\Person;
+use Application\Models\PeopleTable;
 use Blossom\Classes\View;
 
 $meter    = View::escape($this->workOrder->getMeter());
@@ -28,6 +29,22 @@ $title = $this->workOrder->getId() ? $this->_('workOrder_edit') : $this->_('work
                         $picker = $this->template->getHelper('datePicker');
                         echo $picker->datePicker('dateCompleted', $this->workOrder->getDateCompleted('U'));
                     ?>
+                </td>
+            </tr>
+            <tr><td><label for="completedByPerson_id"><?php echo $this->_('completedByPerson'); ?></label></td>
+                <td><select name="completedByPerson_id" id="completedByPerson_id"><option value=""></option>
+                    <?php
+                        $t = new PeopleTable();
+                        $l = $t->find();
+                        foreach ($l as $p) {
+                            $selected = $p->getId()==$this->workOrder->getCompletedByPerson_id()
+                                ? 'selected="selected"'
+                                : '';
+                            $name = View::escape($p->getFullname());
+                            echo "<option value=\"{$p->getId()}\" $selected>$name</option>";
+                        }
+                    ?>
+                    </select>
                 </td>
             </tr>
         </table>

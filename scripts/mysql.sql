@@ -29,6 +29,7 @@ create table issues (
     meter_id     int unsigned not null,
     issueType_id int unsigned not null,
     workOrder_id int unsigned not null,
+    reportedByPerson_id int unsigned,
     reportedDate date not null,
     comments text,
     foreign key (meter_id)     references meters    (id),
@@ -52,6 +53,7 @@ create table workTypes (
 create table workOrders (
     id       int unsigned not null primary key auto_increment,
     meter_id int unsigned not null,
+    completedByPerson_id int unsigned,
     dateCompleted date    not null,
     comments text,
     foreign key (meter_id) references meters(id)

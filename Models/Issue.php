@@ -18,6 +18,7 @@ class Issue extends ActiveRecord
     protected $meter;
     protected $issueType;
     protected $workOrder;
+    protected $reportedByPerson;
 
     /**
      * Populates the object with data
@@ -68,14 +69,16 @@ class Issue extends ActiveRecord
     //----------------------------------------------------------------
     // Generic Getters & Setters
     //----------------------------------------------------------------
-    public function getId()           { return parent::get('id');           }
-    public function getComments()     { return parent::get('comments');     }
-    public function getMeter_id()     { return parent::get('meter_id');     }
-    public function getIssueType_id() { return parent::get('issueType_id'); }
-    public function getWorkOrder_id() { return parent::get('workOrder_id'); }
-    public function getMeter()     { return parent::getForeignKeyObject(__namespace__.'\Meter',     'meter_id'); }
-    public function getIssueType() { return parent::getForeignKeyObject(__namespace__.'\IssueType', 'issueType_id'); }
-    public function getWorkOrder() { return parent::getForeignKeyObject(__namespace__.'\WorkOrder', 'workOrder_id'); }
+    public function getId()                  { return parent::get('id');           }
+    public function getComments()            { return parent::get('comments');     }
+    public function getMeter_id()            { return parent::get('meter_id');     }
+    public function getIssueType_id()        { return parent::get('issueType_id'); }
+    public function getWorkOrder_id()        { return parent::get('workOrder_id'); }
+    public function getReportedByPerson_id() { return parent::get('reportedByPerson_id'); }
+    public function getMeter()            { return parent::getForeignKeyObject(__namespace__.'\Meter',     'meter_id'); }
+    public function getIssueType()        { return parent::getForeignKeyObject(__namespace__.'\IssueType', 'issueType_id'); }
+    public function getWorkOrder()        { return parent::getForeignKeyObject(__namespace__.'\WorkOrder', 'workOrder_id'); }
+    public function getReportedByPerson() { return parent::getForeignKeyObject(__namespace__.'\Person',    'reportedByPerson_id'); }
     public function getReportedDate($f=null, $tz=null) { return parent::getDateData('reportedDate', $f, $tz); }
 
     public function setComments($s) { parent::set('comments', $s); }
@@ -85,6 +88,8 @@ class Issue extends ActiveRecord
     public function setIssueType   ($o) { parent::setForeignKeyObject(__namespace__.'\IssueType', 'issueType_id', $o); }
     public function setWorkOrder_id($i) { parent::setForeignKeyField (__namespace__.'\WorkOrder', 'workOrder_id', $i); }
     public function setWorkOrder   ($o) { parent::setForeignKeyObject(__namespace__.'\WorkOrder', 'workOrder_id', $o); }
+    public function setReportedByPerson_id($i) { parent::setForeignKeyField (__namespace__.'\Person', 'reportedByPerson_id', $i); }
+    public function setReportedByPerson   ($o) { parent::setForeignKeyObject(__namespace__.'\Person', 'reportedByPerson_id', $o); }
 
     public function setReportedDate($d) { parent::setDateData('reportedDate', $d); }
 
@@ -93,7 +98,7 @@ class Issue extends ActiveRecord
      */
     public function handleUpdate($post)
     {
-        $fields = ['meter_id', 'comments', 'reportedDate', 'issueType_id'];
+        $fields = ['meter_id', 'comments', 'reportedByPerson_id', 'reportedDate', 'issueType_id'];
         foreach ($fields as $f) {
             if (isset($post[$f])) {
                 $set = 'set'.ucfirst($f);

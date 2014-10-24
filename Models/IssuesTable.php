@@ -11,7 +11,7 @@ use Zend\Db\Sql\Select;
 
 class IssuesTable extends TableGateway
 {
-    protected $columns = ['id', 'meter_id', 'issueType_id', 'workOrder_id'];
+    protected $columns = ['id', 'meter_id', 'issueType_id', 'workOrder_id', 'reportedByPerson_id'];
 
     public function __construct() { parent::__construct('issues', __namespace__.'\Issue'); }
 

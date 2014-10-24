@@ -13,6 +13,7 @@ class WorkOrder extends ActiveRecord
 {
     protected $tablename = 'workOrders';
     protected $meter;
+    protected $completedByPerson;
 
     private $workTypes = [];
     private $issues    = [];
@@ -80,23 +81,28 @@ class WorkOrder extends ActiveRecord
     //----------------------------------------------------------------
     // Generic Getters & Setters
     //----------------------------------------------------------------
-    public function getId()       { return parent::get('id');       }
-    public function getComments() { return parent::get('comments'); }
-    public function getMeter_id() { return parent::get('meter_id'); }
-    public function getMeter()    { return parent::getForeignKeyObject(__namespace__.'\Meter',     'meter_id'); }
+    public function getId()                   { return parent::get('id');       }
+    public function getComments()             { return parent::get('comments'); }
+    public function getMeter_id()             { return parent::get('meter_id'); }
+    public function getCompletedByPerson_id() { return parent::get('completedByPerson_id'); }
+    public function getMeter()             { return parent::getForeignKeyObject(__namespace__.'\Meter',  'meter_id'); }
+    public function getCompletedByPerson() { return parent::getForeignKeyObject(__namespace__.'\Person', 'completedByPerson_id'); }
     public function getDateCompleted($f=null, $tz=null) { return parent::getDateData('dateCompleted', $f, $tz); }
+    public function getReportedDate ($f=null, $tz=null) { return parent::getDateData('reportedDate',  $f, $tz); }
 
     public function setComments($s) { parent::set('comments', $s); }
     public function setMeter_id($i) { parent::setForeignKeyField (__namespace__.'\Meter', 'meter_id', $i); }
     public function setMeter   ($o) { parent::setForeignKeyObject(__namespace__.'\Meter', 'meter_id', $o); }
     public function setDateCompleted($d) { parent::setDateData('dateCompleted', $d); }
+    public function setCompletedByPerson_id($i) { parent::setForeignKeyField (__namespace__.'\Person', 'completedByPerson_id', $i); }
+    public function setCompletedByPerson   ($o) { parent::setForeignKeyObject(__namespace__.'\Person', 'completedByPerson_id', $o); }
 
     /**
      * @param array $post
      */
     public function handleUpdate($post)
     {
-        $fields = ['meter_id', 'dateCompleted', 'comments', 'workTypes', 'issues'];
+        $fields = ['meter_id', 'dateCompleted', 'completedByPerson_id', 'comments', 'workTypes', 'issues'];
         foreach ($fields as $f) {
             $set = 'set'.ucfirst($f);
             $this->$set($post[$f]);

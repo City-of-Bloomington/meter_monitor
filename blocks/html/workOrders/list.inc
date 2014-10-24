@@ -42,6 +42,7 @@ use Blossom\Classes\Url;
             <th><?php echo $this->_(['meter', 'meters', 1]); ?></th>
             <th><?php echo $this->_(['workOrder', 'workOrders', 1]); ?></th>
             <th><?php echo $this->_('dateCompleted'); ?></th>
+            <th><?php echo $this->_('completedByPerson'); ?></th>
             <th><?php echo $this->_('workOrder_workTypes'); ?></th>
             <?php if (isset($this->meter)) { echo "<th>{$this->_('comments')}</th>"; } ?>
         </tr>
@@ -54,6 +55,10 @@ use Blossom\Classes\Url;
             $comments  = View::escape($work->getComments());
             $completed = $work->getDateCompleted(DATE_FORMAT);
             $status = $meter->hasOpenIssue() ? 'status_problem' : 'status_okay';
+
+            $completedByPerson = $work->getCompletedByPerson_id()
+                ? View::escape($work->getCompletedByPerson()->getFullname())
+                : '';
 
             $workType = [];
             foreach ($work->getWorkTypes() as $type) {
@@ -78,6 +83,7 @@ use Blossom\Classes\Url;
                 </th>
                 <td>{$work->getId()}</td>
                 <td>$completed</td>
+                <td>$completedByPerson</td>
                 <td>$workType</td>
                 $comments
             </tr>

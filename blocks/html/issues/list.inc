@@ -42,6 +42,7 @@ use Blossom\Classes\Url;
         <tr><th></th>
             <th></th>
             <th><?php echo $this->_(['issue', 'issues', 1]); ?></th>
+            <th><?php echo $this->_('reportedByPerson'); ?></th>
             <th><?php echo $this->_('reportedDate'); ?></th>
             <th><?php echo $this->_('dateCompleted'); ?></th>
             <?php if (isset($this->meter)) { echo "<th>{$this->_('comments')}</th>"; } ?>
@@ -57,6 +58,10 @@ use Blossom\Classes\Url;
             $reported  = $issue->getReportedDate(DATE_FORMAT);
             $completed = $issue->getDateCompleted(DATE_FORMAT);
             $status    = $meter->hasOpenIssue() ? 'status_problem' : 'status_okay';
+
+            $reportedByPerson = $issue->getReportedByPerson_id()
+                ? $issue->getReportedByPerson()->getFullname()
+                : '';
 
             $editButton   = '';
             if (Person::isAllowed('issues', 'update')) {
@@ -74,6 +79,7 @@ use Blossom\Classes\Url;
                     <a href=\"{$meter->getUri()}\">$meterName</a>
                 </th>
                 <td>$issueType</td>
+                <td>$reportedByPerson</td>
                 <td>$reported</td>
                 <td>$completed</td>
                 $comments

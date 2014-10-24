@@ -8,6 +8,7 @@
  */
 use Application\Models\IssueTypesTable;
 use Application\Models\Person;
+use Application\Models\PeopleTable;
 use Blossom\Classes\View;
 
 $meter    = View::escape($this->issue->getMeter());
@@ -32,6 +33,21 @@ $title = $this->issue->getId() ? $this->_('issue_edit') : $this->_('issue_add');
                     ?>
                 </td>
             </tr>
+            <tr><td><label for="reportedByPerson_id"><?php echo $this->_('reportedByPerson'); ?></label></td>
+                <td><select name="reportedByPerson_id" id="reportedByPerson_id"><option value=""></option>
+                    <?php
+                        $table = new PeopleTable();
+                        $list = $table->find();
+                        foreach ($list as $p) {
+                            $selected = $p->getId()==$this->issue->getReportedByPerson_id()
+                                ? 'selected="selected"'
+                                : '';
+                            $name = View::escape($p->getFullname());
+                            echo "<option value=\"{$p->getId()}\" $selected>$name</option>";
+                        }
+                    ?>
+                    </select>
+                </td>
             <tr><td><label for="issueType_id"><?php echo $this->_(['issueType', 'issueTypes', 1]); ?></label></td>
                 <td><select name="issueType_id"><option value=""></option>
                     <?php
