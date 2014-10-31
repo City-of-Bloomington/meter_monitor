@@ -6,6 +6,7 @@
  * @param Issue $this->workOrder
  * @param string $this->return_url
  */
+use Application\Models\Issue;
 use Application\Models\WorkTypesTable;
 use Application\Models\Person;
 use Application\Models\PeopleTable;
@@ -80,7 +81,7 @@ $title = $this->workOrder->getId() ? $this->_('workOrder_edit') : $this->_('work
     </fieldset>
 
     <?php
-        $issues = $this->workOrder->getMeter()->getIssues();
+        $issues = $this->workOrder->getMeter()->getIssues(['status'=>Issue::STATUS_OPEN]);
         if (count($issues)) {
             echo "<fieldset><legend>{$this->_('workOrder_issues')}</legend><ul>";
                 foreach ($issues as $issue) {
