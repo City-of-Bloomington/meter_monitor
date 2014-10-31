@@ -12,7 +12,7 @@ echo "<h2>{$this->_(['workOrder', 'workOrders', 2])}</h2>";
 include __DIR__.'/searchForm.inc';
 include __DIR__.'/list.inc';
 
-if (is_a($this->issues, 'Zend\Paginator\Paginator')) {
+if (is_a($this->workOrders, 'Zend\Paginator\Paginator')) {
         $block = new Block('pageNavigation.inc', ['paginator' => $this->workOrders]);
         echo $block->render('html', $this->template);
 }
