@@ -17,7 +17,12 @@ body {
     width: 66em;
 }
 
-h2 { font-size:131%; font-weight:bold; margin:.5em 0; color:#1e59ae; }
+h2 {
+    font-size:131%;
+    font-weight: normal;
+    margin: 1.5em 0 .5em;
+    color:#1e59ae;
+}
 h3 { font-size:123.1%; font-weight:bold;  margin:.5em 0 .25em 0; }
 h4 { font-size:100%; font-weight:bold; }
 a { text-decoration:none; color:#00f; }
@@ -200,8 +205,46 @@ header > nav > a:hover {
 .status_problem > a { color: #c60318;   }
 .status_okay > a { color: #00920e; }
 
-/*dl*/.classname {
-    
+
+/*dl*/.input {
+    border-top: 1px solid #c0c0c0;
+    border-bottom: 1px solid #c0c0c0;
+    margin: 0 0 -1px 0;
+    padding: .5em 0;
 }
-/*dl*/.classname.mod-Change > .ext-StubNamespace {
+/*dl*/.input > dt {
+    font-size: .9em;
+    font-weight: normal;
+}
+/*dl*/.input > dt > label {
+    font-weight: normal;
+}
+/*dl*/.input > dd {
+    margin: 0;
+    padding: 0;
+}
+/*dl*/.input.text > dd > input {
+    font-size: 1em;
+}
+@media screen and (min-width: 60em) {
+    /*dl*/.input {
+        border-top: 1px solid #c0c0c0;
+        border-bottom: 1px solid #c0c0c0;
+    }
+    /*dl*/.input:after {
+        clear: both;
+        content: "";
+        display: table;
+    }
+    /*dl*/.input > dt {
+        float: left;
+        font-size: 1em;
+        width: 8em;
+    }
+    /*dl*/.input.text > dt {
+        padding-top: .25em;
+    }
+    /*dl*/.input > dd {
+        margin-left: 9em;
+    }    
 }

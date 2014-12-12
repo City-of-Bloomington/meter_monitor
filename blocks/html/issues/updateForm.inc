@@ -22,19 +22,18 @@ $title = $this->issue->getId() ? $this->_('issue_edit') : $this->_('issue_add');
         <input name="issue_id" type="hidden" value="<?php echo $this->issue->getId(); ?>" />
         <input name="return_url" type="hidden" value="<?php echo $this->return_url; ?>" />
 
-        <table>
-            <tr><td><label for="meter_id" class="required"><?php echo $this->_('meter'); ?></label></td>
-                <td><input name="meter_id" id="meter_id" value="<?php echo $meter; ?>" class="meterAutoComplete" /></td>
-            </tr>
-            <tr><td><label for="reportedDate"><?php echo $this->_('reportedDate'); ?></label></td>
-                <td><?php
+            <dl class="input text"><dt><label for="meter_id" class="required"><?php echo $this->_('meter'); ?></label></dt>
+                <dd><input name="meter_id" id="meter_id" value="<?php echo $meter; ?>" class="meterAutoComplete" /></dd>
+            </dl>
+            <dl class="input text"><dt><label for="reportedDate"><?php echo $this->_('reportedDate'); ?></label></dt>
+                <dd><?php
                         $picker = $this->template->getHelper('datePicker');
                         echo $picker->datePicker('reportedDate', $this->issue->getReportedDate('U'));
                     ?>
-                </td>
-            </tr>
-            <tr><td><label for="reportedByPerson_id"><?php echo $this->_('reportedByPerson'); ?></label></td>
-                <td><select name="reportedByPerson_id" id="reportedByPerson_id"><option value=""></option>
+                </dd>
+            </dl>
+            <dl class="input text"><dt><label for="reportedByPerson_id"><?php echo $this->_('reportedByPerson'); ?></label></dt>
+                <dd><select name="reportedByPerson_id" id="reportedByPerson_id"><option value=""></option>
                     <?php
                         $table = new PeopleTable();
                         $list = $table->find();
@@ -47,9 +46,10 @@ $title = $this->issue->getId() ? $this->_('issue_edit') : $this->_('issue_add');
                         }
                     ?>
                     </select>
-                </td>
-            <tr><td><label for="issueType_id"><?php echo $this->_(['issueType', 'issueTypes', 1]); ?></label></td>
-                <td><select name="issueType_id"><option value=""></option>
+                </dd>
+            </dl>
+            <dl class="input text"><dt><label for="issueType_id"><?php echo $this->_(['issueType', 'issueTypes', 1]); ?></label></dt>
+                <dd><select name="issueType_id"><option value=""></option>
                     <?php
                         $table = new IssueTypesTable();
                         $list = $table->find();
@@ -62,9 +62,8 @@ $title = $this->issue->getId() ? $this->_('issue_edit') : $this->_('issue_add');
                         }
                     ?>
                     </select>
-                </td>
-            </tr>
-        </table>
+                </dd>
+            </dl>
     </fieldset>
 
     <fieldset>
