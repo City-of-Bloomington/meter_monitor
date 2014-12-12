@@ -23,7 +23,7 @@ use Blossom\Classes\Url;
         }
     ?>
 </h2>
-<table class="data">
+<table class="output-tabular">
     <?php
         foreach ($this->issueTypes as $type) {
             $name        = View::escape($type->getName());

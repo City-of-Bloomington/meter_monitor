@@ -37,7 +37,7 @@ use Blossom\Classes\Url;
     echo "$c {$this->_(['issue', 'issues', $c])}";
 ?>
 </h3>
-<table class="data">
+<table class="output-tabular">
     <thead>
         <tr><th></th>
             <th></th>

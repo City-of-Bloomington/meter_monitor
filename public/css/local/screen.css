@@ -1,16 +1,30 @@
 /**
  * Basic HTML element styles
  */
-body { font-family:sans-serif; }
+html {
+    background: url('../../images/Bloomington_IN_Kirkwood-blurred.jpg') 50% 50% #ecf1f4;
+    background-attachment: fixed;
+}
+body {
+    background: #fff;
+    border: 1px solid #ccc;
+    border-radius: 1em;
+    box-shadow: 0 0 15px 0 rgba(0,0,0,.5);
+    color: #303030;
+    font-family: "Open Sans", "Helvetica Neue", Arial, sans-serif;
+    margin: 2em auto;
+    padding: 2em 0;
+    width: 66em;
+}
 
-h2 { font-size:131%; font-weight:bold; margin:.5em 0; color:#036; }
+h2 { font-size:131%; font-weight:bold; margin:.5em 0; color:#1e59ae; }
 h3 { font-size:123.1%; font-weight:bold;  margin:.5em 0 .25em 0; }
 h4 { font-size:100%; font-weight:bold; }
 a { text-decoration:none; color:#00f; }
 p { margin:0 .5em .5em .5em; }
 
-table { margin:0 .5em .5em .5em; }
-th { color:#333; font-weight:bold; font-size:90%; padding:0.25em; }
+table { margin: 1em 0 1em 0; }
+th { font-weight:bold; font-size:90%; padding:0.25em; }
 td { padding:.25em; }
 thead th { text-align:left; }
 tbody th { text-align:right; }
@@ -57,20 +71,67 @@ button, .btn {
 /**
  * Banner
  */
-header { color:#fff; background-color:#036; margin:0; }
-header a { color:#fff; font-weight:bold; }
-header h1 { margin:0 4px; font-size:174%; }
-header div { margin:4px; }
-header nav {
-	margin-top:5px; padding:5px;
-	background-color:#fff;
-	border-top:2px solid #000; border-bottom:2px solid #000;
+header {
+    background-color: #fff;
+    color: #fff;
+    margin: 0 auto 0;
+    position: relative;
+    width: 60em;
 }
-header nav a { font-weight:bold; color:black; margin-right:1em; }
-#utilityBar { float:right; width:50%; text-align:right; }
-#utilityBar li { display:inline; margin-right:1em; color:white; }
+header:before {
+    background: url('../../images/Simple_City_Logo.svg') no-repeat;
+    background-size: 100% 100%;
+    content: '';
+    display: block;
+    float: left;
+    height: 4em;
+    margin: -.5em .75em 0 .75em;
+    width: 4em;
+}
+header > h1 {
+    font-size:1.5em;
+    font-weight: normal;
+    margin: 0;
+    text-transform: capitalize;
+}
 
-#panel-container { padding:8px; }
+header > h1 > a { color:#1e59ae; }
+header > div {
+    font-weight: 600;
+    margin: .3em .3em 1.25em 0;
+}
+header > div > a { color: #1e59ae; }
+header > nav {
+    background-color:#1e59ae;
+    color: #fff;
+    margin-top:5px;
+    padding: .25em 0;
+}
+header > nav:after {
+    clear: both;
+    content: '';
+    display: table;
+}
+header > nav > a {
+    background: #1e59ae;
+    color: #fff;
+    display: block;
+    float: left;
+    font-weight: normal;
+    padding: .5em 1em;
+    transition: background .25s linear;
+}
+header > nav > a:hover {
+    background: #184878;
+}
+#utilityBar { float:right; width:50%; text-align:right; }
+#utilityBar > li { display:inline; margin-right:1em; color:white; }
+#utilityBar > li > a { color:#1e59ae; }
+
+#panel-container {
+    margin: 0 auto;
+    width: 58em;
+}
 
 /**
  * Side Panel
@@ -102,6 +163,45 @@ header nav a { font-weight:bold; color:black; margin-right:1em; }
 #issueType_picker { -moz-column-count:3; column-count:3; }
 #issueType_picker ul { list-style-type:none; }
 
-table.data tbody tr:nth-child(even) { background-color:#ddd; }
-.status_problem a { color:red;   }
-.status_okay    a { color:green; }
+.output-tabular {
+    width: 100%;
+}
+.output-tabular > thead > tr > th {
+    background: #dbdbdb;
+    color: #444;
+    font-size: .85em;
+    font-weight: normal;
+    height: 2em;
+    padding: .25em .5em .5em .5em;
+    vertical-align: bottom;
+}
+.output-tabular > thead > tr > th:first-child {
+    border-radius: 1em 0 0 0;
+}
+.output-tabular > thead > tr > th:last-child {
+    border-radius: 0 1em 0 0;
+}
+.output-tabular > tbody > tr > th,
+.output-tabular > tbody > tr > td {
+    transition: background-color .2s linear;
+    vertical-align: top;
+}
+.output-tabular > tbody > tr:hover > th,
+.output-tabular > tbody > tr:hover > td {
+    background: #d0f0ff;
+}
+.output-tabular > thead > tr > th,
+.output-tabular > tbody > tr > th,
+.output-tabular > tbody > tr > td {
+    border-bottom: 1px solid #c0c0c0;
+    padding: .5em 1.5em .5em .5em;
+}
+.column-status { text-align: right; }
+.status_problem > a { color: #c60318;   }
+.status_okay > a { color: #00920e; }
+
+/*dl*/.classname {
+    
+}
+/*dl*/.classname.mod-Change > .ext-StubNamespace {
+}

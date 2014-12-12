@@ -36,10 +36,10 @@ use Blossom\Classes\Url;
     echo "$c {$this->_(['workOrder', 'workOrders', $c])}";
 ?>
 </h3>
-<table class="data">
+<table class="output-tabular">
     <thead>
         <tr><th></th>
-            <th><?php echo $this->_(['meter', 'meters', 1]); ?></th>
+            <th class="column-status"><?php echo $this->_(['meter', 'meters', 1]); ?></th>
             <th><?php echo $this->_(['workOrder', 'workOrders', 1]); ?></th>
             <th><?php echo $this->_('dateCompleted'); ?></th>
             <th><?php echo $this->_('completedByPerson'); ?></th>
