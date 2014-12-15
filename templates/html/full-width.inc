@@ -6,6 +6,7 @@
 	$this->_include('partials/header.inc');
 ?>
 <body>
+    <div class="layout-container">
 	<?php
 		$this->_include('partials/banner.inc');
 	?>
@@ -21,6 +22,7 @@
 	<?php
 		$this-> _include('partials/footer.inc');
 	?>
+    </div>
 </body>
 </html>
 <?php

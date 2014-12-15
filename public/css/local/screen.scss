@@ -1,0 +1,310 @@
+/**
+ * Basic HTML element styles
+ */
+
+body {
+    color: #303030;
+    font-family: "Open Sans", "Helvetica Neue", Arial, sans-serif;
+}
+.layout-container {
+    padding: 1em;
+}
+h2 {
+    font-size:131%;
+    font-weight: normal;
+    margin: 1.5em 0 .5em;
+    color:#1e59ae;
+}
+h3 { font-size:123.1%; font-weight:bold;  margin:.5em 0 .25em 0; }
+h4 { font-size:100%; font-weight:bold; }
+a { text-decoration:none; color:#00f; }
+p { margin:0 .5em .5em .5em; }
+
+table { margin: 1em 0 1em 0; }
+th { font-weight:bold; font-size:90%; padding:0.25em; }
+td { padding:.25em; }
+thead th { text-align:left; }
+tbody th { text-align:right; }
+
+ul { list-style-type:bullet; margin-left:1em; padding:0; }
+li { margin:0; }
+
+fieldset { padding:.25em 0; }
+legend { font-weight:bold; }
+
+@media (max-width:400px) {
+    textarea { width:80%; height:6em; }
+}
+@media (min-width:401px) {
+    textarea { width:60ex; height:12em; }
+}
+
+/**
+ * Base styles for buttons and button links
+ */
+button, .btn {
+    font-size:12px; color:black;
+    font-weight:normal;
+    display:inline-block;
+    padding:4px;
+    margin-right:.5ex;
+    border:1px solid #ccc;
+    background-image:url('images/buttonBackground.png');
+    background-position:left center;
+    background-repeat:repeat-x;
+}
+.hidden-label       { font-size:0; height:1px; overflow:hidden; }
+.fa-times       { color:red;   }
+.fa-pencil      { color:blue;  }
+.fa-edit        { color:blue;  }
+.fa-plus        { color:green; }
+.fa-ok          { color:green; }
+.fa-save        { color:green; }
+.fa-map-marker  { color:blue;  }
+.fa-list-ul     { color:blue;  }
+.fa-print       { color:blue;  }
+
+/**
+ * Banner
+ */
+header {
+    background-color: #fff;
+    color: #fff;
+    margin: 0 auto 0;
+    position: relative;
+}
+header:before {
+    background: url('../../images/Simple_City_Logo.svg') no-repeat;
+    background-size: 100% 100%;
+    content: '';
+    display: block;
+    float: left;
+    height: 4em;
+    margin: -.5em .75em 0 .75em;
+    width: 4em;
+}
+header > h1 {
+    font-size:1.5em;
+    font-weight: normal;
+    margin: 0;
+    text-transform: capitalize;
+}
+
+header > h1 > a { color:#1e59ae; }
+header > div {
+    font-weight: 600;
+    margin: .3em .3em 1.25em 0;
+}
+header > div > a { color: #1e59ae; }
+header > nav {
+    background-color:#1e59ae;
+    color: #fff;
+    margin-top:5px;
+    padding: .25em 0;
+}
+header > nav:after {
+    clear: both;
+    content: '';
+    display: table;
+}
+header > nav > a {
+    background: #1e59ae;
+    color: #fff;
+    display: block;
+    font-weight: normal;
+    padding: .5em 1em;
+    transition: background .25s linear;
+}
+header > nav > a:hover {
+    background: #184878;
+}
+#utilityBar { float:right; width:50%; text-align:right; }
+#utilityBar > li { display:inline; margin-right:1em; color:white; }
+#utilityBar > li > a { color:#1e59ae; }
+
+/**
+ * Side Panel
+ */
+#panel-one nav {
+	border:2px solid #000; margin-bottom:0.5em;
+	border-radius:10px;
+	overflow:hidden;
+}
+#panel-one h2 {
+	background-color:#36c; color:#fff;
+	border-bottom:2px solid #000;
+	margin:0; padding:.25em;
+}
+#panel-one ul { margin:.25em; padding:0; }
+#panel-one a { font-weight:bold; color:#000; }
+
+/**
+ * Main Content
+ */
+#errorMessages { background-color:#fcc; padding:4px; border-radius:10px; }
+#errorMessages h2 { }
+
+.pageNavigation ul { list-style-type:none; }
+.pageNavigation li { display:inline; margin-right:1em; }
+.pageNavigation .current { border:2px solid green; }
+
+
+#issueType_picker { -moz-column-count:3; column-count:3; }
+#issueType_picker ul { list-style-type:none; }
+
+.output-tabular {
+    width: 100%;
+}
+.output-tabular > thead > tr > th {
+    background: #dbdbdb;
+    color: #444;
+    font-size: .85em;
+    font-weight: normal;
+    height: 2em;
+    padding: .25em .5em .5em .5em;
+    vertical-align: bottom;
+}
+.output-tabular > thead > tr > th:first-child {
+    border-radius: 1em 0 0 0;
+}
+.output-tabular > thead > tr > th:last-child {
+    border-radius: 0 1em 0 0;
+}
+.output-tabular > tbody > tr > th,
+.output-tabular > tbody > tr > td {
+    transition: background-color .2s linear;
+    vertical-align: top;
+}
+.output-tabular > tbody > tr:hover > th,
+.output-tabular > tbody > tr:hover > td {
+    background: #d0f0ff;
+}
+.output-tabular > thead > tr > th,
+.output-tabular > tbody > tr > th,
+.output-tabular > tbody > tr > td {
+    border-bottom: 1px solid #c0c0c0;
+    padding: .5em 1.5em .5em .5em;
+}
+.column-status { text-align: right; }
+.status_problem > a { color: #c60318;   }
+.status_okay > a { color: #00920e; }
+
+
+/*dl*/.input {
+    &-field {
+        padding: .5em 0;
+
+        > dt {
+            font-size: .75em;
+            font-weight: normal;
+            margin: 0 0 .25em 0;
+
+            > label {
+                font-weight: normal;
+            }
+        }
+        > dd {
+            margin: 0;
+            padding: 0;
+        }
+        &.mod-text {
+            > dd {
+                > input {
+                    font-size: 1em;
+                }
+            }
+        }
+        &.mod-radio {
+            > dd {
+                margin-bottom: .25em;
+                padding: 0 0 0 1.6em;
+                vertical-align: middle;
+
+                > label {
+                    margin: 0;
+                    vertical-align: middle;
+
+                    > input[type="radio"] {
+                        font-size: 1em;
+                        margin: 0 .45em 0 -1.4em;
+                        padding: 0;
+                        vertical-align: middle;
+
+                        + span {
+                            margin: 0;
+                            padding: 0;
+                            vertical-align: middle;
+                        }
+                    }
+                }
+            }
+        }
+    }
+    &-buttons {
+        margin: 1em 0;
+    }
+}
+@media screen and (min-width: 70em) {
+    body {
+        background: url('../../images/Bloomington_IN_Kirkwood-blurred.jpg') 50% 50% #ecf1f4;
+        background-attachment: fixed;
+    }
+    header {
+        width: 60em;
+
+        > nav {
+            > a {
+                float: left;
+            }
+        }
+    }
+    .layout-container {
+        background: #fff;
+        border: 1px solid #ccc;
+        border-radius: 1em;
+        box-shadow: 0 0 15px 0 rgba(0,0,0,.5);
+        margin: 2em auto;
+        padding: 2em 0;
+        width: 66em;
+    }
+    #panel-container {
+        margin: 0 auto;
+        width: 58em;
+    }
+
+    /*dl*/.input {
+        &-field {
+            border-top: 1px solid #c0c0c0;
+            border-bottom: 1px solid #c0c0c0;
+            margin: -1px 0 0 0;
+            transition: background .25s linear;
+
+            &:after {
+                clear: both;
+                content: "";
+                display: table;
+            }
+            &:hover {
+                background: #d0f0ff;
+            }
+            > dt {
+                float: left;
+                font-size: 1em;
+                margin: 0;
+                width: 8em;
+            }
+            > dd {
+                margin-left: 9em;
+            }
+
+            &.mod-text {
+                > dt {
+                    padding-top: .25em;
+                }
+            }
+        }
+        &-buttons {
+            margin: 1em 0 1em 9em;
+        }
+    }
+}

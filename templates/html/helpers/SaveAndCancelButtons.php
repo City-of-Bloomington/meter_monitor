@@ -13,12 +13,14 @@ class SaveAndCancelButtons extends Helper
 	public function saveAndCancelButtons($cancelURL, $onclick=null)
 	{
 		$buttons = "
-		<button type=\"submit\"><i class=\"fa fa-save\"></i>
-			{$this->template->_('save')}
-		</button>
-		<a class=\"btn\" href=\"$cancelURL\" $onclick><i class=\"fa fa-undo\"></i>
-			{$this->template->_('cancel')}
-		</a>
+                <div class=\"input-buttons\">
+                    <button type=\"submit\"><i class=\"fa fa-save\"></i>
+                            {$this->template->_('save')}
+                    </button>
+                    <a class=\"btn\" href=\"$cancelURL\" $onclick><i class=\"fa fa-undo\"></i>
+                            {$this->template->_('cancel')}
+                    </a>
+                </div>
 		";
 		return $buttons;
 	}

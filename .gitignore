@@ -10,3 +10,5 @@ dist
 /meters.sql
 /nbproject/project.xml
 nbproject/private/private.xml
+
+nbproject/private/config.properties

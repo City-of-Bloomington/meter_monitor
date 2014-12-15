@@ -1,7 +1,7 @@
 <?php
 use Blossom\Classes\View;
 ?>
-<header>
+<header class="layout-row">
 	<ul id="utilityBar">
 		<?php
 			$li = '<li><a href="%s">%s</a></li>';
