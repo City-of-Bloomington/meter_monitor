@@ -82,7 +82,7 @@ use Blossom\Classes\Url;
                 <td>$reportedByPerson</td>
                 <td>$reported</td>
                 <td>$completed</td>
-                $comments
+                <td>$comments</td>
             </tr>
             ";
         }
