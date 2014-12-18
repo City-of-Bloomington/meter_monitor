@@ -15,13 +15,15 @@ class IssuesTable extends TableGateway
 
     public function __construct() { parent::__construct('issues', __namespace__.'\Issue'); }
 
+    const DEFAULT_ORDER = 'reportedDate desc';
+
     /**
      * @param array $fields
      * @param string|array $order Multi-column sort should be given as an array
      * @param bool $paginated Whether to return a paginator or a raw resultSet
      * @param int $limit
      */
-    public function find($fields=null, $order='reportedDate desc', $paginated=false, $limit=null)
+    public function find($fields=null, $order=self::DEFAULT_ORDER, $paginated=false, $limit=null)
     {
         $select = new Select('issues');
         if (count($fields)) {
@@ -53,6 +55,7 @@ class IssuesTable extends TableGateway
                 }
             }
         }
+        $order = $order ?: self::DEFAULT_ORDER;
         return parent::performSelect($select, $order, $paginated, $limit);
     }
 
@@ -62,7 +65,7 @@ class IssuesTable extends TableGateway
      * @param bool $paginated Whether to return a paginator or a raw resultSet
      * @param int $limit
      */
-    public function search($fields=null, $order='reportedDate desc', $paginated=false, $limit=null)
+    public function search($fields=null, $order=self::DEFAULT_ORDER, $paginated=false, $limit=null)
     {
         $select = new Select('issues');
         if (count($fields)) {
@@ -94,6 +97,7 @@ class IssuesTable extends TableGateway
                 }
             }
         }
+        $order = $order ?: self::DEFAULT_ORDER;
         return parent::performSelect($select, $order, $paginated, $limit);
     }
 

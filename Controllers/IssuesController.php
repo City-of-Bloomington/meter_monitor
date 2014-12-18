@@ -28,14 +28,16 @@ class IssuesController extends Controller
 
     public function index()
     {
+        $sort = !empty($_GET['sort']) ? $_GET['sort'] : null;
+
         $table = new IssuesTable();
-        $list = $table->search($_GET, null, true);
+        $list = $table->search($_GET, $sort, true);
 
         $page = !empty($_GET['page']) ? (int)$_GET['page'] : 1;
         $list->setCurrentPageNumber($page);
         $list->setItemCountPerPage(20);
 
-        $this->template->blocks[] = new Block('issues/panel.inc', ['issues'    => $list]);
+        $this->template->blocks[] = new Block('issues/panel.inc', ['issues'=>$list]);
     }
 
     public function update()

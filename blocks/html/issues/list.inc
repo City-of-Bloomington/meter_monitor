@@ -8,6 +8,7 @@
  */
 use Application\Models\Person;
 use Application\Models\Issue;
+use Application\Models\IssuesTable;
 use Application\Templates\Helpers\ButtonLink;
 use Blossom\Classes\View;
 use Blossom\Classes\Url;
@@ -15,11 +16,11 @@ use Blossom\Classes\Url;
 <div>
 <?php
     if (Person::isAllowed('issues', 'update')) {
-        $helper = $this->template->getHelper('buttonLink');
+        $buttonHelper = $this->template->getHelper('buttonLink');
         $return_url = Url::current_url();
 
         if (isset($this->meter)) {
-            echo $helper->buttonLink(
+            echo $buttonHelper->buttonLink(
                 BASE_URI."/issues/update?meter_id={$this->meter->getId()};return_url=$return_url",
                 $this->_('issue_add'),
                 'add'
@@ -35,6 +36,9 @@ use Blossom\Classes\Url;
         ? $this->issues->getTotalItemCount()
         : count($this->issues);
     echo "$c {$this->_(['issue', 'issues', $c])}";
+
+    $sort = !empty($_GET['sort']) ? $_GET['sort'] : IssuesTable::DEFAULT_ORDER;
+    $sortHelper = $this->template->getHelper('sortableLabel');
 ?>
 </h3>
 <table class="data">
@@ -43,7 +47,7 @@ use Blossom\Classes\Url;
             <th></th>
             <th><?php echo $this->_(['issue', 'issues', 1]); ?></th>
             <th><?php echo $this->_('reportedByPerson'); ?></th>
-            <th><?php echo $this->_('reportedDate'); ?></th>
+            <th><?php echo $sortHelper->sortableLabel('reportedDate', $this->_('reportedDate'), $sort); ?></th>
             <th><?php echo $this->_('dateCompleted'); ?></th>
             <?php if (isset($this->meter)) { echo "<th>{$this->_('comments')}</th>"; } ?>
         </tr>
@@ -65,7 +69,7 @@ use Blossom\Classes\Url;
 
             $editButton   = '';
             if (Person::isAllowed('issues', 'update')) {
-                $editButton = $helper->buttonLink(
+                $editButton = $buttonHelper->buttonLink(
                     BASE_URI."/issues/update?issue_id={$issue->getId()};return_url=$return_url",
                     $this->_('edit'),
                     'edit',
