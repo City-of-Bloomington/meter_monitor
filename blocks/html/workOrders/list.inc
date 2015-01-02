@@ -39,8 +39,8 @@ use Blossom\Classes\Url;
 <table class="output-tabular">
     <thead>
         <tr><th></th>
-            <th class="column-status"><?php echo $this->_(['meter', 'meters', 1]); ?></th>
-            <th><?php echo $this->_(['workOrder', 'workOrders', 1]); ?></th>
+            <th><?php echo $this->_(['meter', 'meters', 1]); ?></th>
+            <th class="column-status"><?php echo $this->_(['workOrder', 'workOrders', 1]); ?></th>
             <th><?php echo $this->_('dateCompleted'); ?></th>
             <th><?php echo $this->_('completedByPerson'); ?></th>
             <th><?php echo $this->_('workOrder_workTypes'); ?></th>

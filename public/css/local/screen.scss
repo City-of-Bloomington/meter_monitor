@@ -1,3 +1,4 @@
+@import '../../../data/_sass_config';
 /**
  * Basic HTML element styles
  */
@@ -7,6 +8,7 @@ body {
     font-family: "Open Sans", "Helvetica Neue", Arial, sans-serif;
 }
 .layout-container {
+    background: #f3f3f3;
     padding: 1em;
 }
 h2 {
@@ -21,7 +23,7 @@ a { text-decoration:none; color:#00f; }
 p { margin:0 .5em .5em .5em; }
 
 table { margin: 1em 0 1em 0; }
-th { font-weight:bold; font-size:90%; padding:0.25em; }
+th { font-weight:bold; }
 td { padding:.25em; }
 thead th { text-align:left; }
 tbody th { text-align:right; }
@@ -97,8 +99,8 @@ header > div {
 }
 header > div > a { color: #1e59ae; }
 header > nav {
-    background-color:#1e59ae;
-    color: #fff;
+    background-color: $navigation-bar-bg;
+    color: $navigation-bar-text;
     margin-top:5px;
     padding: .25em 0;
 }
@@ -108,8 +110,8 @@ header > nav:after {
     display: table;
 }
 header > nav > a {
-    background: #1e59ae;
-    color: #fff;
+    background: $navigation-bar-bg;
+    color: $navigation-bar-text;
     display: block;
     font-weight: normal;
     padding: .5em 1em;
@@ -154,40 +156,59 @@ header > nav > a:hover {
 
 .output-tabular {
     width: 100%;
+
+    @mixin data-cell() {
+        border-bottom: 1px solid #c0c0c0;
+        padding: .75em 1.5em .75em .5em;        
+    }
+    > thead {
+        > tr {            
+            > th {
+                background: #dbdbdb;
+                color: #444;
+                font-size: .85em;
+                font-weight: normal;
+                height: 2em;
+                vertical-align: bottom;
+                @include data-cell();
+            }
+            > th:first-child {
+                border-radius: 1em 0 0 0;
+            }
+            > th:last-child {
+                border-radius: 0 1em 0 0;
+            }
+            &.column-status {
+                text-align: right;
+            }
+        }
+    } 
+    > tbody {
+        > tr {
+            > th, td {
+                background: #fff;
+                transition: background-color .2s linear;
+                vertical-align: top;
+                @include data-cell();
+            }
+            > .status_problem > a {
+                color: #c60318;
+                text-align: right;
+                white-space: nowrap;
+            }
+            > .status_okay > a {
+                color: #00920e;
+                text-align: right;
+                white-space: nowrap;
+            }
+        }
+        > tr:hover {
+            th, td {
+                background: #d0f0ff;                
+            }
+        }
+    }
 }
-.output-tabular > thead > tr > th {
-    background: #dbdbdb;
-    color: #444;
-    font-size: .85em;
-    font-weight: normal;
-    height: 2em;
-    padding: .25em .5em .5em .5em;
-    vertical-align: bottom;
-}
-.output-tabular > thead > tr > th:first-child {
-    border-radius: 1em 0 0 0;
-}
-.output-tabular > thead > tr > th:last-child {
-    border-radius: 0 1em 0 0;
-}
-.output-tabular > tbody > tr > th,
-.output-tabular > tbody > tr > td {
-    transition: background-color .2s linear;
-    vertical-align: top;
-}
-.output-tabular > tbody > tr:hover > th,
-.output-tabular > tbody > tr:hover > td {
-    background: #d0f0ff;
-}
-.output-tabular > thead > tr > th,
-.output-tabular > tbody > tr > th,
-.output-tabular > tbody > tr > td {
-    border-bottom: 1px solid #c0c0c0;
-    padding: .5em 1.5em .5em .5em;
-}
-.column-status { text-align: right; }
-.status_problem > a { color: #c60318;   }
-.status_okay > a { color: #00920e; }
 
 
 /*dl*/.input {
@@ -195,9 +216,8 @@ header > nav > a:hover {
         padding: .5em 0;
 
         > dt {
-            font-size: .75em;
             font-weight: normal;
-            margin: 0 0 .25em 0;
+            margin: 0 0 .25em .5em;
 
             > label {
                 font-weight: normal;
@@ -209,11 +229,15 @@ header > nav > a:hover {
         }
         &.mod-text {
             > dd {
-                > input {
-                    font-size: 1em;
-                }
+                 > input {
+                     box-sizing: border-box;
+                     font-size: 1.25em;
+                     padding: .5em;
+                     width: 100%;
+                 }
             }
         }
+        &.mod-checkbox,
         &.mod-radio {
             > dd {
                 margin-bottom: .25em;
@@ -224,7 +248,7 @@ header > nav > a:hover {
                     margin: 0;
                     vertical-align: middle;
 
-                    > input[type="radio"] {
+                    > input[type="radio"], input[type="checkbox"] {
                         font-size: 1em;
                         margin: 0 .45em 0 -1.4em;
                         padding: 0;
@@ -244,34 +268,19 @@ header > nav > a:hover {
         margin: 1em 0;
     }
 }
-@media screen and (min-width: 70em) {
-    body {
-        background: url('../../images/Bloomington_IN_Kirkwood-blurred.jpg') 50% 50% #ecf1f4;
-        background-attachment: fixed;
+
+/* Media query for tablet layout */
+@media screen and (min-width: 30em) {
+    .layout-container {
+        background: #fff;
     }
     header {
-        width: 60em;
-
         > nav {
             > a {
                 float: left;
             }
         }
     }
-    .layout-container {
-        background: #fff;
-        border: 1px solid #ccc;
-        border-radius: 1em;
-        box-shadow: 0 0 15px 0 rgba(0,0,0,.5);
-        margin: 2em auto;
-        padding: 2em 0;
-        width: 66em;
-    }
-    #panel-container {
-        margin: 0 auto;
-        width: 58em;
-    }
-
     /*dl*/.input {
         &-field {
             border-top: 1px solid #c0c0c0;
@@ -299,12 +308,50 @@ header > nav > a:hover {
 
             &.mod-text {
                 > dt {
-                    padding-top: .25em;
+                    padding: .25em 0 0 0;
+                }
+                > dd {
+                    input {
+                        font-size: 1em;
+                        padding: .2em;
+                        width: 15em;
+                    }                    
                 }
             }
         }
         &-buttons {
             margin: 1em 0 1em 9em;
+        }
+    }
+}
+
+@media screen and (min-width: 70em) {
+    body {
+        background: url('../../images/Bloomington_IN_Kirkwood-blurred.jpg') 50% 50% #ecf1f4;
+        background-attachment: fixed;
+    }
+    header {
+        width: 60em;
+    }
+    .layout-container {
+        border: 1px solid #ccc;
+        border-radius: 1em;
+        box-shadow: 0 0 15px 0 rgba(0,0,0,.5);
+        margin: 2em auto;
+        padding: 2em 0;
+        width: 66em;
+    }
+    #panel-container {
+        margin: 0 auto;
+        width: 58em;
+    }    
+
+    /*dl*/.input {
+        &-field {
+            &.mod-text {
+                > dd {
+                }
+            }
         }
     }
 }
