@@ -11,7 +11,7 @@ use Blossom\Classes\View;
 $c = is_a($this->meters, 'Zend\Paginator\Paginator')
     ? $this->meters->getTotalItemCount()
     : count($c);
-echo "<h3>$c {$this->_(['meter', 'meters', $c])}</h3>";
+echo "<h2>$c {$this->_(['meter', 'meters', $c])}</h2>";
 ?>
 <table class="output-tabular">
     <thead>

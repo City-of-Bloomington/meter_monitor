@@ -6,12 +6,11 @@
 	$this->_include('partials/header.inc');
 ?>
 <body>
-    <div class="layout-container">
 	<?php
 		$this->_include('partials/banner.inc');
 	?>
-	<div id="panel-container">
-		<div id="content-panel">
+	<div id="panel-container" class="panel-row">
+		<div id="content-panel" class="panel-container">
 			<?php
 				include BLOSSOM.'/errorMessages.php';
 
@@ -22,7 +21,6 @@
 	<?php
 		$this-> _include('partials/footer.inc');
 	?>
-    </div>
 </body>
 </html>
 <?php

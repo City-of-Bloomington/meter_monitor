@@ -15,6 +15,7 @@ $meter    = View::escape($this->issue->getMeter());
 $comments = View::escape($this->issue->getComments());
 
 $title = $this->issue->getId() ? $this->_('issue_edit') : $this->_('issue_add');
+$inputHelper = $this->template->getHelper('Input');
 ?>
 <h2><?php echo $title; ?></h2>
 <form method="post" action="<?php echo BASE_URI; ?>/issues/update">
@@ -22,9 +23,8 @@ $title = $this->issue->getId() ? $this->_('issue_edit') : $this->_('issue_add');
         <input name="issue_id" type="hidden" value="<?php echo $this->issue->getId(); ?>" />
         <input name="return_url" type="hidden" value="<?php echo $this->return_url; ?>" />
 
-        <dl class="input-field mod-text"><dt><label for="meter_id" class="required"><?php echo $this->_('meter'); ?></label></dt>
-            <dd><input name="meter_id" id="meter_id" value="<?php echo $meter; ?>" class="meterAutoComplete" /></dd>
-        </dl>
+        <?php echo $inputHelper->text('meter_id', $this->_('meter'), $meter, 'meterAutometerAutoComplete'); ?>
+
         <dl class="input-field mod-text"><dt><label for="reportedDate"><?php echo $this->_('reportedDate'); ?></label></dt>
             <dd><?php
                     $picker = $this->template->getHelper('datePicker');

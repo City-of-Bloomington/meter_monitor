@@ -29,14 +29,14 @@ use Blossom\Classes\Url;
 ?>
 </div>
 <?php if (count($this->issues)): ?>
-<h3>
+<h2>
 <?php
     $c = is_a($this->issues, 'Zend\Paginator\Paginator')
         ? $this->issues->getTotalItemCount()
         : count($this->issues);
     echo "$c {$this->_(['issue', 'issues', $c])}";
 ?>
-</h3>
+</h2>
 <table class="output-tabular">
     <thead>
         <tr><th></th>

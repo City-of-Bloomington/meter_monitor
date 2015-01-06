@@ -6,16 +6,15 @@
  */
 use Blossom\Classes\View;
 
+
 $name = !empty($_GET['name']) ? View::escape($_GET['name']) : '';
 $zone = !empty($_GET['zone']) ? View::escape($_GET['zone']) : '';
+$inputHelper = $this->template->getHelper('Input');
 ?>
 <form method="get" action="<?php echo BASE_URI; ?>/meters">
     <fieldset>
         <legend><?php echo $this->_('search'); ?></legend>
-        <dl class="input-field mod-text">
-            <dt><label for="name"><?php echo $this->_('name'); ?></label></dt>
-            <dd><input name="name" id="name" value="<?php echo $name; ?>" class="meterAutoComplete" /></dd>
-        </dl>
+        <?php echo $inputHelper->text('name', $this->_('name'), $name, 'meterAutoComplete') ?>
         <dl class="input-field"><dt><label for="zone"><?php echo $this->_('zone'); ?></label></dt>
             <dd><?php
                     $z = $this->template->getHelper('zoneSelector');

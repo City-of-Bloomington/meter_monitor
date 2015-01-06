@@ -29,7 +29,7 @@ class DatePicker extends Helper
 
         return "
         <input name=\"{$fieldname}\" id=\"$fieldname\" value=\"$date\"
-               size=\"10\" class=\"date\" placeholder=\"$help\" />
+               size=\"10\" class=\"date\" placeholder=\"$help\" type=\"text\" />
         ";
     }
 }

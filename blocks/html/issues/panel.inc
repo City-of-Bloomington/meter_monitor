@@ -8,7 +8,7 @@
  */
 use Blossom\Classes\Block;
 
-echo "<h2>{$this->_(['issue', 'issues', 2])}</h2>";
+echo "<h1>{$this->_(['issue', 'issues', 2])}</h1>";
 include __DIR__.'/searchForm.inc';
 include __DIR__.'/list.inc';
 

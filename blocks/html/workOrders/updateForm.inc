@@ -25,7 +25,7 @@ $title = $this->workOrder->getId() ? $this->_('workOrder_edit') : $this->_('work
         <input name="meter_id"     type="hidden" value="<?php echo $this->workOrder->getMeter_id(); ?>" />
         <input name="return_url"   type="hidden" value="<?php echo $this->return_url; ?>" />
 
-        <dl class="input-field mod-text"><dt><label for="dateCompleted"><?php echo $this->_('dateCompleted'); ?></label></dt>
+        <dl class="input-field"><dt><label for="dateCompleted"><?php echo $this->_('dateCompleted'); ?></label></dt>
             <dd><?php
                     $picker = $this->template->getHelper('datePicker');
                     echo $picker->datePicker('dateCompleted', $this->workOrder->getDateCompleted('U'));

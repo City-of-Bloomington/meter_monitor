@@ -1,0 +1,7 @@
+.input-buttons {
+    margin: 1em 0;
+
+    @media screen and (min-width: $window-med) {
+        margin: 1em 0 1em 9em;
+    }
+}

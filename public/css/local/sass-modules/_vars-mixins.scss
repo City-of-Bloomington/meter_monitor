@@ -1,0 +1,10 @@
+$window-med: 46em;
+$window-lg: 70em;
+
+@mixin clearfix {
+    &:after {
+        clear: both;
+        content: '';
+        display: table;
+    }
+}
