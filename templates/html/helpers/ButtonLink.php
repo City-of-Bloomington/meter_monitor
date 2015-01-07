@@ -20,7 +20,8 @@ class ButtonLink extends Helper
 		'edit'   => 'fa fa-pencil',
 		'delete' => 'fa fa-times',
 		'cancel' => 'fa fa-times',
-		'print'  => 'fa fa-print'
+		'print'  => 'fa fa-print',
+		'download' => 'fa fa-download'
 	];
 
 	public function buttonLink($url, $label, $type, $size=self::SIZE_BUTTON)

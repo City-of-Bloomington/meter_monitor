@@ -39,6 +39,10 @@ use Blossom\Classes\Url;
 
     $sort = !empty($_GET['sort']) ? $_GET['sort'] : IssuesTable::DEFAULT_ORDER;
     $sortHelper = $this->template->getHelper('sortableLabel');
+
+    $downloadUrl = new Url(Url::current_url());
+    $downloadUrl->format = 'csv';
+    echo $buttonHelper->buttonLink($downloadUrl, 'csv', 'download');
 ?>
 </h3>
 <table class="data">

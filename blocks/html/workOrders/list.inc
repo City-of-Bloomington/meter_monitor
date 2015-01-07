@@ -14,12 +14,13 @@ use Blossom\Classes\Url;
 ?>
 <div>
 <?php
+    $buttonHelper = $this->template->getHelper('buttonLink');
+
     if (Person::isAllowed('workOrders', 'update')) {
-        $helper = $this->template->getHelper('buttonLink');
         $return_url = Url::current_url();
 
         if (isset($this->meter)) {
-            echo $helper->buttonLink(
+            echo $buttonHelper->buttonLink(
                 BASE_URI."/workOrders/update?meter_id={$this->meter->getId()};return_url=$return_url",
                 $this->_('workOrder_add'),
                 'add'
@@ -38,6 +39,10 @@ use Blossom\Classes\Url;
 
     $sort = !empty($_GET['sort']) ? $_GET['sort'] : WorkOrdersTable::DEFAULT_ORDER;
     $sortHelper = $this->template->getHelper('sortableLabel');
+
+    $downloadUrl = new Url(Url::current_url());
+    $downloadUrl->format = 'csv';
+    echo $buttonHelper->buttonLink($downloadUrl, 'csv', 'download');
 ?>
 </h3>
 <table class="data">
@@ -71,14 +76,14 @@ use Blossom\Classes\Url;
 
             $editButton   = '';
             if (Person::isAllowed('issues', 'update')) {
-                $editButton = $helper->buttonLink(
+                $editButton = $buttonHelper->buttonLink(
                     BASE_URI."/workOrders/update?workOrder_id={$work->getId()};return_url=$return_url",
                     $this->_('edit'),
                     'edit',
                     ButtonLink::SIZE_ICON
                 );
             }
-            
+
             if (isset($this->meter)) {
                 $comments = "<td>{View::escape($work->getComments())}</td>";
             }
