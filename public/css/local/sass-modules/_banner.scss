@@ -49,7 +49,20 @@
     .header {
         &-row {
             position: relative;
-            z-index: 2;
+            z-index: 3;
+
+            &:after {
+                background: url($header-background-url);
+                background-size: 100% auto;
+                content: '';
+                display: block;
+                height: 18.75em;
+                position: absolute;
+                top: 100%;
+                left: 0;
+                right: 0;
+                z-index: 2;
+            }
         }
         &-container {
             box-sizing: border-box;
@@ -63,14 +76,16 @@
         }
     }
     .nav1 {
+        &-row {
+            padding: 2.7em 0 0 0;
+            position: relative;
+            z-index: 3;
+        }
         &-container {
             box-sizing: border-box;
             margin: 0 auto;
             width: 42em;
             @include clearfix();
-        }
-        &-row {
-            padding: 2.7em 0 0 0;
         }
         &-link {
             background: rgba(255, 255, 255, .5);

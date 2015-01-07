@@ -9,6 +9,9 @@
 	<?php
 		$this->_include('partials/banner.inc');
 	?>
+	<?php
+		$this->_include('partials/menubar.inc');
+	?>
 	<div id="panel-container" class="panel-row">
 		<div id="content-panel" class="panel-container">
 			<?php

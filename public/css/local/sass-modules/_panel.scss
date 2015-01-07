@@ -1,25 +1,25 @@
 @media screen and (min-width: $window-med) {
     .panel {
         &-row {
-            background: -moz-linear-gradient(top, #e4eff8 0%, #ffffff 200px); /* FF3.6+ */
-            //            background: -webkit-linear-gradient(top,  #e4eff8 0%,#ffffff 200px); /* Chrome10+,Safari5.1+ */
-            background: -o-linear-gradient(top, #e4eff8 0%,#ffffff 200px); /* Opera 11.10+ */
-            background: -ms-linear-gradient(top, #e4eff8 0%,#ffffff 200px); /* IE10+ */
-            background: linear-gradient(to bottom,  #e4eff8 20em,#ffffff 30em); /* W3C */
-            padding: 0;
             position: relative;
 
             &:before {
-                background: url($header-background-url);
-                background-size: 100% auto;
+                background: -moz-linear-gradient(top, #e4eff8 0%, #ffffff 200px); /* FF3.6+ */
+                //            background: -webkit-linear-gradient(top,  #e4eff8 0%,#ffffff 200px); /* Chrome10+,Safari5.1+ */
+                background: -o-linear-gradient(top, #e4eff8 0%,#ffffff 200px); /* Opera 11.10+ */
+                background: -ms-linear-gradient(top, #e4eff8 0%,#ffffff 200px); /* IE10+ */
+                background: linear-gradient(to bottom,  #e4eff8 20em,#ffffff 30em); /* W3C */
+                box-sizing: content-box;
                 content: '';
                 display: block;
-                height: 18.75em;
+                height: 200px;
+                padding: 20em 0 0 0;
                 position: absolute;
-                top: -5em;
-                left: 0;
-                right: 0;
+                    top: 0;
+                    right: 0;
+                    left: 0;
                 z-index: 1;
+
             }
         }
         &-container {
@@ -31,7 +31,7 @@
             padding: 2em;
             position: relative;
             width: 46em;
-            z-index: 2;
+            z-index: 3;
         }
     }
 }

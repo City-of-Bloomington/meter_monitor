@@ -24,7 +24,4 @@ use Blossom\Classes\View;
 		</div>
 
 	</div>
-	<?php
-		$this->_include('partials/menubar.inc');
-	?>
 </header>
