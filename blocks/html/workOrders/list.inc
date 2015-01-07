@@ -7,6 +7,7 @@
  * @param Meter $this->meter (optional)
  */
 use Application\Models\Person;
+use Application\Models\WorkOrdersTable;
 use Application\Templates\Helpers\ButtonLink;
 use Blossom\Classes\View;
 use Blossom\Classes\Url;
@@ -34,6 +35,9 @@ use Blossom\Classes\Url;
         ? $this->workOrders->getTotalItemCount()
         : count($this->workOrders);
     echo "$c {$this->_(['workOrder', 'workOrders', $c])}";
+
+    $sort = !empty($_GET['sort']) ? $_GET['sort'] : WorkOrdersTable::DEFAULT_ORDER;
+    $sortHelper = $this->template->getHelper('sortableLabel');
 ?>
 </h3>
 <table class="data">
@@ -41,7 +45,7 @@ use Blossom\Classes\Url;
         <tr><th></th>
             <th><?php echo $this->_(['meter', 'meters', 1]); ?></th>
             <th><?php echo $this->_(['workOrder', 'workOrders', 1]); ?></th>
-            <th><?php echo $this->_('dateCompleted'); ?></th>
+            <th><?php echo $sortHelper->sortableLabel('dateCompleted', $this->_('dateCompleted'), $sort); ?></th>
             <th><?php echo $this->_('completedByPerson'); ?></th>
             <th><?php echo $this->_('workOrder_workTypes'); ?></th>
             <?php if (isset($this->meter)) { echo "<th>{$this->_('comments')}</th>"; } ?>
@@ -52,7 +56,6 @@ use Blossom\Classes\Url;
         foreach ($this->workOrders as $work) {
             $meter = $work->getMeter();
             $meterName = View::escape($meter->getName());
-            $comments  = View::escape($work->getComments());
             $completed = $work->getDateCompleted(DATE_FORMAT);
             $status = $meter->hasOpenIssue() ? 'status_problem' : 'status_okay';
 
@@ -75,7 +78,12 @@ use Blossom\Classes\Url;
                     ButtonLink::SIZE_ICON
                 );
             }
-            if (isset($this->meter)) { $comments = "<td>$comments</td>"; }
+            
+            if (isset($this->meter)) {
+                $comments = "<td>{View::escape($work->getComments())}</td>";
+            }
+            else { $comments = ''; }
+
             echo "
             <tr><th>$editButton</th>
                 <th class=\"$status\">

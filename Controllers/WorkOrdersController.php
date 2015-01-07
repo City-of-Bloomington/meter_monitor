@@ -28,8 +28,9 @@ class WorkOrdersController extends Controller
 
     public function index()
     {
+        $sort = !empty($_GET['sort']) ? $_GET['sort'] : null;
         $table = new WorkOrdersTable();
-        $list = $table->search($_GET, null, true);
+        $list = $table->search($_GET, $sort, true);
 
         $page = !empty($_GET['page']) ? (int)$_GET['page'] : 1;
         $list->setCurrentPageNumber($page);

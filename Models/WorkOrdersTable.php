@@ -12,6 +12,7 @@ use Zend\Db\Sql\Select;
 class WorkOrdersTable extends TableGateway
 {
     protected $columns = ['id', 'meter_id', 'completedByPerson_id'];
+    const DEFAULT_ORDER = 'dateCompleted desc';
 
     public function __construct() { parent::__construct('workOrders', __namespace__.'\WorkOrder'); }
 
@@ -33,7 +34,7 @@ class WorkOrdersTable extends TableGateway
      * @param bool $paginated Whether to return a paginator or a raw resultSet
      * @param int $limit
      */
-    public function find($fields=null, $order='dateCompleted desc', $paginated=false, $limit=null)
+    public function find($fields=null, $order=self::DEFAULT_ORDER, $paginated=false, $limit=null)
     {
         $select = new Select('workOrders');
         if (count($fields)) {
@@ -60,6 +61,7 @@ class WorkOrdersTable extends TableGateway
                 }
             }
         }
+        $order = $order ?: self::DEFAULT_ORDER;
         return parent::performSelect($select, $order, $paginated, $limit);
     }
 
@@ -69,7 +71,7 @@ class WorkOrdersTable extends TableGateway
      * @param bool $paginated Whether to return a paginator or a raw resultSet
      * @param int $limit
      */
-    public function search($fields=null, $order='dateCompleted desc', $paginated=false, $limit=null)
+    public function search($fields=null, $order=self::DEFAULT_ORDER, $paginated=false, $limit=null)
     {
         $select = new Select('workOrders');
         if (count($fields)) {
@@ -98,6 +100,7 @@ class WorkOrdersTable extends TableGateway
                 }
             }
         }
+        $order = $order ?: self::DEFAULT_ORDER;
         return parent::performSelect($select, $order, $paginated, $limit);
     }
 }
