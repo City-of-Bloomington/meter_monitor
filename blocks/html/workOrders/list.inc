@@ -85,7 +85,8 @@ use Blossom\Classes\Url;
             }
 
             if (isset($this->meter)) {
-                $comments = "<td>{View::escape($work->getComments())}</td>";
+                $comments = View::escape($work->getComments());
+                $comments = "<td>$comments</td>";
             }
             else { $comments = ''; }
 
