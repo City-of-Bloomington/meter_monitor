@@ -76,10 +76,11 @@ button, .btn {
 .fa-list-ul     { color:blue;  }
 .fa-print       { color:blue;  }
 
-/**
- * Banner
- */
-@import 'sass-modules/_banner';
+
+.view {
+    @import 'sass-modules/_banner';
+    @import 'sass-modules/_panel';
+}
 
 /**
  * Side Panel
@@ -111,7 +112,6 @@ button, .btn {
 #issueType_picker { -moz-column-count:3; column-count:3; }
 #issueType_picker ul { list-style-type:none; }
 
-@import 'sass-modules/_panel';
 @import 'sass-modules/output/_tabular';
 @import 'sass-modules/input/_field';
 @import 'sass-modules/input/_buttons';

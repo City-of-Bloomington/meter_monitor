@@ -12,15 +12,15 @@
 	<?php
 		$this->_include('partials/menubar.inc');
 	?>
-	<div id="panel-container" class="panel-row">
-		<div id="content-panel" class="panel-container">
+	<main id="panel-container" class="view-main">
+		<div id="content-panel" class="view-main-container">
 			<?php
 				include BLOSSOM.'/errorMessages.php';
 
 				echo $this->includeBlocks();
 			?>
 		</div>
-	</div>
+	</main>
 	<?php
 		$this-> _include('partials/footer.inc');
 	?>

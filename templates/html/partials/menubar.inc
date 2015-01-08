@@ -1,8 +1,8 @@
 <?php
 use Application\Models\Person;
 ?>
-<div class="nav1-row">
-    <nav class="nav1-container">
+<div class="view-nav1">
+    <nav class="view-nav1-container">
     <?php
         $a = '<a href="%s" class="nav1-link">%s</a>';
 

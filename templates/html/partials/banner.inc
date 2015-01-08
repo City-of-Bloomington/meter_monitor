@@ -1,8 +1,8 @@
 <?php
 use Blossom\Classes\View;
 ?>
-<header class="header-row">
-	<div class="header-container">
+<header class="view-header">
+	<div class="view-header-container">
 		<div class="header-title">
 			<h1><a href="<?php echo BASE_URL; ?>/"><?php echo APPLICATION_NAME; ?></a></h1>
 			<div id="location_name" class="header-location">
