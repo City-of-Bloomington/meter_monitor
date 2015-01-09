@@ -28,7 +28,7 @@ class DatePicker extends Helper
         $help = View::translateDateString(DATE_FORMAT);
 
         return "
-        <input name=\"{$fieldname}\" id=\"$fieldname\" value=\"$date\"
+        <input name=\"$fieldname\" id=\"$fieldname\" value=\"$date\"
                size=\"10\" class=\"date\" placeholder=\"$help\" />
         ";
     }

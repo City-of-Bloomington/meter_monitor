@@ -6,6 +6,7 @@
  */
 namespace Application\Models;
 
+use Blossom\Classes\ActiveRecord;
 use Blossom\Classes\TableGateway;
 use Zend\Db\Sql\Select;
 
@@ -47,6 +48,16 @@ class IssuesTable extends TableGateway
                             $select->where(['m.zone'=>$value]);
                             break;
 
+                        case 'reportedDate-start':
+                            $d = date(ActiveRecord::MYSQL_DATETIME_FORMAT, strtotime($value));
+                            $select->where("reportedDate>='$d'");
+                            break;
+
+                        case 'reportedDate-end':
+                            $d = date(ActiveRecord::MYSQL_DATETIME_FORMAT, strtotime($value));
+                            $select->where("reportedDate<='$d'");
+                            break;
+
                         default:
                             if (in_array($key, $this->columns)) {
                                 $select->where([$key=>$value]);
@@ -55,6 +66,7 @@ class IssuesTable extends TableGateway
                 }
             }
         }
+
         $order = $order ?: self::DEFAULT_ORDER;
         return parent::performSelect($select, $order, $paginated, $limit);
     }
@@ -87,6 +99,16 @@ class IssuesTable extends TableGateway
 
                         case 'zone':
                             $select->where(['m.zone'=>$value]);
+                            break;
+
+                        case 'reportedDate-start':
+                            $d = date(ActiveRecord::MYSQL_DATETIME_FORMAT, strtotime($value));
+                            $select->where("reportedDate>='$d'");
+                            break;
+
+                        case 'reportedDate-end':
+                            $d = date(ActiveRecord::MYSQL_DATETIME_FORMAT, strtotime($value));
+                            $select->where("reportedDate<='$d'");
                             break;
 
                         default:

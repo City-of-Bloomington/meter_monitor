@@ -14,6 +14,21 @@ use Application\Models\Issue;
         </table>
 
         <div>
+            <label><?php echo $this->_('reportedDate'); ?></label>
+            <label for="reportedDate-start"><?php echo $this->_('start'); ?></label>
+            <?php
+                $h = $this->template->getHelper('datePicker');
+                $d = !empty($_GET['reportedDate-start']) ? strtotime($_GET['reportedDate-start']) : null;
+                echo $h->datePicker('reportedDate-start', $d);
+            ?>
+            <label for="reportedDate-end"><?php echo $this->_('end'); ?></label>
+            <?php
+                $d = !empty($_GET['reportedDate-end']) ? strtotime($_GET['reportedDate-end']) : null;
+                echo $h->datePicker('reportedDate-end', $d);
+            ?>
+        </div>
+
+        <div>
             <label><?php echo $this->_('status'); ?></label>
             <label>
             <?php
