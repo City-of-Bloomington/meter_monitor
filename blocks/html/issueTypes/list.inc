@@ -13,6 +13,7 @@ use Blossom\Classes\Url;
 $userCanEdit = Person::isAllowed('issueTypes', 'update') && empty($_GET['print']);
 $helper = $this->template->getHelper('buttonLink');
 ?>
+<div id="issueTypes_list">
 <h2><?php
         echo $this->_(['issueTypeGroup', 'issueTypeGroups', 2]);
         if ($userCanEdit) {
@@ -82,3 +83,5 @@ foreach ($this->issueTypeGroups as $group) {
     </section>
     ";
 }
+?>
+</div>
