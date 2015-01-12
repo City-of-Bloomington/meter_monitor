@@ -10,7 +10,7 @@ use Application\Templates\Helpers\ButtonLink;
 use Blossom\Classes\View;
 use Blossom\Classes\Url;
 
-$userCanEdit = Person::isAllowed('issueTypes', 'update');
+$userCanEdit = Person::isAllowed('issueTypes', 'update') && empty($_GET['print']);
 $helper = $this->template->getHelper('buttonLink');
 ?>
 <h2><?php
@@ -21,6 +21,11 @@ $helper = $this->template->getHelper('buttonLink');
                 $this->_('issueTypeGroup_add'),
                 'add'
             );
+        }
+
+        if (empty($_GET['print'])) {
+            $p = $this->template->getHelper('printButton');
+            echo $p->printButton();
         }
     ?>
 </h2>

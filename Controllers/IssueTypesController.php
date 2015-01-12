@@ -27,6 +27,10 @@ class IssueTypesController extends Controller
 
     public function index()
     {
+        if (!empty($_GET['print'])) {
+            $this->template->setFilename('print');
+        }
+        
         $table = new IssueTypeGroupsTable();
         $list = $table->find();
         $this->template->blocks[] = new Block('issueTypes/list.inc', ['issueTypeGroups'=>$list]);
