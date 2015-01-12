@@ -1,6 +1,6 @@
 <?php
 /**
- * @copyright 2014-2015 City of Bloomington, Indiana
+ * @copyright 2015 City of Bloomington, Indiana
  * @license http://www.gnu.org/licenses/agpl.txt GNU/AGPL, see LICENSE.txt
  * @author Cliff Ingham <inghamn@bloomington.in.gov>
  */
@@ -8,9 +8,9 @@ namespace Application\Models;
 use Blossom\Classes\ActiveRecord;
 use Blossom\Classes\Database;
 
-class IssueType extends ActiveRecord
+class IssueTypeGroup extends ActiveRecord
 {
-    protected $tablename = 'issueTypes';
+    protected $tablename = 'issueTypeGroups';
 
     /**
      * Populates the object with data
@@ -33,17 +33,17 @@ class IssueType extends ActiveRecord
             else {
                 $zend_db = Database::getConnection();
                 if (ActiveRecord::isId($id)) {
-                    $sql = 'select * from issueTypes where id=?';
+                    $sql = 'select * from issueTypeGroups where id=?';
                 }
                 else {
-                    $sql = 'select * from issueTypes where name=?';
+                    $sql = 'select * from issueTypeGroups where name=?';
                 }
                 $result = $zend_db->createStatement($sql)->execute([$id]);
                 if (count($result)) {
                     $this->exchangeArray($result->current());
                 }
                 else {
-                    throw new \Exception('issueTypes/unknownType');
+                    throw new \Exception('issueTypes/unknownGroup');
                 }
             }
         }
@@ -63,28 +63,33 @@ class IssueType extends ActiveRecord
     //----------------------------------------------------------------
     // Generic Getters & Setters
     //----------------------------------------------------------------
-    public function getId()          { return parent::get('id');          }
-    public function getName()        { return parent::get('name');        }
-    public function getDescription() { return parent::get('description'); }
-    public function getGroup_id()    { return parent::get('issueTypeGroup_id'); }
-    public function getGroup()       { return parent::getForeignKeyObject(__namespace__.'\IssueTypeGroup', 'issueTypeGroup_id'); }
+    public function getId()   { return parent::get('id');   }
+    public function getName() { return parent::get('name'); }
 
-    public function setName       ($s) { parent::set('name',        $s); }
-    public function setDescription($s) { parent::set('description', $s); }
-    public function setGroup_id($i) { parent::setForeignKeyField (__namespace__.'\IssueTypeGroup', 'issueTypeGroup_id', $i); }
-    public function setGroup   ($o) { parent::setForeignKeyObject(__namespace__.'\IssueTypeGroup', 'issueTypeGroup_id', $o); }
+    public function setName($s) { parent::set('name', $s); }
 
-    /**
-     * @param array $post
-     */
     public function handleUpdate($post)
     {
-        $this->setName       ($post['name']);
-        $this->setDescription($post['description']);
+        $this->setName($post['name']);
     }
 
     //----------------------------------------------------------------
     // Custom Functions
     //----------------------------------------------------------------
     public function __toString() { return parent::get('name'); }
+
+    /**
+     * @return array
+     */
+    public function getIssueTypeStats()
+    {
+        $sql = "select t.id, t.name, count(i.id) as count
+                from issueTypes t
+                left join issues i on t.id=i.issueType_id
+                where t.issueTypeGroup_id=?
+                group by t.id, t.name";
+        $zend_db = Database::getConnection();
+        $result = $zend_db->query($sql)->execute([$this->getId()]);
+        return $result;
+    }
 }

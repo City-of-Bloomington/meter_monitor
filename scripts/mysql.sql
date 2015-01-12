@@ -18,10 +18,18 @@ create table meters (
     zone tinyint unsigned not null
 );
 
+create table issueTypeGroups (
+    id   int unsigned not null primary key auto_increment,
+    name varchar(32)  not null
+);
+insert into issueTypeGroups set name='Other';
+
 create table issueTypes (
     id int unsigned not null primary key auto_increment,
     name varchar(32) not null,
-    description varchar(255)
+    description varchar(255),
+    issueTypeGroup_id int unsigned not null,
+    foreign key (issueTypeGroup_id) references issueTypeGroups(id)
 );
 
 create table issues (

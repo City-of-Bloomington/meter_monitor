@@ -22,6 +22,7 @@ $ZEND_ACL->addResource(new Resource('people'));
 $ZEND_ACL->addResource(new Resource('users'));
 $ZEND_ACL->addResource(new Resource('login'));
 
+$ZEND_ACL->addResource(new Resource('issueTypeGroups'));
 $ZEND_ACL->addResource(new Resource('issueTypes'));
 $ZEND_ACL->addResource(new Resource('workTypes'));
 $ZEND_ACL->addResource(new Resource('workOrders'));
@@ -38,7 +39,9 @@ $ZEND_ACL->allow(null,'login');
 $ZEND_ACL->allow(null, ['index'], ['index']);
 
 // Allow Staff to do stuff
-$ZEND_ACL->allow('Staff', ['meters', 'issueTypes', 'workTypes'], ['index','view']);
+$ZEND_ACL->allow('Staff',
+                ['meters', 'issueTypeGroups', 'issueTypes', 'workTypes'],
+                ['index','view']);
 $ZEND_ACL->allow('Staff', ['issues', 'workOrders'], ['index', 'update']);
 
 // Administrator is allowed access to everything
