@@ -1,0 +1,75 @@
+@import '../../../data/_sass_config';
+@import 'sass-modules/_vars-mixins';
+
+@import 'sass-modules/layout/_html-elements';
+@import 'sass-modules/layout/_header';
+@import 'sass-modules/layout/_nav1';
+@import 'sass-modules/layout/_main';
+//@import'sass-modules/layout/_footer'; <- module deferred
+@import'sass-modules/layout/_site';
+
+
+
+/**
+ * Basic HTML element styles
+ */
+
+
+/**
+ * Base styles for buttons and button links
+ */
+button, .btn {
+    font-size:12px; color:black;
+    font-weight:normal;
+    display:inline-block;
+    padding:4px;
+    margin-right:.5ex;
+    border:1px solid #ccc;
+    background-image:url('images/buttonBackground.png');
+    background-position:left center;
+    background-repeat:repeat-x;
+}
+.hidden-label       { font-size:0; height:1px; overflow:hidden; }
+.fa-times       { color:red;   }
+.fa-pencil      { color:blue;  }
+.fa-edit        { color:blue;  }
+.fa-plus        { color:green; }
+.fa-ok          { color:green; }
+.fa-save        { color:green; }
+.fa-map-marker  { color:blue;  }
+.fa-list-ul     { color:blue;  }
+.fa-print       { color:blue;  }
+
+@import 'sass-modules/output/_tabular';
+@import 'sass-modules/input/_field';
+@import 'sass-modules/input/_buttons';
+
+/**
+ * Side Panel
+ */
+#panel-one nav {
+	border:2px solid #000; margin-bottom:0.5em;
+	border-radius:10px;
+	overflow:hidden;
+}
+#panel-one h2 {
+	background-color:#36c; color:#fff;
+	border-bottom:2px solid #000;
+	margin:0; padding:.25em;
+}
+#panel-one ul { margin:.25em; padding:0; }
+#panel-one a { font-weight:bold; color:#000; }
+
+/**
+ * Main Content
+ */
+#errorMessages { background-color:#fcc; padding:4px; border-radius:10px; }
+#errorMessages h2 { }
+
+.pageNavigation ul { list-style-type:none; }
+.pageNavigation li { display:inline; margin-right:1em; }
+.pageNavigation .current { border:2px solid green; }
+
+
+#issueType_picker { -moz-column-count:3; column-count:3; }
+#issueType_picker ul { list-style-type:none; }

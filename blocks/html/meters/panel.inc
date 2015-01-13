@@ -7,7 +7,7 @@
  */
 use Blossom\Classes\Block;
 
-echo "<h2>{$this->_(['meter', 'meters', 2])}</h2>";
+echo "<h1>{$this->_(['meter', 'meters', 2])}</h1>";
 include __DIR__.'/searchForm.inc';
 
 if ($this->meters) {

@@ -6,3 +6,14 @@ data/blocks/*
 tests/configuration.inc
 build
 dist
+/nbproject/project.properties
+/meters.sql
+/nbproject/project.xml
+nbproject/private/private.xml
+
+nbproject/private/config.properties
+
+.remote-sync.json
+
+.sass-cache
+*.komodoproject

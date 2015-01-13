@@ -6,26 +6,27 @@
  */
 use Blossom\Classes\View;
 
+
 $name = !empty($_GET['name']) ? View::escape($_GET['name']) : '';
 $zone = !empty($_GET['zone']) ? View::escape($_GET['zone']) : '';
+$inputHelper = $this->template->getHelper('Input');
 ?>
 <form method="get" action="<?php echo BASE_URI; ?>/meters">
-    <fieldset><legend><?php echo $this->_('search'); ?></legend>
-        <table>
-            <tr><td><label for="name"><?php echo $this->_('name'); ?></label></td>
-                <td><input name="name" id="name" value="<?php echo $name; ?>" class="meterAutoComplete" /></td>
-            </tr>
-            <tr><td><label for="zone"><?php echo $this->_('zone'); ?></label></td>
-                <td><?php
-                        $z = $this->template->getHelper('zoneSelector');
-                        echo $z->zoneSelector($zone, 'zone');
-                    ?>
-                </td>
-            </tr>
-        </table>
+    <fieldset>
+        <legend><?php echo $this->_('search'); ?></legend>
+        <?php echo $inputHelper->text('name', $this->_('name'), $name, 'meterAutoComplete') ?>
+        <dl class="input-field"><dt><label for="zone"><?php echo $this->_('zone'); ?></label></dt>
+            <dd><?php
+                    $z = $this->template->getHelper('zoneSelector');
+                    echo $z->zoneSelector($zone, 'zone');
+                ?>
+            </dd>
+        </dl>
 
-        <button type="submit"><i class="fa fa-search"></i> <?php echo $this->_('search'); ?></button>
-        <a href="<?php echo BASE_URI; ?>/meters"><?php echo $this->_('clear'); ?></a>
+        <div class="input-buttons">
+            <button type="submit"><i class="fa fa-search"></i> <?php echo $this->_('search'); ?></button>
+            <a href="<?php echo BASE_URI; ?>/meters"><?php echo $this->_('clear'); ?></a>
+        </div>
     </fieldset>
 </form>
 <?php

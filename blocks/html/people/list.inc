@@ -25,7 +25,7 @@ use Blossom\Classes\Url;
 			}
 		?>
 	</h2>
-	<table>
+	<table class="output-tabular">
 		<thead>
 			<tr><th></th>
 				<th><?php echo $this->_('username'); ?></th>

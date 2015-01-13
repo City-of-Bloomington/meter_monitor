@@ -1,19 +1,27 @@
 <?php
 use Blossom\Classes\View;
 ?>
-<head>
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-	<link rel="stylesheet" type="text/css" href="<?php echo BASE_URI; ?>/css/local/reset.css" />
-	<link rel="stylesheet" type="text/css" href="<?php echo BASE_URI; ?>/css/local/layouts/<?php echo $this->layout; ?>.css" />
-	<link rel="stylesheet" type="text/css" href="<?php echo BASE_URI; ?>/css/local/screen.css" />
-    <link rel="stylesheet" type="text/css" href="<?php echo BASE_URI; ?>/css/Font-Awesome/css/font-awesome.css" />
-	<title><?php echo isset($this->title) ? self::escape($this->title) : APPLICATION_NAME; ?></title>
+<header>
+	<div class="container">
+		<div class="site-title">
+			<h1><a href="<?php echo BASE_URL; ?>/"><?php echo APPLICATION_NAME; ?></a></h1>
+			<div id="location_name" class="ext-location">
+				<a href="<?php echo BASE_URL; ?>">City of Bloomington, Mark Kruzan, Mayor</a>
+			</div>
+		</div>
+		<div id="utilityBar" class="site-utilityBar">
+			<?php
+				$li = '<a href="%s">%s</a>';
 
-	<script type="text/javascript">
-        var METERS = {
-               BASE_URI: '<?php echo BASE_URI; ?>',
-            DATE_FORMAT: '<?php echo View::jQueryDateFormat(DATE_FORMAT); ?>',
-            TIME_FORMAT: '<?php echo TIME_FORMAT; ?>'
-        };
-	</script>
-</head>
+				if (isset($_SESSION['USER'])) {
+					echo sprintf($li, BASE_URI.'/login/logout', $this->translate('logout'));
+				}
+				else {
+					$return_url = View::escape($_SERVER['REQUEST_URI']);
+					echo sprintf($li, BASE_URI.'/login?return_url='.$return_url, $this->_('login'));
+				}
+			?>
+		</div>
+	</div>
+	<?php $this->_include('partials/nav1.inc'); ?>
+</header>

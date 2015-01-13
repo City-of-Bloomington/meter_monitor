@@ -45,11 +45,11 @@ use Blossom\Classes\Url;
     echo $buttonHelper->buttonLink($downloadUrl, 'csv', 'download');
 ?>
 </h3>
-<table class="data">
+<table class="output-tabular">
     <thead>
         <tr><th></th>
             <th><?php echo $this->_(['meter', 'meters', 1]); ?></th>
-            <th><?php echo $this->_(['workOrder', 'workOrders', 1]); ?></th>
+            <th class="column-status"><?php echo $this->_(['workOrder', 'workOrders', 1]); ?></th>
             <th><?php echo $sortHelper->sortableLabel('dateCompleted', $this->_('dateCompleted'), $sort); ?></th>
             <th><?php echo $this->_('completedByPerson'); ?></th>
             <th><?php echo $this->_('workOrder_workTypes'); ?></th>

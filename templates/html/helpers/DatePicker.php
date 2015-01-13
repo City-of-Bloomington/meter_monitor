@@ -1,6 +1,6 @@
 <?php
 /**
- * @copyright 2014 City of Bloomington, Indiana
+ * @copyright 2014-2015 City of Bloomington, Indiana
  * @license http://www.gnu.org/licenses/agpl.txt GNU/AGPL, see LICENSE.txt
  * @author Cliff Ingham <inghamn@bloomington.in.gov>
  */
@@ -26,10 +26,11 @@ class DatePicker extends Helper
         }
 
         $help = View::translateDateString(DATE_FORMAT);
+        $size = strlen($help);
 
         return "
         <input name=\"$fieldname\" id=\"$fieldname\" value=\"$date\"
-               size=\"10\" class=\"date\" placeholder=\"$help\" />
+                size=\"$size\" class=\"date\" placeholder=\"$help\" class=\"datePicker\" />
         ";
     }
 }

@@ -9,6 +9,7 @@ use Blossom\Classes\View;
 
 $name        = View::escape($this->workType->getName());
 $description = View::escape($this->workType->getDescription());
+$inputHelper = $this->template->getHelper('Input');
 
 $title = $this->workType->getId() ? $this->_('edit') : $this->_('add');
 ?>
@@ -17,11 +18,7 @@ $title = $this->workType->getId() ? $this->_('edit') : $this->_('add');
     <fieldset><legend><?php echo $this->_(['workType', 'workTypes', 1]); ?></legend>
         <input name="workType_id" type="hidden" value="<?php echo $this->workType->getId(); ?>" />
 
-        <table>
-            <tr><td><label for="name"><?php echo $this->_('name'); ?></label></td>
-                <td><input name="name" id="name" value="<?php echo $name; ?>" /></td>
-            </tr>
-        </table>
+        <?php echo $inputHelper->text('name', $this->_('name'), $name); ?>
         <div>
             <div><label for="description"><?php echo $this->_('description'); ?></label></div>
             <textarea name="description" id="description"><?php echo $description; ?></textarea>

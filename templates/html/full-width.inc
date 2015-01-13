@@ -3,21 +3,21 @@
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
 <?php
 	$this->layout = 'full-width';
-	$this->_include('partials/header.inc');
+	$this->_include('partials/head.inc');
 ?>
 <body>
 	<?php
-		$this->_include('partials/banner.inc');
+		$this->_include('partials/header.inc');
 	?>
-	<div id="panel-container">
-		<div id="content-panel">
+	<main>
+		<div class="container">
 			<?php
 				include BLOSSOM.'/errorMessages.php';
 
 				echo $this->includeBlocks();
 			?>
 		</div>
-	</div>
+	</main>
 	<?php
 		$this-> _include('partials/footer.inc');
 	?>

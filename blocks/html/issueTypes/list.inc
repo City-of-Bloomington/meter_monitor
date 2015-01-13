@@ -77,7 +77,7 @@ foreach ($this->issueTypeGroups as $group) {
     echo "
     <section>
         <h1>$groupName ($total) $editGroupButton $addTypeButton</h1>
-        <table class=\"data\">
+        <table class=\"output-tabular\">
         $table_rows
         </table>
     </section>
