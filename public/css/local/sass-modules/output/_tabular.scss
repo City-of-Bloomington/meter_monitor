@@ -52,4 +52,21 @@
             }
         }
     }
+
+    @media print {
+        @mixin data-cell() {
+            padding: .75em 1.5em .75em .5em;
+        }
+
+        > thead,
+        > tbody {
+            > tr {
+                th, td {
+                    background: none;
+                    border: none;
+                    padding: .05em 1em .05em .05em;
+                }
+            }
+        }
+    }
 }
