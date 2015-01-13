@@ -1,12 +1,12 @@
 <?php
 /**
- * @copyright 2014 City of Bloomington, Indiana
+ * @copyright 2014-2015 City of Bloomington, Indiana
  * @license http://www.gnu.org/licenses/agpl.txt GNU/AGPL, see LICENSE.txt
  * @author Cliff Ingham <inghamn@bloomington.in.gov>
  * @param Issue $this->issue
  * @param string $this->return_url
  */
-use Application\Models\IssueTypesTable;
+use Application\Models\IssueType;
 use Application\Models\Person;
 use Application\Models\PeopleTable;
 use Blossom\Classes\View;
@@ -51,14 +51,14 @@ $inputHelper = $this->template->getHelper('Input');
         <dl class="input-field"><dt><label for="issueType_id"><?php echo $this->_(['issueType', 'issueTypes', 1]); ?></label></dt>
             <dd><select name="issueType_id"><option value=""></option>
                 <?php
-                    $table = new IssueTypesTable();
-                    $list = $table->find();
-                    foreach ($list as $type) {
-                        $selected = $this->issue->getIssueType_id() == $type->getId()
+                    $options = IssueType::selectOptions();
+                    foreach ($options as $t) {
+                        $selected = $this->issue->getIssueType_id() == $t['id']
                             ? 'selected="selected"'
                             : '';
-                        $name = View::escape($type);
-                        echo "<option value=\"{$type->getId()}\" $selected>$name</option>";
+                        $name  = View::escape($t['name' ]);
+                        $group = View::escape($t['group']);
+                        echo "<option value=\"$t[id]\" $selected>$group: $name</option>";
                     }
                 ?>
                 </select>

@@ -21,7 +21,7 @@ class IssueTypesTable extends TableGateway
      * @param bool $paginated Whether to return a paginator or a raw resultSet
      * @param int $limit
      */
-    public function find($fields=null, $order='name', $paginated=false, $limit=null)
+    public function find($fields=null, $order=['issueTypeGroup_id','name'], $paginated=false, $limit=null)
     {
         $select = new Select('issueTypes');
         if (count($fields)) {

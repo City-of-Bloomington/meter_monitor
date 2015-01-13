@@ -1,10 +1,10 @@
 <?php
 /**
- * @copyright 2014 City of Bloomington, Indiana
+ * @copyright 2014-2015 City of Bloomington, Indiana
  * @license http://www.gnu.org/licenses/agpl.txt GNU/AGPL, see LICENSE.txt
  * @author Cliff Ingham <inghamn@bloomington.in.gov>
  */
-use Application\Models\IssueTypesTable;
+use Application\Models\IssueType;
 use Application\Models\PeopleTable;
 use Blossom\Classes\View;
 
@@ -40,14 +40,14 @@ $inputHelper = $this->template->getHelper('Input');
 <dl class="input-field mod-select"><dt><label for="issueType_id"><?php echo $this->_(['issueType', 'issueTypes', 1]); ?></label></dt>
     <dd><select name="issueType_id"><option value=""></option>
         <?php
-            $table = new IssueTypesTable();
-            $list = $table->find();
-            foreach ($list as $t) {
-                $name = View::escape($t);
-                $selected = (!empty($_GET['issueType_id']) && $t->getId()==$_GET['issueType_id'])
+            $options = IssueType::selectOptions();
+            foreach ($options as $t) {
+                $group = View::escape($t['group']);
+                $name  = View::escape($t['name' ]);
+                $selected = (!empty($_GET['issueType_id']) && $t['id']==$_GET['issueType_id'])
                     ? 'selected="selected"'
                     : '';
-                echo "<option value=\"{$t->getId()}\" $selected>$name</option>";
+                echo "<option value=\"$t[id]\" $selected>$group: $name</option>";
             }
         ?>
         </select>

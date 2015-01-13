@@ -87,4 +87,15 @@ class IssueType extends ActiveRecord
     // Custom Functions
     //----------------------------------------------------------------
     public function __toString() { return parent::get('name'); }
+
+    public static function selectOptions()
+    {
+        $zend_db = Database::getConnection();
+        $sql = "select t.*,g.name as `group`
+                from issueTypes t
+                join issueTypeGroups g on t.issueTypeGroup_id=g.id
+                order by g.name, t.name";
+        $result = $zend_db->query($sql)->execute();
+        return $result;
+    }
 }
