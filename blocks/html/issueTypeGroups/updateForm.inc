@@ -11,7 +11,9 @@ $name        = View::escape($this->issueTypeGroup->getName());
 
 $title = $this->issueTypeGroup->getId() ? $this->_('edit') : $this->_('add');
 ?>
-<h2><?php echo $title; ?></h2>
+
+
+<h1><?php echo $title; ?></h1>
 <form method="post" action="<?php echo BASE_URI; ?>/issueTypeGroups/update">
     <fieldset><legend><?php echo $this->_(['issueTypeGroup', 'issueTypeGroups', 1]); ?></legend>
         <input name="issueTypeGroup_id" type="hidden" value="<?php echo $this->issueTypeGroup->getId(); ?>" />

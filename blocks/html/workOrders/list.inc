@@ -30,7 +30,7 @@ use Blossom\Classes\Url;
 ?>
 </div>
 <?php if (count($this->workOrders)): ?>
-<h3>
+<h2>
 <?php
     $c = is_a($this->workOrders, 'Zend\Paginator\Paginator')
         ? $this->workOrders->getTotalItemCount()
@@ -44,7 +44,7 @@ use Blossom\Classes\Url;
     $downloadUrl->format = 'csv';
     echo $buttonHelper->buttonLink($downloadUrl, 'csv', 'download');
 ?>
-</h3>
+</h2>
 <table class="output-tabular">
     <thead>
         <tr><th></th>

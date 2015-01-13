@@ -9,7 +9,7 @@ use Application\Models\Person;
 use Blossom\Classes\View;
 ?>
 <div class="interfaceBox">
-	<h2><?php
+	<h1><?php
 			echo $this->_(['user','users',2]);
 
 			$helper = $this->template->getHelper('buttonLink');
@@ -17,7 +17,7 @@ use Blossom\Classes\View;
 				echo $helper->buttonLink(BASE_URI.'/users/update', $this->_('create_account'), 'add');
 			}
 		?>
-	</h2>
+	</h1>
         <table class="output-tabular">
 		<thead>
 			<tr><th></th>

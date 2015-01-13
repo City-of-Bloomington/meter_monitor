@@ -14,7 +14,7 @@ $userCanEdit = Person::isAllowed('issueTypes', 'update') && empty($_GET['print']
 $helper = $this->template->getHelper('buttonLink');
 ?>
 <div id="issueTypes_list">
-<h2><?php
+<h1><?php
         echo $this->_(['issueTypeGroup', 'issueTypeGroups', 2]);
         if ($userCanEdit) {
             echo $helper->buttonLink(
@@ -29,7 +29,7 @@ $helper = $this->template->getHelper('buttonLink');
             echo $p->printButton();
         }
     ?>
-</h2>
+</h1>
 <?php
 foreach ($this->issueTypeGroups as $group) {
     $editGroupButton = '';
@@ -76,7 +76,7 @@ foreach ($this->issueTypeGroups as $group) {
 
     echo "
     <section>
-        <h1>$groupName ($total) $editGroupButton $addTypeButton</h1>
+        <h2>$groupName <span class=\"count\">($total)</span> $editGroupButton $addTypeButton</h2>
         <table class=\"output-tabular\">
         $table_rows
         </table>

@@ -10,7 +10,7 @@ use Application\Templates\Helpers\ButtonLink;
 use Blossom\Classes\View;
 use Blossom\Classes\Url;
 ?>
-<h2><?php
+<h1><?php
         echo $this->_(['workType', 'workTypes', 2]);
 
         if (Person::isAllowed('workTypes', 'edit')) {
@@ -22,7 +22,7 @@ use Blossom\Classes\Url;
             );
         }
     ?>
-</h2>
+</h1>
 <table class="output-tabular">
     <?php
         foreach ($this->workTypes as $type) {

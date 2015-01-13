@@ -20,6 +20,9 @@
                 &:first-child {
                     padding-left: $first-cell-padding-left;
                 }
+                > a {
+                    color: #fff;
+                }
             }
             &.column-status {
                 text-align: right;

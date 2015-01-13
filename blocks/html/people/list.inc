@@ -10,7 +10,7 @@ use Blossom\Classes\View;
 use Blossom\Classes\Url;
 ?>
 <div class="interfaceBox">
-	<h2><?php
+	<h1><?php
 			echo $this->translate(['person','people',2]);
 
 			$return_url = Url::current_url();
@@ -24,7 +24,7 @@ use Blossom\Classes\Url;
 				);
 			}
 		?>
-	</h2>
+	</h1>
 	<table class="output-tabular">
 		<thead>
 			<tr><th></th>
