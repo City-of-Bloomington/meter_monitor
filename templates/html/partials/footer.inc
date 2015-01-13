@@ -22,13 +22,3 @@
 		}
 	}
 ?>
-<script type="text/javascript" src="<?php echo BASE_URI ?>/js/dropdown.js"></script>
-<script type="text/javascript">
-	$(function(){
-		var menu = new rpdm($('#userDropdownLauncher'), $('#userDropdown'));
-		menu.buttonClick().documentClick();
-
-		var settingsMenu = new rpdm($('#siteSettingsLauncher'), $('#siteSettingsDropdown'));
-		settingsMenu.buttonClick().documentClick();
-	});
-</script>
