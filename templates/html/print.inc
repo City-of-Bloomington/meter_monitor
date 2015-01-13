@@ -3,7 +3,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
 <?php
     $this->layout = 'full-width';
-    $this->_include('partials/header.inc');
+    $this->_include('partials/head.inc');
 ?>
 <body>
     <div id="panel-container">
