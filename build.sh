@@ -1,15 +1,25 @@
 #!/bin/bash
-BUILD=./build
-DIST=./dist
+RELEASE_NAME=meter_monitor
+DIR=`pwd`
+BUILD=$DIR/build
+DIST=$DIR/dist
 
 if [ ! -d $BUILD ]
-	then mkdir $BUILD
+    then mkdir $BUILD
 fi
 
 if [ ! -d $DIST ]
-	then mkdir $DIST
+    then mkdir $DIST
 fi
 
-rsync -rlv --exclude-from=./buildignore --delete ./ ./build/
+# Compile the SCSS
+cd $DIR/public/css/local
+./build_css.sh
+cd $DIR
 
-tar czvf $DIST/Blossom.tar.gz --transform=s/build/Blossom/ $BUILD
+# The PHP code does not need to actually build anything.
+# Just copy all the files into the build
+rsync -rlv --exclude-from=$DIR/buildignore --delete $DIR/ $BUILD/
+
+# Create a distribution tarball of the build
+tar czvf $DIST/$RELEASE_NAME.tar.gz --transform=s/build/$RELEASE_NAME/ $BUILD

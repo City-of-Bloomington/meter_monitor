@@ -15,5 +15,7 @@ nbproject/private/config.properties
 
 .remote-sync.json
 
+public/css/local/screen.css
+public/css/local/screen.css.map
 .sass-cache
 *.komodoproject
