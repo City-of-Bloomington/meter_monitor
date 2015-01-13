@@ -57,3 +57,14 @@ legend { font-weight:bold; }
 @media (min-width:401px) {
     textarea { width:60ex; height:12em; }
 }
+
+@media print {
+    h1 {
+        font-size: 1.5rem;
+        margin: .5em 0 0 0;
+    }
+    h2 {
+        font-size: 1.35rem;
+        margin: .5em 0 0 0;
+    }
+}
