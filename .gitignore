@@ -6,16 +6,16 @@ data/blocks/*
 tests/configuration.inc
 build
 dist
-/nbproject/project.properties
-/meters.sql
-/nbproject/project.xml
-nbproject/private/private.xml
-
-nbproject/private/config.properties
-
-.remote-sync.json
 
 public/css/local/screen.css
 public/css/local/screen.css.map
 .sass-cache
 *.komodoproject
+
+gulpfile.js
+
+.ftppass
+
+node_modules/*
+
+.build/*

@@ -31,7 +31,7 @@
             display: block;
             float: left;
             margin: 0 .5em .4em 0;
-            padding: .5em 1.5em;
+            padding: .5em .75em;
             transition: background-color .25s ease-in-out;
 
             &:hover {
@@ -53,6 +53,10 @@
     @media screen and (min-width: $window-lg) {
         > .container {
             width: 60em;
+        }
+        &-link {
+            padding-left: 1.5em;
+            padding-right: 1.5em;
         }
     }
 }
