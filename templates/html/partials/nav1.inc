@@ -9,11 +9,9 @@ use Application\Models\Person;
         $routes = [
             'meters'     => 'meter',
             'issues'     => 'issue',
-            'workOrders' => 'workOrder',
             'issueTypes' => 'issueType',
-            'workTypes'  => 'workType',
-            'people'     => 'person',
-            'users'      => 'user'
+            'workOrders' => 'workOrder',
+            'workTypes'  => 'workType'
         ];
         foreach ($routes as $plural=>$singular) {
             $requiredAction = ($plural=='workTypes' || $plural=='issueTypes')

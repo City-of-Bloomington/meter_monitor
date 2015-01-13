@@ -17,3 +17,11 @@ nbproject/private/config.properties
 
 .sass-cache
 *.komodoproject
+
+gulpfile.js
+
+.ftppass
+
+node_modules/*
+
+.build/*
