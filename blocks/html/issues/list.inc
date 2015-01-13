@@ -61,7 +61,6 @@ use Blossom\Classes\Url;
         foreach ($this->issues as $issue) {
             $meter = $issue->getMeter();
             $meterName = View::escape($meter->getName());
-            $comments  = View::escape($issue->getComments());
             $issueType = View::escape($issue->getIssueType());
             $reported  = $issue->getReportedDate(DATE_FORMAT);
             $completed = $issue->getDateCompleted(DATE_FORMAT);
@@ -80,7 +79,10 @@ use Blossom\Classes\Url;
                     ButtonLink::SIZE_ICON
                 );
             }
-            if (isset($this->meter)) { $comments = "<td>$comments</td>"; }
+
+            $comments = isset($this->meter)
+                ? '<td>'.View::escape($issue->getComments()).'</td>'
+                : '';
             echo "
             <tr><th>$editButton</th>
                 <th class=\"$status\">
@@ -90,7 +92,7 @@ use Blossom\Classes\Url;
                 <td>$reportedByPerson</td>
                 <td>$reported</td>
                 <td>$completed</td>
-                <td>$comments</td>
+                $comments
             </tr>
             ";
         }
