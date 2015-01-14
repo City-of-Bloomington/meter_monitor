@@ -16,6 +16,7 @@ use Application\Models\Person;
                 $this->addToAsset('scripts', BASE_URI.'/js/dropdown.js');
                 $this->addToAsset('scripts', BASE_URI.'/js/usermenu.js');
 
+                $a = '<a href="%s">%s</a>';
                 if (isset($_SESSION['USER'])) {
                     echo "
                     <div id=\"userDropdownLauncher\" class=\"ext-launcher\"
@@ -27,7 +28,6 @@ use Application\Models\Person;
                     </div>
                     <div class=\"ext-links closed\" aria-hidden=\"true\" id=\"userDropdown\">
                     ";
-                        $a = '<a href="%s">%s</a>';
                         echo sprintf($a, BASE_URI.'/login/logout', $this->translate('logout'));
                     echo "
                     </div>
