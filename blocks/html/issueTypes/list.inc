@@ -66,9 +66,10 @@ foreach ($this->issueTypeGroups as $group) {
                 ButtonLink::SIZE_ICON
             );
         }
+        $searchUrl = BASE_URI.'/issues?issueType_id='.$id;
         $table_rows.= "
         <tr><td>$editButton</td>
-            <td>$name</td>
+            <td><a href=\"$searchUrl\">$name</a></td>
             <td>$count</td>
         </tr>
         ";
