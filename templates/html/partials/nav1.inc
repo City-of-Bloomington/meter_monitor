@@ -9,12 +9,12 @@ use Application\Models\Person;
         $routes = [
             'meters'     => 'meter',
             'issues'     => 'issue',
-            'issueTypes' => 'issueType',
             'workOrders' => 'workOrder',
+            'issueTypes' => 'issueType',
             'workTypes'  => 'workType'
         ];
         foreach ($routes as $plural=>$singular) {
-            $requiredAction = ($plural=='workTypes' || $plural=='issueTypes')
+            $requiredAction = ($plural=='workTypes')
                 ? 'update'
                 : 'index';
             if (Person::isAllowed($plural, $requiredAction)) {
