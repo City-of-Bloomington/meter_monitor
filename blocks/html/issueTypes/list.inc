@@ -79,9 +79,9 @@ $helper = $this->template->getHelper('buttonLink');
                 $table_rows.= "
                 <tr><td>$editButton</td>
                     <td><a href=\"$searchUrl\">$name</a></td>
-                    <td>$count</td>
-                    <td>$open</td>
-                    <td>$closed</td>
+                    <td class=\"ext-number\">$count</td>
+                    <td class=\"ext-number\">$open</td>
+                    <td class=\"ext-number\">$closed</td>
                 </tr>
                 ";
             }
@@ -105,9 +105,9 @@ $helper = $this->template->getHelper('buttonLink');
                         $table_rows
                         <tr class=\"total\">
                             <td colspan=\"2\">{$this->_('total')}</td>
-                            <td>$total[total]</td>
-                            <td>$total[open]</td>
-                            <td>$total[closed]</td>
+                            <td class=\"ext-number\">$total[total]</td>
+                            <td class=\"ext-number\">$total[open]</td>
+                            <td class=\"ext-number\">$total[closed]</td>
                         </tr>
                     </tbody>
                 </table>

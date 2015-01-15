@@ -42,6 +42,7 @@
                     padding-left: $first-cell-padding-left;
                 }
                 &.ext-number {
+                    text-align: right;
                     white-space: nowrap;
                 }
             }
