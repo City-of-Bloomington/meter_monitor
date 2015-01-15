@@ -12,11 +12,13 @@ use Application\Models\IssuesTable;
 use Application\Templates\Helpers\ButtonLink;
 use Blossom\Classes\View;
 use Blossom\Classes\Url;
+
+$userCanEdit = Person::isAllowed('issues', 'update') && empty($_GET['print']);
+$buttonHelper = $this->template->getHelper('buttonLink');
 ?>
 <div>
 <?php
-    if (Person::isAllowed('issues', 'update')) {
-        $buttonHelper = $this->template->getHelper('buttonLink');
+    if ($userCanEdit) {
         $return_url = Url::current_url();
 
         if (isset($this->meter)) {
@@ -40,9 +42,14 @@ use Blossom\Classes\Url;
     $sort = !empty($_GET['sort']) ? $_GET['sort'] : IssuesTable::DEFAULT_ORDER;
     $sortHelper = $this->template->getHelper('sortableLabel');
 
-    $downloadUrl = new Url(Url::current_url());
-    $downloadUrl->format = 'csv';
-    echo $buttonHelper->buttonLink($downloadUrl, 'csv', 'download');
+    if (empty($_GET['print'])) {
+        $downloadUrl = new Url(Url::current_url());
+        $downloadUrl->format = 'csv';
+        echo $buttonHelper->buttonLink($downloadUrl, 'csv', 'download');
+
+        $p = $this->template->getHelper('printButton');
+        echo $p->printButton();
+    }
 ?>
 </h2>
 <table class="output-tabular">
@@ -71,7 +78,7 @@ use Blossom\Classes\Url;
                 : '';
 
             $editButton   = '';
-            if (Person::isAllowed('issues', 'update')) {
+            if ($userCanEdit) {
                 $editButton = $buttonHelper->buttonLink(
                     BASE_URI."/issues/update?issue_id={$issue->getId()};return_url=$return_url",
                     $this->_('edit'),

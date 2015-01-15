@@ -1,6 +1,6 @@
 <?php
 /**
- * @copyright 2014 City of Bloomington, Indiana
+ * @copyright 2014-2015 City of Bloomington, Indiana
  * @license http://www.gnu.org/licenses/agpl.txt GNU/AGPL, see LICENSE.txt
  * @author Cliff Ingham <inghamn@bloomington.in.gov>
  */
@@ -31,12 +31,22 @@ class IssuesController extends Controller
         $sort = !empty($_GET['sort']) ? $_GET['sort'] : null;
         $table = new IssuesTable();
 
-        if ($this->template->outputFormat == 'html') {
-            $list = $table->search($_GET, $sort, true);
+        if (!empty($_GET['print'])) {
+            $pagination = false;
+            $this->template->setFilename('print');
+        }
+        else {
+            $pagination = true;
+        }
 
-            $page = !empty($_GET['page']) ? (int)$_GET['page'] : 1;
-            $list->setCurrentPageNumber($page);
-            $list->setItemCountPerPage(20);
+        if ($this->template->outputFormat == 'html') {
+            $list = $table->search($_GET, $sort, $pagination);
+
+            if ($pagination) {
+                $page = !empty($_GET['page']) ? (int)$_GET['page'] : 1;
+                $list->setCurrentPageNumber($page);
+                $list->setItemCountPerPage(20);
+            }
             $this->template->blocks[] = new Block('issues/panel.inc', ['issues'=>$list]);
         }
         else {

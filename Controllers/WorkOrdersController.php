@@ -31,12 +31,22 @@ class WorkOrdersController extends Controller
         $sort = !empty($_GET['sort']) ? $_GET['sort'] : null;
         $table = new WorkOrdersTable();
 
-        if ($this->template->outputFormat == 'html') {
-            $list = $table->search($_GET, $sort, true);
+        if (!empty($_GET['print'])) {
+            $pagination = false;
+            $this->template->setFilename('print');
+        }
+        else {
+            $pagination = true;
+        }
 
-            $page = !empty($_GET['page']) ? (int)$_GET['page'] : 1;
-            $list->setCurrentPageNumber($page);
-            $list->setItemCountPerPage(20);
+        if ($this->template->outputFormat == 'html') {
+            $list = $table->search($_GET, $sort, $pagination);
+
+            if ($pagination) {
+                $page = !empty($_GET['page']) ? (int)$_GET['page'] : 1;
+                $list->setCurrentPageNumber($page);
+                $list->setItemCountPerPage(20);
+            }
             $this->template->blocks[] = new Block('workOrders/panel.inc', ['workOrders' => $list]);
         }
         else {

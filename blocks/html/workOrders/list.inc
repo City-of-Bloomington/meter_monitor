@@ -1,6 +1,6 @@
 <?php
 /**
- * @copyright 2014 City of Bloomington, Indiana
+ * @copyright 2014-2015 City of Bloomington, Indiana
  * @license http://www.gnu.org/licenses/agpl.txt GNU/AGPL, see LICENSE.txt
  * @author Cliff Ingham <inghamn@bloomington.in.gov>
  * @param Zend\Db\Result $this->workOrders
@@ -14,9 +14,10 @@ use Blossom\Classes\Url;
 ?>
 <div>
 <?php
+    $userCanEdit = Person::isAllowed('workOrders', 'update') && empty($_GET['print']);
     $buttonHelper = $this->template->getHelper('buttonLink');
 
-    if (Person::isAllowed('workOrders', 'update')) {
+    if ($userCanEdit) {
         $return_url = Url::current_url();
 
         if (isset($this->meter)) {
@@ -40,9 +41,14 @@ use Blossom\Classes\Url;
     $sort = !empty($_GET['sort']) ? $_GET['sort'] : WorkOrdersTable::DEFAULT_ORDER;
     $sortHelper = $this->template->getHelper('sortableLabel');
 
-    $downloadUrl = new Url(Url::current_url());
-    $downloadUrl->format = 'csv';
-    echo $buttonHelper->buttonLink($downloadUrl, 'csv', 'download');
+    if (empty($_GET['print'])) {
+        $downloadUrl = new Url(Url::current_url());
+        $downloadUrl->format = 'csv';
+        echo $buttonHelper->buttonLink($downloadUrl, 'csv', 'download');
+
+        $p = $this->template->getHelper('printButton');
+        echo $p->printButton();
+    }
 ?>
 </h2>
 <table class="output-tabular">
@@ -75,7 +81,7 @@ use Blossom\Classes\Url;
             $workType = implode(', ', $workType);
 
             $editButton   = '';
-            if (Person::isAllowed('issues', 'update')) {
+            if ($userCanEdit) {
                 $editButton = $buttonHelper->buttonLink(
                     BASE_URI."/workOrders/update?workOrder_id={$work->getId()};return_url=$return_url",
                     $this->_('edit'),
