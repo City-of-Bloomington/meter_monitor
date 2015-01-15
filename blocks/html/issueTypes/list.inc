@@ -13,70 +13,21 @@ use Blossom\Classes\Url;
 $userCanEdit = Person::isAllowed('issueTypes', 'update') && empty($_GET['print']);
 $helper = $this->template->getHelper('buttonLink');
 ?>
-<section id="issueTypes_list">
-    <header>
-        <h1><?php echo $this->_(['issueTypeGroup', 'issueTypeGroups', 2]); ?></h1>
-        <div class="tools">
-            <?php
-                if ($userCanEdit) {
-                    echo $helper->buttonLink(
-                        BASE_URI.'/issueTypeGroups/update',
-                        $this->_('issueTypeGroup_add'),
-                        'add'
-                    );
-                }
-        
-                if (empty($_GET['print'])) {
-                    $p = $this->template->getHelper('printButton');
-                    echo $p->printButton();
-                }
-            ?>
-        </div>
-    </header>
-    <?php
-    foreach ($this->issueTypeGroups as $group) {
-        $editGroupButton = '';
-        $addTypeButton   = '';
+<div id="issueTypes_list">
+<h1><?php
+        echo $this->_(['issueTypeGroup', 'issueTypeGroups', 2]);
         if ($userCanEdit) {
-            $editGroupButton = $helper->buttonLink(
-                BASE_URI.'/issueTypeGroups/update?issueTypeGroup_id='.$group->getId(),
-                $this->_('issueTypeGroup_edit'),
-                'edit'
-            );
-            $addTypeButton   = $helper->buttonLink(
-                BASE_URI.'/issueTypes/update?issueTypeGroup_id='.$group->getId(),
-                $this->_('issueType_add'),
+            echo $helper->buttonLink(
+                BASE_URI.'/issueTypeGroups/update',
+                $this->_('issueTypeGroup_add'),
                 'add'
             );
         }
-        $groupName = View::escape($group->getName());
-        $data      = $group->getIssueTypeStats();
-    
-        $table_rows = '';
-        $total = 0;
-        foreach ($data as $row) {
-            $id    = (int)$row['id'];
-            $name  = View::escape($row['name']);
-            $count = (int)$row['count'];
-            $total += $count;
-    
-            $editButton = '';
-            if ($userCanEdit) {
-                $editButton = $helper->buttonLink(
-                    BASE_URI."/issueTypes/update?issueType_id=$id",
-                    $this->_('edit'),
-                    'edit',
-                    ButtonLink::SIZE_ICON
-                );
-            }
-            $table_rows.= "
-            <tr><td>$editButton</td>
-                <td>$name</td>
-                <td>$count</td>
-            </tr>
-            ";
+
+        if (empty($_GET['print'])) {
+            $p = $this->template->getHelper('printButton');
+            echo $p->printButton();
         }
-<<<<<<< Updated upstream
     ?>
 </h1>
 <?php
@@ -121,20 +72,17 @@ foreach ($this->issueTypeGroups as $group) {
             <td><a href=\"$searchUrl\">$name</a></td>
             <td>$count</td>
         </tr>
-=======
-    
-        echo "
-        <section>
-            <header>
-                <h2>$groupName <span class=\"count\">($total)</span></h2>
-                <div class=\"tools\">$editGroupButton $addTypeButton</div>
-            </header>
-            <table class=\"output-tabular\">
-                $table_rows
-            </table>
-        </section>
->>>>>>> Stashed changes
         ";
     }
-    ?>
-</section>
+
+    echo "
+    <section>
+        <h2>$groupName <span class=\"count\">($total)</span> $editGroupButton $addTypeButton</h2>
+        <table class=\"output-tabular\">
+        $table_rows
+        </table>
+    </section>
+    ";
+}
+?>
+</div>
