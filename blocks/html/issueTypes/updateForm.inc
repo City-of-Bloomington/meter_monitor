@@ -13,7 +13,7 @@ $description = View::escape($this->issueType->getDescription());
 
 $title = $this->issueType->getId() ? $this->_('edit') : $this->_('add');
 ?>
-<h2><?php echo $title; ?></h2>
+<h1><?php echo $title; ?></h1>
 <form method="post" action="<?php echo BASE_URI; ?>/issueTypes/update">
     <fieldset><legend><?php echo $this->_(['issueType', 'issueTypes', 1]); ?></legend>
         <input name="issueType_id" type="hidden" value="<?php echo $this->issueType->getId(); ?>" />

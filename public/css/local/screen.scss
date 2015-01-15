@@ -6,7 +6,9 @@
 @import 'sass-modules/layout/_nav1';
 @import 'sass-modules/layout/_main';
 //@import'sass-modules/layout/_footer'; <- module deferred
-@import'sass-modules/layout/_site';
+@import 'sass-modules/layout/_site';
+
+@import 'sass-modules/layout/_content-section';
 
 
 
