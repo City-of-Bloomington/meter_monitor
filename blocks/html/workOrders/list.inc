@@ -11,47 +11,38 @@ use Application\Models\WorkOrdersTable;
 use Application\Templates\Helpers\ButtonLink;
 use Blossom\Classes\View;
 use Blossom\Classes\Url;
+
+$userCanEdit = Person::isAllowed('workOrders', 'update') && empty($_GET['print']);
+$buttonHelper = $this->template->getHelper('buttonLink');
+
+if ($userCanEdit) { $return_url = Url::current_url(); }
+
+if (count($this->workOrders)) {
 ?>
-<div>
-<?php
-    $userCanEdit = Person::isAllowed('workOrders', 'update') && empty($_GET['print']);
-    $buttonHelper = $this->template->getHelper('buttonLink');
+<section>
+    <header>
+    <?php
+        $c = is_a($this->workOrders, 'Zend\Paginator\Paginator')
+            ? $this->workOrders->getTotalItemCount()
+            : count($this->workOrders);
+        echo "<h2>$c {$this->_(['workOrder', 'workOrders', $c])}</h2>";
 
-    if ($userCanEdit) {
-        $return_url = Url::current_url();
+        $sort = !empty($_GET['sort']) ? $_GET['sort'] : WorkOrdersTable::DEFAULT_ORDER;
+        $sortHelper = $this->template->getHelper('sortableLabel');
 
-        if (isset($this->meter)) {
-            echo $buttonHelper->buttonLink(
-                BASE_URI."/workOrders/update?meter_id={$this->meter->getId()};return_url=$return_url",
-                $this->_('workOrder_add'),
-                'add'
-            );
+        if (empty($_GET['print'])) {
+            echo '<div class="tools">';
+            $downloadUrl = new Url(Url::current_url());
+            $downloadUrl->format = 'csv';
+            echo $buttonHelper->buttonLink($downloadUrl, 'csv', 'download');
+
+            $p = $this->template->getHelper('printButton');
+            echo $p->printButton();
+            echo '</div>';
         }
-    }
-?>
-</div>
-<?php if (count($this->workOrders)): ?>
-<h2>
-<?php
-    $c = is_a($this->workOrders, 'Zend\Paginator\Paginator')
-        ? $this->workOrders->getTotalItemCount()
-        : count($this->workOrders);
-    echo "$c {$this->_(['workOrder', 'workOrders', $c])}";
-
-    $sort = !empty($_GET['sort']) ? $_GET['sort'] : WorkOrdersTable::DEFAULT_ORDER;
-    $sortHelper = $this->template->getHelper('sortableLabel');
-
-    if (empty($_GET['print'])) {
-        $downloadUrl = new Url(Url::current_url());
-        $downloadUrl->format = 'csv';
-        echo $buttonHelper->buttonLink($downloadUrl, 'csv', 'download');
-
-        $p = $this->template->getHelper('printButton');
-        echo $p->printButton();
-    }
-?>
-</h2>
-<table class="output-tabular">
+    ?>
+    </header>
+    <table class="output-tabular">
     <thead>
         <tr><th></th>
             <th><?php echo $this->_(['meter', 'meters', 1]); ?></th>
@@ -111,5 +102,12 @@ use Blossom\Classes\Url;
         }
     ?>
     </tbody>
-</table>
-<?php endif ?>
+    </table>
+</section>
+<?php
+}
+else {
+    echo '<section><header>';
+    include APPLICATION_HOME.'/blocks/html/noResultsFound.inc';
+    echo '</header></section>';
+}
