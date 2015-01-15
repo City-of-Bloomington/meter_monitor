@@ -46,6 +46,11 @@
                 }
             }
         }
+        > tr.total {
+            td {
+                border-top:2px solid #000;
+            }
+        }
         > tr:hover {
             th, td {
                 background: #fff;

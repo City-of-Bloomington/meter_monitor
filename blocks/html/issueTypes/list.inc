@@ -53,12 +53,18 @@ $helper = $this->template->getHelper('buttonLink');
             $data      = $group->getIssueTypeStats();
 
             $table_rows = '';
-            $total = 0;
+            $total = ['total'=>0, 'open'=>0, 'closed'=>0];
             foreach ($data as $row) {
-                $id    = (int)$row['id'];
-                $name  = View::escape($row['name']);
-                $count = (int)$row['count'];
-                $total += $count;
+                $id     = (int)$row['id'];
+                $name   = View::escape($row['name']);
+
+                $count  = (int)$row['count'];
+                $closed = (int)$row['closed'];
+                $open   = $count - $closed;
+
+                $total['total' ] += $count;
+                $total['open'  ] += $open;
+                $total['closed'] += $closed;
 
                 $editButton = '';
                 if ($userCanEdit) {
@@ -74,6 +80,8 @@ $helper = $this->template->getHelper('buttonLink');
                 <tr><td>$editButton</td>
                     <td><a href=\"$searchUrl\">$name</a></td>
                     <td>$count</td>
+                    <td>$open</td>
+                    <td>$closed</td>
                 </tr>
                 ";
             }
@@ -81,11 +89,27 @@ $helper = $this->template->getHelper('buttonLink');
             echo "
             <section>
                 <header>
-                    <h2>$groupName <span class=\"count\">($total)</span></h2>
+                    <h2>$groupName <span class=\"count\">($total[total])</span></h2>
                     <div class=\"tools\">$editGroupButton $addTypeButton</div>
                 </header>
                 <table class=\"output-tabular\">
-                $table_rows
+                    <thead>
+                        <tr><th></th>
+                            <th>{$this->_(['issueType', 'issueTypes', 1])}</th>
+                            <th>{$this->_('total')}</th>
+                            <th>{$this->_('open')}</th>
+                            <th>{$this->_('closed')}</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        $table_rows
+                        <tr class=\"total\">
+                            <td colspan=\"2\">{$this->_('total')}</td>
+                            <td>$total[total]</td>
+                            <td>$total[open]</td>
+                            <td>$total[closed]</td>
+                        </tr>
+                    </tbody>
                 </table>
             </section>
             ";

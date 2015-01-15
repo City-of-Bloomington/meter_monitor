@@ -83,7 +83,7 @@ class IssueTypeGroup extends ActiveRecord
      */
     public function getIssueTypeStats()
     {
-        $sql = "select t.id, t.name, count(i.id) as count
+        $sql = "select t.id, t.name, count(i.id) as count, count(i.workOrder_id) as closed
                 from issueTypes t
                 left join issues i on t.id=i.issueType_id
                 where t.issueTypeGroup_id=?
