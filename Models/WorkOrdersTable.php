@@ -19,6 +19,7 @@ class WorkOrdersTable extends TableGateway
     private function handleJoins($fields, &$select)
     {
         if (   (array_key_exists('issue_id',            $fields) && !empty($fields['issue_id']))
+            || (array_key_exists('issueType_id',        $fields) && !empty($fields['issueType_id']))
             || (array_key_exists('reportedByPerson_id', $fields) && !empty($fields['reportedByPerson_id']))) {
             $select->join(['i'=>'issues'], 'workOrders.id=i.workOrder_id', []);
         }
@@ -44,6 +45,7 @@ class WorkOrdersTable extends TableGateway
                 if ($value) {
                     switch ($key) {
                         case 'issue_id':
+                        case 'issueType_id':
                         case 'reportedByPerson_id':
                             $select->where(["i.$key"=>$value]);
                             break;
@@ -81,6 +83,7 @@ class WorkOrdersTable extends TableGateway
                 if ($value) {
                     switch ($key) {
                         case 'issue_id':
+                        case 'issueType_id':
                         case 'reportedByPerson_id':
                             $select->where(["i.$key"=>$value]);
                             break;
