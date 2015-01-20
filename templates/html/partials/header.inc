@@ -40,9 +40,9 @@ use Application\Models\Person;
 			?>
 		</div>
 		<div class="site-utilityBar">
-			<div class="ext-launcher" id="siteSettingsLauncher" aria-haspopup="true" aria-expanded="false"><i class="fa fa-gear"></i> Settings</div>
-			<div class="ext-links closed" id="siteSettingsDropdown">
-				<?php
+			<?php if (Person::isAllowed('people') || Person::isAllowed('users')) {
+				echo "<div class=\"ext-launcher\" id=\"siteSettingsLauncher\" aria-haspopup=\"true\" aria-expanded=\"false\"><i class=\"fa fa-gear\"></i> Settings</div>";
+				echo "<div class=\"ext-links closed\" id=\"siteSettingsDropdown\">";
 					$routes = [
 						'people'     => 'person',
 						'users'      => 'user'
@@ -55,8 +55,9 @@ use Application\Models\Person;
 							echo sprintf($a, BASE_URI.'/'.$plural, $this->_([$singular, $plural, 2]));
 						}
 					}
-				?>
-			</div>
+				echo "</div>";
+			}
+			?>
 		</div>
 	</div>
 	<?php $this->_include('partials/nav1.inc'); ?>
