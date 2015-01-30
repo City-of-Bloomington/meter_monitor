@@ -48,8 +48,18 @@ tbody th { text-align:right; }
 ul { list-style-type:bullet; margin-left:1em; padding:0; }
 li { margin:0; }
 
-fieldset { padding:.25em 0; }
-legend { font-weight:bold; }
+fieldset {
+    margin: 3em 0;
+    padding:0;
+}
+legend {
+    color: #747474;
+    display: block;
+    font-size: 1.15em;
+    font-weight: normal;
+    margin: 0;
+    padding: 0 0 0 0;
+}
 
 @media (max-width:400px) {
     textarea { width:80%; height:6em; }

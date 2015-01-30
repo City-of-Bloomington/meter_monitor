@@ -1,10 +1,10 @@
 <?php
 /**
-* Provides markup for button links
+* Provides markup for basic inputs
 *
-* @copyright 2014 City of Bloomington, Indiana
+* @copyright 2014-2015 City of Bloomington, Indiana
 * @license http://www.gnu.org/licenses/agpl.txt GNU/AGPL, see LICENSE.txt
-* @author Cliff Ingham <inghamn@bloomington.in.gov>
+* @author Dan Hiester <hiesterd@bloomington.in.gov>
 */
 namespace Application\Templates\Helpers;
 
@@ -12,14 +12,21 @@ use Blossom\Classes\Helper;
 
 class Input extends Helper
 {
-    public function text($id, $label, $value = '', $inputClass = '')
+
+    public function text($id, $label, $value = '', $type = 'text', $required = false, $inputAttributesArray = [])
     {
-        $classText = $inputClass ? " class=\"$inputClass\"" : '';
-        echo "
-        <dl class=\"input-field\">
-            <dt><label for=\"$id\">$label</label></dt>
-            <dd><input type=\"text\" id=\"$id\" name=\"$id\" value=\"$value\"$classText /></dd>
-        </dl>
-        ";
+        $extraAttributes = '';
+        $required = $required === false ? '' : '<abbr title="Required field" class="text-required">*</abbr> ';
+        foreach ($inputAttributesArray as $attribute => $attrValue)
+        {
+            $extraAttributes .= "$attribute=\"$attrValue\" ";
+        }
+        echo <<<EOT
+
+            <dl class="input-field">
+                <dt><label for="$id">{$required}$label</label></dt>
+                <dd><input id="$id" name="$id" value="$value" type="$type" $extraAttributes/></dd>
+            </dl>
+EOT;
     }
 }

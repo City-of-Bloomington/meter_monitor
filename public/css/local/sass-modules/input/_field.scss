@@ -2,7 +2,7 @@
     padding: .5em 0;
 
     > dt {
-        font-size: .75em;
+        font-size: (12em/16);
         font-weight: normal;
         margin: 0 0 .25em 0;
 
@@ -14,8 +14,22 @@
         margin: 0;
         padding: 0;
 
-        > input[type="text"] {
+        input[type="text"],
+        input[type="date"],
+        input[type="tel"],
+        input[type="email"] {
+            box-sizing: border-box;
+            border: 1px solid #e0e0e0;
+            font-family: $font-body-family;
             font-size: 1em;
+            padding: .5em;
+            transition: border-color .35s ease-in-out, background-color .5s ease-in-out;
+            width: 100%;
+
+            &:focus {
+                background-color: #ffffff;
+                border-color: #a0a0a0;
+            }
         }
     }
     &.mod-radio {
@@ -70,9 +84,8 @@
     }
 
     @media all and (min-width: $window-med) {
-        border-top: 1px solid #c0c0c0;
-        border-bottom: 1px solid #c0c0c0;
-        margin: -1px 0 0 0;
+        background: #f4f4f4;
+        margin: 2px 0;
         transition: background .25s linear;
 
         &:after {
@@ -81,22 +94,26 @@
             display: table;
         }
         &:hover {
-            background: #d0f0ff;
+            background: #fafafa;
         }
         > dt {
+            color: #666;
             float: left;
-            font-size: 1em;
+            font-size: (13em/16);
             margin: 0;
-            padding: .3em 0 0 0;
+            padding: 1em 0 0 1em;
             width: 8em;
         }
         > dd {
-            margin-left: 9em;
+            margin-left: 8em;
 
-            input[type="text"] {
-                font-size: 1em;
-                padding: .2em;
-                width: 15em;
+            input[type="text"],
+            input[type="date"],
+            input[type="tel"],
+            input[type="email"] {
+                font-size: (14em/16);
+                width: 20em;
+
                 &.datePicker { width:inherit; }
                 &.timePicker { width:inherit; }
             }

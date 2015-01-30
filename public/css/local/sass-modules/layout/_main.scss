@@ -1,4 +1,8 @@
 body > main {
+    > .container {
+        box-sizing: border-box;
+        padding: 2em;
+    }
     @media screen and (min-width: $window-med) {
         position: relative;
 
