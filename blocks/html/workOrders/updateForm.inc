@@ -14,6 +14,7 @@ use Blossom\Classes\View;
 
 $meter    = View::escape($this->workOrder->getMeter());
 $comments = View::escape($this->workOrder->getComments());
+$inputHelper = $this->template->getHelper('Input');
 
 $title = $this->workOrder->getId() ? $this->_('workOrder_edit') : $this->_('workOrder_add');
 ?>
@@ -48,25 +49,21 @@ $title = $this->workOrder->getId() ? $this->_('workOrder_edit') : $this->_('work
                 </select>
             </dd>
         </dl>
-        <dl class="input-field mod-checkbox">
-            <dt><?php echo $this->_('workOrder_workTypes'); ?></dt>
         <?php
             $table = new WorkTypesTable();
             $list = $table->find();
+            $i = 0;
+            $helperArray = [];
             foreach ($list as $type) {
-                $checked = $this->workOrder->hasWorkType($type)
-                    ? 'checked="checked"'
-                    : '';
-                $label = View::escape($type);
-                echo "
-                <dd><label>
-                    <input name=\"workTypes[]\" value=\"{$type->getId()}\" type=\"checkbox\" $checked />
-                    <span>$label</span>
-                </label></dd>
-                ";
+                $helperArray[$i] = [
+                    'label' => View::escape($type),
+                    'value' => $type->getID(),
+                    'checked' => $this->workOrder->hasWorkType($type) ? true : false
+                ];
+                $i++;
             }
-        ?>
-        </dl>
+            echo $inputHelper->checkbox($this->_('workOrder_workTypes'), $helperArray);
+        ?>        
         <dl class="input-field mod-text">
             <dt><label for="comments"><?php echo $this->_('comments'); ?></label></dt>
             <dd><textarea name="comments" id="comments"><?php echo $comments; ?></textarea></dd>
