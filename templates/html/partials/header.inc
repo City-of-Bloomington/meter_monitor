@@ -7,7 +7,7 @@ use Application\Models\Person;
 		<div class="site-title">
 			<h1><a href="<?php echo BASE_URL; ?>/"><?php echo APPLICATION_NAME; ?></a></h1>
 			<div id="location_name" class="ext-location">
-				<a href="<?php echo BASE_URL; ?>">City of Bloomington, Mark Kruzan, Mayor</a>
+				<a href="<?php echo BASE_URL; ?>">City of Bloomington, John Hamilton, Mayor</a>
 			</div>
 		</div>
 		<div id="utilityBar" class="site-utilityBar">
