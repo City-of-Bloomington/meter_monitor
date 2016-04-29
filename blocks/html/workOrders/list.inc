@@ -87,12 +87,14 @@ if (count($this->workOrders)) {
             }
             else { $comments = ''; }
 
+            $workOrderUri = BASE_URI.'/workOrders/view?workOrder_id='.$work->getId();
+
             echo "
             <tr><th>$editButton</th>
                 <th class=\"$status\">
                     <a href=\"{$meter->getUri()}\">$meterName</a>
                 </th>
-                <td>{$work->getId()}</td>
+                <td><a href=\"$workOrderUri\">{$work->getId()}</a></td>
                 <td>$completed</td>
                 <td>$completedByPerson</td>
                 <td>$workType</td>

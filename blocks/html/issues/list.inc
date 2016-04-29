@@ -1,10 +1,10 @@
 <?php
 /**
- * @copyright 2014-2015 City of Bloomington, Indiana
+ * @copyright 2014-2016 City of Bloomington, Indiana
  * @license http://www.gnu.org/licenses/agpl.txt GNU/AGPL, see LICENSE.txt
- * @author Cliff Ingham <inghamn@bloomington.in.gov>
  * @param Zend\Db\Result $this->issues
- * @param Meter $this->meter (optional)
+ * @param Meter          $this->meter          (optional)
+ * @param boolean        $this->disableButtons (optional)
  */
 use Application\Models\Person;
 use Application\Models\Issue;
@@ -13,7 +13,9 @@ use Application\Templates\Helpers\ButtonLink;
 use Blossom\Classes\View;
 use Blossom\Classes\Url;
 
-$userCanEdit = Person::isAllowed('issues', 'update') && empty($_GET['print']);
+$userCanEdit = !$this->disableButtons
+            && Person::isAllowed('issues', 'update')
+            && empty($_GET['print']);
 $buttonHelper = $this->template->getHelper('buttonLink');
 
 if ($userCanEdit) { $return_url = Url::current_url(); }

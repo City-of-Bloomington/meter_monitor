@@ -88,7 +88,6 @@ class WorkOrder extends ActiveRecord
     public function getMeter()             { return parent::getForeignKeyObject(__namespace__.'\Meter',  'meter_id'); }
     public function getCompletedByPerson() { return parent::getForeignKeyObject(__namespace__.'\Person', 'completedByPerson_id'); }
     public function getDateCompleted($f=null, $tz=null) { return parent::getDateData('dateCompleted', $f, $tz); }
-    public function getReportedDate ($f=null, $tz=null) { return parent::getDateData('reportedDate',  $f, $tz); }
 
     public function setComments($s) { parent::set('comments', $s); }
     public function setMeter_id($i) { parent::setForeignKeyField (__namespace__.'\Meter', 'meter_id', $i); }

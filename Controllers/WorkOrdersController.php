@@ -55,6 +55,23 @@ class WorkOrdersController extends Controller
         }
     }
 
+    public function view()
+    {
+        $workOrder = $this->loadWorkOrder($_GET['workOrder_id']);
+
+        $this->template->blocks[] = new Block('workOrders/info.inc', ['workOrder'=>$workOrder]);
+        $this->template->blocks[] = new Block('workTypes/list.inc', [
+            'disableButtons' => true,
+            'workTypes'      => $workOrder->getWorkTypes()
+        ]);
+
+        $_GET['print'] = true; // This should disable the csv download buttons in issues/list
+        $this->template->blocks[] = new Block('issues/list.inc', [
+            'disableButtons' => true,
+            'issues'         => $workOrder->getIssues()
+        ]);
+    }
+
     public function update()
     {
         $workOrder =    !empty($_REQUEST['workOrder_id'])

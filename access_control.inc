@@ -42,7 +42,7 @@ $ZEND_ACL->allow(null, ['index'], ['index']);
 $ZEND_ACL->allow('Staff',
                 ['meters', 'issueTypeGroups', 'issueTypes', 'workTypes'],
                 ['index','view']);
-$ZEND_ACL->allow('Staff', ['issues', 'workOrders'], ['index', 'update']);
+$ZEND_ACL->allow('Staff', ['issues', 'workOrders'], ['index', 'view', 'update']);
 
 // Administrator is allowed access to everything
 $ZEND_ACL->allow('Administrator');
