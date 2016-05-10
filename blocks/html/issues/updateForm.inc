@@ -1,38 +1,40 @@
 <?php
 /**
- * @copyright 2014-2015 City of Bloomington, Indiana
+ * @copyright 2014-2016 City of Bloomington, Indiana
  * @license http://www.gnu.org/licenses/agpl.txt GNU/AGPL, see LICENSE.txt
- * @author Cliff Ingham <inghamn@bloomington.in.gov>
  * @param Issue $this->issue
  * @param string $this->return_url
  */
 use Application\Models\IssueType;
 use Application\Models\Person;
 use Application\Models\PeopleTable;
-use Blossom\Classes\View;
 
-$meter    = View::escape($this->issue->getMeter());
-$comments = View::escape($this->issue->getComments());
+$meter    = self::escape($this->issue->getMeter());
+$comments = self::escape($this->issue->getComments());
 
 $title = $this->issue->getId() ? $this->_('issue_edit') : $this->_('issue_add');
-$inputHelper = $this->template->getHelper('Input');
+$inputHelper = $this->template->getHelper('field');
 ?>
-<h2><?php echo $title; ?></h2>
-<form method="post" action="<?php echo BASE_URI; ?>/issues/update">
+<h2><?= $title; ?></h2>
+<form method="post" action="<?= BASE_URI; ?>/issues/update">
     <fieldset>
-        <input name="issue_id" type="hidden" value="<?php echo $this->issue->getId(); ?>" />
-        <input name="return_url" type="hidden" value="<?php echo $this->return_url; ?>" />
+        <input name="issue_id"   type="hidden" value="<?= $this->issue->getId(); ?>" />
+        <input name="return_url" type="hidden" value="<?= $this->return_url; ?>" />
 
-        <?php echo $inputHelper->text('meter_id', $this->_('meter'), $meter, 'meterAutometerAutoComplete'); ?>
+        <?php
+            echo $inputHelper->input([
+                'name'=>'meter_id', 'id'=>'meter_id', 'label'=>$this->_('meter'), 'value'=>$meter, 'attr'=>['class'=>'meterAutoComplete']
+            ]);
+        ?>
 
-        <dl class="input-field mod-text"><dt><label for="reportedDate"><?php echo $this->_('reportedDate'); ?></label></dt>
+        <dl class="input-field mod-text"><dt><label for="reportedDate"><?= $this->_('reportedDate'); ?></label></dt>
             <dd><?php
                     $picker = $this->template->getHelper('datePicker');
                     echo $picker->datePicker('reportedDate', $this->issue->getReportedDate('U'));
                 ?>
             </dd>
         </dl>
-        <dl class="input-field"><dt><label for="reportedByPerson_id"><?php echo $this->_('reportedByPerson'); ?></label></dt>
+        <dl class="input-field"><dt><label for="reportedByPerson_id"><?= $this->_('reportedByPerson'); ?></label></dt>
             <dd><select name="reportedByPerson_id" id="reportedByPerson_id"><option value=""></option>
                 <?php
                     $table = new PeopleTable();
@@ -41,14 +43,14 @@ $inputHelper = $this->template->getHelper('Input');
                         $selected = $p->getId()==$this->issue->getReportedByPerson_id()
                             ? 'selected="selected"'
                             : '';
-                        $name = View::escape($p->getFullname());
+                        $name = self::escape($p->getFullname());
                         echo "<option value=\"{$p->getId()}\" $selected>$name</option>";
                     }
                 ?>
                 </select>
             </dd>
         </dl>
-        <dl class="input-field"><dt><label for="issueType_id"><?php echo $this->_(['issueType', 'issueTypes', 1]); ?></label></dt>
+        <dl class="input-field"><dt><label for="issueType_id"><?= $this->_(['issueType', 'issueTypes', 1]); ?></label></dt>
             <dd><select name="issueType_id"><option value=""></option>
                 <?php
                     $options = IssueType::selectOptions();
@@ -56,8 +58,8 @@ $inputHelper = $this->template->getHelper('Input');
                         $selected = $this->issue->getIssueType_id() == $t['id']
                             ? 'selected="selected"'
                             : '';
-                        $name  = View::escape($t['name' ]);
-                        $group = View::escape($t['group']);
+                        $name  = self::escape($t['name' ]);
+                        $group = self::escape($t['group']);
                         echo "<option value=\"$t[id]\" $selected>$group: $name</option>";
                     }
                 ?>
@@ -65,8 +67,8 @@ $inputHelper = $this->template->getHelper('Input');
             </dd>
         </dl>
         <dl class="input-field mod-text">
-            <dt><label for="comments"><?php echo $this->_('comments'); ?></label></dt>
-            <dd><textarea name="comments" id="comments"><?php echo $comments; ?></textarea></dd>
+            <dt><label for="comments"><?= $this->_('comments'); ?></label></dt>
+            <dd><textarea name="comments" id="comments"><?= $comments; ?></textarea></dd>
         </dl>
 
         <?php

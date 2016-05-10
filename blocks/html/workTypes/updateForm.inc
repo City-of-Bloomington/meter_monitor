@@ -1,32 +1,40 @@
 <?php
 /**
- * @copyright 2014 City of Bloomington, Indiana
+ * @copyright 2014-2016 City of Bloomington, Indiana
  * @license http://www.gnu.org/licenses/agpl.txt GNU/AGPL, see LICENSE.txt
- * @author Cliff Ingham <inghamn@bloomington.in.gov>
  * @param WorkType $this->workType
  */
-use Blossom\Classes\View;
+$fields = ['id', 'name', 'description'];
+foreach ($fields as $f) {
+    $get = 'get'.ucfirst($f);
+    $$f  = self::escape($this->workType->$get());
+}
 
-$name        = View::escape($this->workType->getName());
-$description = View::escape($this->workType->getDescription());
-$inputHelper = $this->template->getHelper('Input');
-
-$title = $this->workType->getId() ? $this->_('edit') : $this->_('add');
+$title = $id ? $this->_('workType_edit') : $this->_('workType_add');
 ?>
-<h2><?php echo $title; ?></h2>
-<form method="post" action="<?php echo BASE_URI; ?>/workTypes/update">
-    <fieldset><legend><?php echo $this->_(['workType', 'workTypes', 1]); ?></legend>
-        <input name="workType_id" type="hidden" value="<?php echo $this->workType->getId(); ?>" />
+<section>
+    <header>
+        <h1><?= $title; ?></h1>
+    </header>
+    <form method="post" action="<?= BASE_URI; ?>/workTypes/update">
+        <fieldset><legend><?= $this->_('workType'); ?></legend>
+            <input name="workType_id" type="hidden" value="<?= $id ?>" />
 
-        <?php echo $inputHelper->text('name', $this->_('name'), $name); ?>
-        <div>
-            <div><label for="description"><?php echo $this->_('description'); ?></label></div>
-            <textarea name="description" id="description"><?php echo $description; ?></textarea>
-        </div>
+            <?php
+                $f = $this->template->getHelper('field');
+                echo $f->input([
+                    'name'=>'name', 'id'=>'name', 'label'=>$this->_('name'), 'value'=>$name, 'required'=>true
+                ]);
+            ?>
+            <div>
+                <div><label for="description"><?= $this->_('description'); ?></label></div>
+                <textarea name="description" id="description"><?= $description; ?></textarea>
+            </div>
 
-        <?php
-            $h = $this->template->getHelper('saveAndCancelButtons');
-            echo $h->saveAndCancelButtons(BASE_URI.'/workTypes');
-        ?>
-    </fieldset>
-</form>
+            <?php
+                $h = $this->template->getHelper('saveAndCancelButtons');
+                echo $h->saveAndCancelButtons(BASE_URI.'/workTypes');
+            ?>
+        </fieldset>
+    </form>
+</section>
