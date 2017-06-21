@@ -1,10 +1,9 @@
 <?php
 /**
- * @copyright 2014-2015 City of Bloomington, Indiana
+ * @copyright 2014-2017 City of Bloomington, Indiana
  * @license http://www.gnu.org/licenses/agpl.txt GNU/AGPL, see LICENSE.txt
- * @author Cliff Ingham <inghamn@bloomington.in.gov>
  * @param Zend\Db\Result $this->workOrders
- * @param Meter $this->meter (optional)
+ * @param Meter          $this->meter      (optional)
  */
 use Application\Models\Person;
 use Application\Models\WorkOrdersTable;
@@ -15,7 +14,7 @@ use Blossom\Classes\Url;
 $userCanEdit = Person::isAllowed('workOrders', 'update') && empty($_GET['print']);
 $buttonHelper = $this->template->getHelper('buttonLink');
 
-if ($userCanEdit) { $return_url = Url::current_url(); }
+if ($userCanEdit) { $return_url = Url::current_url(BASE_HOST); }
 
 if (count($this->workOrders)) {
 ?>
@@ -32,7 +31,7 @@ if (count($this->workOrders)) {
 
         if (empty($_GET['print'])) {
             echo '<div class="tools">';
-            $downloadUrl = new Url(Url::current_url());
+            $downloadUrl = new Url(Url::current_url(BASE_HOST));
             $downloadUrl->format = 'csv';
             echo $buttonHelper->buttonLink($downloadUrl, 'csv', 'download');
 

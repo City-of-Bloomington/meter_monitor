@@ -10,9 +10,8 @@
  * that will be passed to the TableGateway::find() method.  It is
  * usually "database_field asc|desc"
  *
- * @copyright 2014 City of Bloomington, Indiana
+ * @copyright 2014-2017 City of Bloomington, Indiana
  * @license http://www.gnu.org/licenses/agpl.txt GNU/AGPL, see LICENSE.txt
- * @author Cliff Ingham <inghamn@bloomington.in.gov>
  */
 namespace Application\Templates\Helpers;
 
@@ -55,7 +54,7 @@ class SortableLabel extends Helper
         $sortArray = $this->getSortArray($currentSort);
         $sortArray[$field] = $sortArray[$field]=='desc' ? 'asc' : 'desc';
 
-        $url = new Url(Url::current_url());
+        $url = new Url(Url::current_url(BASE_HOST));
         $url->sort = $this->getSortString($sortArray);
 
         $icon = $sortArray[$field] == 'desc'

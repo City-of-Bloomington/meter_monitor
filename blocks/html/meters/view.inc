@@ -1,8 +1,7 @@
 <?php
 /**
- * @copyright 2014-2015 City of Bloomington, Indiana
+ * @copyright 2014-2017 City of Bloomington, Indiana
  * @license http://www.gnu.org/licenses/agpl.txt GNU/AGPL, see LICENSE.txt
- * @author Cliff Ingham <inghamn@bloomington.in.gov>
  * @param Meter $this->meter
  */
 use Application\Models\Person;
@@ -22,7 +21,7 @@ use Blossom\Classes\Url;
         <h3><?php echo $this->_(['issue', 'issues', 2]); ?></h3>
         <?php
             $helper     = $this->template->getHelper('buttonLink');
-            $return_url = Url::current_url();
+            $return_url = Url::current_url(BASE_HOST);
 
             if (Person::isAllowed('issues', 'update')) {
                 echo '<div class="tools">';

@@ -1,6 +1,6 @@
 <?php
 /**
- * @copyright 2014-2016 City of Bloomington, Indiana
+ * @copyright 2014-2017 City of Bloomington, Indiana
  * @license http://www.gnu.org/licenses/agpl.txt GNU/AGPL, see LICENSE.txt
  * @param Zend\Db\Result $this->issues
  * @param Meter          $this->meter          (optional)
@@ -18,7 +18,7 @@ $userCanEdit = !$this->disableButtons
             && empty($_GET['print']);
 $buttonHelper = $this->template->getHelper('buttonLink');
 
-if ($userCanEdit) { $return_url = Url::current_url(); }
+if ($userCanEdit) { $return_url = Url::current_url(BASE_HOST); }
 
 if (count($this->issues)) {
 ?>
@@ -35,7 +35,7 @@ if (count($this->issues)) {
 
         if (empty($_GET['print'])) {
             echo '<div class="tools">';
-            $downloadUrl = new Url(Url::current_url());
+            $downloadUrl = new Url(Url::current_url(BASE_HOST));
             $downloadUrl->format = 'csv';
             echo $buttonHelper->buttonLink($downloadUrl, 'csv', 'download');
 
