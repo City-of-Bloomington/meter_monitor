@@ -101,6 +101,9 @@ class WorkOrder extends ActiveRecord
      */
     public function handleUpdate($post)
     {
+        if (empty($post['issues'   ])) { $post['issues'   ] = []; }
+        if (empty($post['workTypes'])) { $post['workTypes'] = []; }
+
         $fields = ['meter_id', 'dateCompleted', 'completedByPerson_id', 'comments', 'workTypes', 'issues'];
         foreach ($fields as $f) {
             $set = 'set'.ucfirst($f);
