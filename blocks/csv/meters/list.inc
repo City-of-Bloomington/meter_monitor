@@ -8,6 +8,13 @@ declare (strict_types=1);
 header('Content-Disposition: attachment; filename="meters.csv"');
 
 echo "Meter ID,Meter,Zone\n";
+
+$out = fopen('php://output', 'w');
 foreach ($this->meters as $m) {
-    echo "{$m->getId()},{$m->getName()},{$m->getZone()}\n";
+    $row = [
+        $m->getId(),
+        $m->getName(),
+        $m->getZone()
+    ];
+    fputcsv($out, $row);
 }

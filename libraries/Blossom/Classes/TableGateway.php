@@ -57,7 +57,7 @@ abstract class TableGateway
 	public function find($fields=null, $order=null, $paginated=false, $limit=null)
 	{
 		$select = new Select($this->tableGateway->getTable());
-		if (count($fields)) {
+		if ($fields) {
 			foreach ($fields as $key=>$value) {
 				$select->where([$key=>$value]);
 			}
