@@ -1,17 +1,22 @@
 <?php
 /**
- * @copyright 2014 City of Bloomington, Indiana
+ * @copyright 2014-2018 City of Bloomington, Indiana
  * @license http://www.gnu.org/licenses/agpl.txt GNU/AGPL, see LICENSE.txt
- * @author Cliff Ingham <inghamn@bloomington.in.gov>
  * @param Zend\Db\Result $this->meters
  */
 use Application\Models\Issue;
 use Blossom\Classes\View;
+use Blossom\Classes\Url;
 
 $c = is_a($this->meters, 'Zend\Paginator\Paginator')
     ? $this->meters->getTotalItemCount()
     : count($c);
 echo "<h2>$c {$this->_(['meter', 'meters', $c])}</h2>";
+
+$h = $this->template->getHelper('buttonLink');
+$downloadUrl = new Url(Url::current_url(BASE_HOST));
+$downloadUrl->format = 'csv';
+echo $h->buttonLink($downloadUrl, 'csv', 'download');
 ?>
 <table class="output-tabular">
     <thead>

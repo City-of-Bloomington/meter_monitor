@@ -8,7 +8,7 @@
  */
 header('Content-Disposition: attachment; filename="workOrders.csv"');
 
-echo "Work ID,Meter ID,Meter,Zone,Date Completed,Completed By,Issue ID,Issue Type,Date Reported";
+echo "Work ID,Meter ID,Meter,Zone,Date Completed,Completed By,Issue ID,Issue Type,Date Reported\n";
 foreach ($this->workOrders as $w) {
     $m = $w->getMeter();
     $issues = $w->getIssues();
