@@ -4,6 +4,7 @@
 /dist
 .git/
 .git*
+/charts/
 configuration.inc
 site_config.inc
 /data/sessions/*

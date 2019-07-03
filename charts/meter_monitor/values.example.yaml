@@ -1,0 +1,152 @@
+# Default values for meter_monitor.
+# This is a YAML-formatted file.
+# Declare variables to be passed into your templates.
+
+replicaCount: 1
+
+image:
+  repository: <your-repo>/meter_monitor
+  tag: latest
+  pullPolicy: IfNotPresent
+
+imagePullSecrets: []
+nameOverride: ""
+fullnameOverride: ""
+
+service:
+  type: ClusterIP
+  port: 80
+
+ingress:
+  enabled: false
+  annotations: {}
+    # kubernetes.io/ingress.class: nginx
+    # kubernetes.io/tls-acme: "true"
+  hosts:
+    - host: some.hostname.gov
+      paths: [""]
+
+  tls: {}
+#    - secretName: cert-wildcard
+#      hosts:
+#        - some.hostname.gov
+
+resources: {}
+  # We usually recommend not to specify default resources and to leave this as a conscious
+  # choice for the user. This also increases chances charts run on environments with little
+  # resources, such as Minikube. If you do want to specify resources, uncomment the following
+  # lines, adjust them as necessary, and remove the curly braces after 'resources:'.
+  # limits:
+  #   cpu: 100m
+  #   memory: 128Mi
+  # requests:
+  #   cpu: 100m
+  #   memory: 128Mi
+
+nodeSelector: {}
+
+tolerations: []
+
+affinity: {}
+
+
+# Since this is an app that's unlikely to change much deployment-wise, I've just included
+# the config files as raw mappings from values.yaml.
+
+# If a more advanced configuration is needed, these can be split out into their own templated
+# files for customization.
+configs:
+  configuration.inc: |-
+    <?php
+    define('APPLICATION_HOME', __DIR__);
+    define('BLOSSOM', APPLICATION_HOME.'/libraries/Blossom');
+    define('ZEND',    APPLICATION_HOME.'/libraries/zf2/library/Zend');
+    define('SITE_HOME', __DIR__.'/data');
+    include SITE_HOME.'/site_config.inc';
+    //define('ERROR_REPORTING','PHP_DEFAULT');
+    define('ERROR_REPORTING','CUSTOM');
+    $ERROR_REPORTING = ['SKIDDER'];
+    define('SKIDDER_URL','https://apps.bloomington.in.gov/skidder/home.php');
+    define('SKIDDER_APPLICATION_ID', 16);
+    require_once ZEND.'/Loader/AutoloaderFactory.php';
+    $config = [
+        'Zend\Loader\StandardAutoloader' => [
+            'namespaces' => [
+                'Application' => APPLICATION_HOME,
+                'Blossom'     => BLOSSOM,
+                'Zend'        => ZEND
+            ]
+        ]
+    ];
+    Zend\Loader\AutoloaderFactory::factory($config);
+    if (!defined('STDIN')) {
+        ini_set('session.save_path', SITE_HOME.'/sessions');
+        session_start();
+    }
+    if (ERROR_REPORTING != 'PHP_DEFAULT') {
+        set_error_handler         ('Blossom\Classes\Error::customErrorHandler');
+        set_exception_handler     ('Blossom\Classes\Error::customExceptionHandler');
+        register_shutdown_function('Blossom\Classes\Error::shutdownHandler');
+    }
+    include APPLICATION_HOME.'/access_control.inc';
+    $startTime = microtime(1);
+
+  site_config.inc: |-
+    <?php
+    define('APPLICATION_NAME','Meter Monitor');
+
+    define('BASE_URI' , '/meters');
+    define('BASE_HOST', isset($_SERVER['HTTP_X_FORWARDED_HOST'])
+                            ? $_SERVER['HTTP_X_FORWARDED_HOST']
+                            : $_SERVER['SERVER_NAME']);
+    define('BASE_URL' , "http://".BASE_HOST.BASE_URI);
+    define('JQUERY',            BASE_URI.'/js/vendor/jquery-2.1.1');
+    define('JQUERY_UI',         BASE_URI.'/js/vendor/jquery-ui-1.11.1');
+    define('JQUERY_TIMEPICKER', BASE_URI.'/js/vendor/jquery-timepicker-1.4.12');
+    define('ADMINISTRATOR_NAME','<YOUR_ADMIN>');
+    define('ADMINISTRATOR_EMAIL','<YOUR_ADMIN_EMAIL>');
+    define('DB_ADAPTER','Pdo_Mysql');
+    define('DB_HOST','<DB_HOST_HERE>');
+    define('DB_NAME','<DATABASE_NAME>');
+    define('DB_USER','<DB_USERNAME>');
+    define('DB_PASS','<DB_PASSWORD>');
+    $DIRECTORY_CONFIG = array();
+    define('CAS',APPLICATION_HOME.'/libraries/phpCAS');
+    define('CAS_SERVER','<YOUR_CAS_SERVER>');
+    define('CAS_URI','cas');
+    define('DATE_FORMAT', 'Y-m-d');
+    define('TIME_FORMAT', 'g:i a');
+    define('DATETIME_FORMAT', DATE_FORMAT.' '.TIME_FORMAT);
+    define('LOCALE', 'en_US');
+
+  apache.conf: |-
+    DocumentRoot /var/www/html
+    <Directory  "/var/www/html">
+        Options FollowSymLinks
+        AllowOverride None
+        Require all granted
+    </Directory>
+
+    <IfModule mod_remoteip.c>
+    RemoteIPHeader X-Forwarded-For
+    RemoteIPInternalProxy 10.20.24.20
+    LogFormat "%a %l %u %t \"%r\" %>s %O \"%{Referer}i\" \"%{User-Agent}i\"" combined
+    </IfModule>
+
+    ErrorLog /dev/stderr
+    TransferLog /dev/stdout
+
+    Alias /meters "/srv/sites/meter_monitor/public"
+    <Directory            "/srv/sites/meter_monitor/public">
+        Options FollowSymLinks
+        AllowOverride None
+        Require all granted
+
+
+
+        RewriteEngine On
+        RewriteBase /meters
+        RewriteCond %{REQUEST_FILENAME} !-d
+        RewriteCond %{REQUEST_FILENAME} !-f
+        RewriteRule .? /meters/index.php [NC,L]
+    </Directory>

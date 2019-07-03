@@ -13,3 +13,5 @@ gulpfile.js
 .ftppass
 node_modules/*
 .build/*
+
+charts/*/values.yaml
