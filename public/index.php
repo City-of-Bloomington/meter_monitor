@@ -1,10 +1,12 @@
 <?php
 /**
- * @copyright 2012-2013 City of Bloomington, Indiana
- * @license http://www.gnu.org/licenses/agpl.txt GNU/AGPL, see LICENSE.txt
+ * @copyright 2012-2019 City of Bloomington, Indiana
+ * @license http://www.gnu.org/licenses/agpl.txt GNU/AGPL, see LICENSE
  * @author Cliff Ingham <inghamn@bloomington.in.gov>
  */
-include '../configuration.inc';
+$startTime = microtime(1);
+
+include '../bootstrap.php';
 use Blossom\Classes\Template;
 use Blossom\Classes\Block;
 

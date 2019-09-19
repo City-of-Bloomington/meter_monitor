@@ -9,8 +9,7 @@
     <div id="panel-container">
         <div id="content-panel">
             <?php
-                include BLOSSOM.'/errorMessages.php';
-
+                $this->_include('errorMessages.inc');
                 echo $this->includeBlocks();
             ?>
         </div>

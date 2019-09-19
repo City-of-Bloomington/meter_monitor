@@ -12,14 +12,13 @@
 	<main>
 		<div class="container">
 			<?php
-				include BLOSSOM.'/errorMessages.php';
-
+                $this->_include('errorMessages.inc');
 				echo $this->includeBlocks();
 			?>
 		</div>
 	</main>
 	<?php
-		$this-> _include('partials/footer.inc');
+		$this->_include('partials/footer.inc');
 	?>
 </body>
 </html>
