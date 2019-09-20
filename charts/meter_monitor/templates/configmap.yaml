@@ -9,8 +9,86 @@ metadata:
     app.kubernetes.io/instance: {{ .Release.Name }}
     app.kubernetes.io/managed-by: {{ .Release.Service }}
 data:
-{{- range $key, $value := .Values.configs }}
-  {{ $key }}: |-
-{{ $value | indent 4 }}
-{{- end }}
+  site_config.inc: |+
+    <?php
+    define('APPLICATION_NAME','meters');
+
+    define('BASE_URI' , '/meters');
+    define('BASE_HOST', isset($_SERVER['HTTP_X_FORWARDED_HOST'])
+                            ? $_SERVER['HTTP_X_FORWARDED_HOST']
+                            : '{{ .Values.config.base_uri }}');
+    define('BASE_URL' , "https://".BASE_HOST.BASE_URI);
+
+    define('JQUERY',            BASE_URI.'/js/vendor/jquery-2.1.1');
+    define('JQUERY_UI',         BASE_URI.'/js/vendor/jquery-ui-1.11.1');
+    define('JQUERY_TIMEPICKER', BASE_URI.'/js/vendor/jquery-timepicker-1.4.12');
+
+    $DATABASES = [
+        'default' => [
+            'driver'   => 'Pdo_Mysql',
+            'dsn'      => 'mysql:{{ .Values.config.db.dbname }}=meters;host={{ .Values.config.db.host }}',
+            'username' => '{{ .Values.config.db.username }}',
+            'password' => '{{ .Values.config.db.password }}',
+            'options'  => []
+        ]
+    ];
+
+    $DIRECTORY_CONFIG = [
+        'Employee' => [
+            'DIRECTORY_SERVER'             => '{{ .Values.config.auth.ldap.server             }}',
+            'DIRECTORY_BASE_DN'            => '{{ .Values.config.auth.ldap.base_dn            }}',
+            'DIRECTORY_USERNAME_ATTRIBUTE' => '{{ .Values.config.auth.ldap.username_attribute }}',
+            'DIRECTORY_USER_BINDING'       => '{{ .Values.config.auth.ldap.user_binding       }}',
+            'DIRECTORY_ADMIN_BINDING'      => '{{ .Values.config.auth.ldap.admin_binding      }}',
+            'DIRECTORY_ADMIN_PASS'         => '{{ .Values.config.auth.ldap.admin_pass         }}'
+        ]
+    ];
+
+    define('CAS', APPLICATION_HOME.'{{ .Values.config.auth.cas.appHome }}');
+    define('CAS_SERVER',           '{{ .Values.config.auth.cas.server  }}');
+    define('CAS_URI',              '{{ .Values.config.auth.cas.uri     }}');
+
+    define('DATE_FORMAT', 'Y-m-d');
+    define('TIME_FORMAT', 'g:i a');
+    define('DATETIME_FORMAT', DATE_FORMAT.' '.TIME_FORMAT);
+    define('LOCALE', 'en_US');
+
+    define('ERROR_REPORTING','PHP_DEFAULT');
+    //define('ERROR_REPORTING','CUSTOM');
+    //$ERROR_REPORTING = array('PRETTY_PRINT','SKIDDER');
+    if (ERROR_REPORTING != 'PHP_DEFAULT') {
+        set_error_handler         ('Blossom\Classes\Error::customErrorHandler');
+        set_exception_handler     ('Blossom\Classes\Error::customExceptionHandler');
+        register_shutdown_function('Blossom\Classes\Error::shutdownHandler');
+    }
+    // define('SKIDDER_URL','http://localhost/skidder/home.php');
+    // define('SKIDDER_APPLICATION_ID',);
+
+  000-default.conf: |+
+    DocumentRoot /var/www/html
+    <Directory  "/var/www/html">
+        Options FollowSymLinks
+        AllowOverride None
+        Require all granted
+    </Directory>
+
+    RemoteIPHeader X-Forwarded-For
+    RemoteIPInternalProxy 10.0.0.0/8
+    LogFormat "%a %l %u %t \"%r\" %>s %O \"%{Referer}i\" \"%{User-Agent}i\"" combined
+
+    ErrorLog /dev/stderr
+    CustomLog /dev/stdout combined
+
+    Alias {{ .Values.config.base_uri }} "/srv/sites/meter_monitor/public"
+    <Directory "/srv/sites/meter_monitor/public">
+        Options FollowSymLinks
+        AllowOverride None
+        Require all granted
+
+        RewriteEngine On
+        RewriteBase {{ .Values.config.base_uri }}
+        RewriteCond %{REQUEST_FILENAME} !-d
+        RewriteCond %{REQUEST_FILENAME} !-f
+        RewriteRule .? {{ .Values.config.base_uri }}/index.php [NC,L]
+    </Directory>
 ...

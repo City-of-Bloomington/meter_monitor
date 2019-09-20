@@ -35,9 +35,7 @@ COPY docker/php.ini /etc/php/7.2/apache2/conf.d/local.ini
 COPY docker/php.ini /etc/php/7.2/cli/conf.d/local.ini
 COPY docker/apache.conf /etc/apache2/sites-available/000-default.conf
 
-
-WORKDIR /srv/sites/meter_monitor
-COPY --chown=www-data:staff build/meter_monitor /srv/sites/meter_monitor
+COPY --chown=www-data:staff ./ /srv/sites/meter_monitor
 
 EXPOSE 80
 ENTRYPOINT ["apachectl", "-D", "FOREGROUND"]
