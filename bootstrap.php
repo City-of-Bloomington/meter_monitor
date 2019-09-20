@@ -22,7 +22,7 @@ define('SITE_HOME', !empty($_SERVER['SITE_HOME']) ? $_SERVER['SITE_HOME'] : __DI
  * Enable autoloading for the PHP libraries
  */
 $loader = require APPLICATION_HOME.'/vendor/autoload.php';
-$loader->addPsr4('Site\\', SITE_HOME);
+$loader->addPsr4('Site\\', SITE_HOME.'/src');
 
 include SITE_HOME.'/site_config.inc';
 include APPLICATION_HOME.'/access_control.inc';
