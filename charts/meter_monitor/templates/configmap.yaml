@@ -26,7 +26,7 @@ data:
     $DATABASES = [
         'default' => [
             'driver'   => 'Pdo_Mysql',
-            'dsn'      => 'mysql:{{ .Values.config.db.dbname }}=meters;host={{ .Values.config.db.host }}',
+            'dsn'      => 'mysql:dbname={{ .Values.config.db.dbname }};host={{ .Values.config.db.host }}',
             'username' => '{{ .Values.config.db.username }}',
             'password' => '{{ .Values.config.db.password }}',
             'options'  => []

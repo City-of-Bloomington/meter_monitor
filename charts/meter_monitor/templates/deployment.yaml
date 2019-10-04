@@ -46,8 +46,8 @@ spec:
               mountPath: /srv/sites/meter_monitor/data/site_config.inc
               subPath: site_config.inc
             - name: {{ include "meter-monitor.fullname" . }}
-              mountPath: /etc/apache2/sites-available/000-default.conf
-              subPath: apache.conf
+              mountPath: '/etc/apache2/sites-available/000-default.conf'
+              subPath: '000-default.conf'
       {{- with .Values.nodeSelector }}
       nodeSelector:
         {{- toYaml . | nindent 8 }}

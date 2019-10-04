@@ -18,7 +18,7 @@ RUN apt-get install -y \
     php-json \
     php-readline \
     php-mbstring \
-    php-pgsql \
+    php-mysql \
     php-intl \
     php-zip \
     unzip \
