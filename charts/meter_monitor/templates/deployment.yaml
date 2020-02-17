@@ -1,7 +1,8 @@
-apiVersion: apps/v1
-kind: Deployment
+---
+apiVersion: 'apps/v1'
+kind:       'Deployment'
 metadata:
-  name: {{ include "meter-monitor.fullname" . }}
+  name: {{ include "meter-monitor.name" . }}
   labels:
 {{ include "meter-monitor.labels" . | indent 4 }}
 spec:
@@ -9,7 +10,7 @@ spec:
   selector:
     matchLabels:
       app.kubernetes.io/name: {{ include "meter-monitor.name" . }}
-      app.kubernetes.io/instance: {{ .Release.Name }}
+      app.kubernetes.io/instance: "{{ .Release.Name }}"
   template:
     metadata:
       labels:
@@ -23,7 +24,7 @@ spec:
       containers:
         - name: {{ .Chart.Name }}
           image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
-          imagePullPolicy: {{ .Values.image.pullPolicy }}
+          imagePullPolicy: "{{ .Values.image.pullPolicy }}"
           ports:
             - name: http
               containerPort: 80
@@ -39,15 +40,13 @@ spec:
           resources:
             {{- toYaml .Values.resources | nindent 12 }}
           volumeMounts:
-            - name: {{ include "meter-monitor.fullname" . }}
-              mountPath: /srv/sites/meter_monitor/configuration.inc
-              subPath: configuration.inc
-            - name: {{ include "meter-monitor.fullname" . }}
-              mountPath: /srv/sites/meter_monitor/data/site_config.inc
-              subPath: site_config.inc
-            - name: {{ include "meter-monitor.fullname" . }}
+            - name: {{ include "meter-monitor.name" . }}-config
+              mountPath: '/srv/sites/meter_monitor/data/site_config.inc'
+              subPath:   'site_config.inc'
+
+            - name: {{ include "meter-monitor.name" . }}-config
               mountPath: '/etc/apache2/sites-available/000-default.conf'
-              subPath: '000-default.conf'
+              subPath:   '000-default.conf'
       {{- with .Values.nodeSelector }}
       nodeSelector:
         {{- toYaml . | nindent 8 }}
@@ -61,6 +60,7 @@ spec:
         {{- toYaml . | nindent 8 }}
     {{- end }}
       volumes:
-        - name: {{ include "meter-monitor.fullname" . }}
+        - name: {{ include "meter-monitor.name" . }}-config
           configMap:
-            name: {{ include "meter-monitor.fullname" . }}
+            name: {{ include "meter-monitor.name" . }}-configmap
+...
