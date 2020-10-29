@@ -27,7 +27,7 @@ clean:
 	rm -Rf build/${APPNAME}*
 
 compile: deps $(LANGUAGES)
-	cd public/css/local && sassc -mt compact screen.scss screen.css
+	cd public/css/local && sassc -t compact -m screen.scss screen.css
 
 package:
 	[[ -d build ]] || mkdir build
